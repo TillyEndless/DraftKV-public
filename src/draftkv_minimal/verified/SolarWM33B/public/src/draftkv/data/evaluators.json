@@ -1,0 +1,19 @@
+{
+  "orbia": {
+    "upstream_revision": "f7d8ddde3069a6d5ce75a87fa6b4fc896cc78a59",
+    "adapter_revision": "c1ff05c2f349dff97fe8995fa28427a942274066",
+    "entry": "draftkv.evaluators.orbia",
+    "quality_aggregation": "short_video_scores.json"
+  },
+  "revisit": {
+    "upstream_revision": "edc4e80e642baac4f2b5764dec9f1a491200af8f",
+    "adapter_revision": "c1ff05c2f349dff97fe8995fa28427a942274066",
+    "entry": "scripts/table3_reprojection_eval.py",
+    "generation_allowed": false
+  },
+  "vbench-long": {
+    "adapter_revision": "4f6ea1e91d98e333f9f6c62b0e85fe9952b0fce7",
+    "entry": "draftkv.evaluators.bench1",
+    "quality_aggregation": "bridge-result.json"
+  }
+}

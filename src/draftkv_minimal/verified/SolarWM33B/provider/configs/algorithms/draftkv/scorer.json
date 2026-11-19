@@ -1,0 +1,25 @@
+{
+  "capacity": 128,
+  "draft_descriptor_dtype": "fp16",
+  "draft_gemm_accumulation": "fp32",
+  "draft_logit_dtype": "fp16",
+  "fusion": "probability_mean_max",
+  "maxpool_weight": 0.04,
+  "mixed_precision_attention": false,
+  "name": "draftattention2_postrope_spatial8x16_meanmax",
+  "partition": "spatial2d_fixed8x16",
+  "qk_space": "post_qknorm_post_rope",
+  "schema_version": 1,
+  "softmax_accumulation": "fp32",
+  "pool_h": 8,
+  "pool_w": 16,
+  "autotune": {
+    "status": "INHERITED_WEIGHT_NOT_RETUNED_FOR_SPATIAL8X16",
+    "maxpool_weight": 0.04,
+    "historical_ragged64_config": {
+      "repo_path": "receipts/draftkv-spatial8x16-20261029/ragged64-scorer-before.json",
+      "sha256": "a0f326f37f3f89afd137cc84a1c4fb17e4fd3e328a6705d46d804e2784293bd9"
+    },
+    "scope": "Only partition changes; prior Ragged64 tuning is provenance, not tuning evidence for fixed8x16"
+  }
+}

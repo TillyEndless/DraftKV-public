@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "packages": {
+    "diffusers": {
+      "version": "0.40.0",
+      "files": {
+        "diffusers/models/transformers/transformer_minimax_h3.py": "1926b1bc15a5bebda05e3dc8cde1b3955d56641ba7f8f9d6e90c8f78c66ae30c",
+        "diffusers/models/autoencoders/autoencoder_kl_minimax_h3.py": "4c3c9745ee27d16ff343c4998244bad41cd8f4213f0029cf7ce11ebb6d72ca1b",
+        "diffusers/modular_pipelines/minimax_h3/encoders.py": "fea751a889752ba58f1528acbc23b223e827ea707a75e2ae0c43d4a53ce758af"
+      }
+    },
+    "transformers": {
+      "version": "5.12.1",
+      "files": {
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py": "f39b3621fea3f757a01d2e00ebd3a2be3516b7df3048d862a365988aba9fa994",
+        "transformers/models/qwen3_vl/processing_qwen3_vl.py": "add767ca5e9511e1db0a69091d51b1d0b2078c874d59ee3a58c4748b5d9014a4"
+      }
+    }
+  }
+}

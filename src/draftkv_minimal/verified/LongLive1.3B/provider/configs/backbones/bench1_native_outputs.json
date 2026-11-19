@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "provenance_receipt": "configs/backbones/bench1_native_inputs.receipt.json",
+  "provenance_receipt_sha256": "608d43b6cd059b991bc097aff41b763d652abc4b1762ff74e8c4af6cdead4b72",
+  "backbones": {
+    "LongLive1.3B": {
+      "input_mode": "bench1_t2v",
+      "latent_frames": 240,
+      "frames": 957,
+      "native_frames": 957,
+      "width": 832,
+      "height": 480,
+      "output_width": 832,
+      "output_height": 480,
+      "fps": 16,
+      "seed": 31415,
+      "sample_shift": 5.0,
+      "offload_model": true,
+      "image_conditioning": "none",
+      "output_spec_provenance": "frozen_native_t2v",
+      "vae_decode_method": "decode_to_pixel",
+      "denoising_step_list": [
+        1000,
+        750,
+        500,
+        250
+      ],
+      "num_frame_per_block": 3,
+      "local_attn_size": 12,
+      "sink_size": 3
+    },
+    "LingBot14B": {
+      "input_mode": "bench1_ti",
+      "latent_frames": 240,
+      "frames": 957,
+      "native_frames": 961,
+      "width": 832,
+      "height": 480,
+      "output_width": 832,
+      "output_height": 480,
+      "fps": 16,
+      "seed": 42,
+      "sample_shift": 10.0,
+      "offload_model": true,
+      "native_chunk_policy": "floor_complete_c4",
+      "camera_policy": "same_static_identity_opencv_c2w_as_legacy",
+      "camera_coordinate_system": "opencv_c2w",
+      "camera_provenance": "protocol_adapter",
+      "camera_adapter": {
+        "kind": "protocol_adapter",
+        "source_receipt": "configs/backbones/bench1_native_inputs.receipt.json",
+        "source_receipt_sha256": "608d43b6cd059b991bc097aff41b763d652abc4b1762ff74e8c4af6cdead4b72"
+      },
+      "num_frame_per_block": 4,
+      "local_attn_size": 18,
+      "sink_size": 6
+    }
+  }
+}

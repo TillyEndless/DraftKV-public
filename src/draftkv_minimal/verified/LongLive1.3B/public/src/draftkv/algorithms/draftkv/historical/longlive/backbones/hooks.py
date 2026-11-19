@@ -1,0 +1,285 @@
+# SPDX-License-Identifier: Apache-2.0
+"""Algorithm registration and transactional adapter for native attention seams."""
+from __future__ import annotations
+from draftkv.streaming.external import external_symbol, external_path
+import ast
+from contextlib import contextmanager
+from dataclasses import dataclass
+import functools
+import inspect
+import textwrap
+import types
+from .catalog import ALGORITHM_REQUIREMENTS, algorithm_requirements
+from .contracts import ABI_VERSION, BackboneError, QKVContext
+from .failure_scope import bypass_failed_transaction_rollback
+
+@dataclass(frozen=True)
+class HookRegistration:
+    algorithm: str
+    factory: object
+    semantics: frozenset[str]
+    source_sha256: str
+    consumer: str
+    abi_version: int = ABI_VERSION
+
+class HookRegistry:
+    """Runtime registration is separate from the release's audited coverage.
+
+    A registration records the provider's semantic claims, NOT E2E acceptance.
+    The release catalog remains blocked until that provider is source audited.
+    """
+
+    def __init__(self):
+        self.registrations = {}
+
+    def register(self, registration: HookRegistration):
+        if registration.algorithm != 'draftkv':
+            raise BackboneError('BLOCKED_ALGORITHM_SEMANTICS', 'Only Full DraftKV is supported')
+        import re
+        algorithm = 'draftkv'
+        if 'draftkv' not in ALGORITHM_REQUIREMENTS:
+            raise BackboneError('BLOCKED_ALGORITHM_SEMANTICS', "Native uses the author's unmodified path")
+        required = frozenset(ALGORITHM_REQUIREMENTS['draftkv'])
+        expected = 'streaming_fa2'
+        if registration.abi_version != ABI_VERSION or not callable(registration.factory) or (not required <= registration.semantics) or ('streaming_fa2' != expected) or (not re.fullmatch('[a-f0-9]{64}', registration.source_sha256)):
+            raise BackboneError('BLOCKED_ALGORITHM_SEMANTICS', f"incomplete {'draftkv'} implementation declaration")
+        if 'draftkv' in self.registrations:
+            raise BackboneError('DUPLICATE_HOOK', 'draftkv')
+        self.registrations['draftkv'] = registration
+
+    def build(self, algorithm, host):
+        if 'draftkv' not in self.registrations:
+            raise BackboneError('BLOCKED_ALGORITHM_SEMANTICS', f"no original {'draftkv'} hook registered")
+        registration = self.registrations['draftkv']
+        required = frozenset(algorithm_requirements('draftkv', host.spec.backbone))
+        if not required <= registration.semantics:
+            raise BackboneError('BLOCKED_ALGORITHM_SEMANTICS', 'missing model-specific retrieval capabilities')
+        hook = registration.factory(host)
+        if any((not callable(getattr(hook, name, None)) for name in ('route', 'consume', 'after_attention'))):
+            raise BackboneError('BLOCKED_ALGORITHM_SEMANTICS', 'incomplete attention lifecycle')
+        owner = getattr(hook, 'owner', None)
+        if any((not callable(getattr(owner, name, None)) for name in ('begin_forward', 'history_ids', 'frame_pages', 'commit_clean', 'rollback'))):
+            raise BackboneError('BLOCKED_ALGORITHM_SEMANTICS', 'missing historical cache owner')
+        return (hook, registration)
+
+class HookSession:
+
+    def __init__(self, spec, hook, registration, trace, conditioning, sp, *, physical_sp=None, sp_mode='single'):
+        (self.spec, self.hook, self.registration) = (spec, hook, registration)
+        from .budgets import effective_budget
+        self.budget = effective_budget(spec, 'draftkv')
+        (self.trace, self.conditioning, self.sp) = (trace, conditioning, sp)
+        self.physical_sp = sp if physical_sp is None else physical_sp
+        self.sp_mode = sp_mode
+        self.active = None
+        self.pending = {}
+        self.poisoned = False
+        self.forward_sequence = 0
+        self.expected_layers = frozenset(range(spec.layers))
+
+    @contextmanager
+    def forward(self, *, start_frame, clean, timestep):
+        if self.active is not None or self.poisoned:
+            raise BackboneError('DIRTY_HISTORY', 'nested or previously failed forward')
+        self.forward_sequence += 1
+        self.active = dict(start_frame=start_frame, clean=clean, timestep=timestep)
+        self.trace('algorithm_forward_begin', forward_id=self.forward_sequence, start_frame=start_frame, clean=clean, attention_branch=self.conditioning.get('attention_branch'))
+        self.seen = set()
+        abandon = False
+        try:
+            self.hook.owner.begin_forward(**self.active)
+            yield
+            if self.pending or self.seen != self.expected_layers:
+                raise BackboneError('PARTIAL_NATIVE_WIRING', 'not all model layers completed attention')
+            if clean:
+                self.hook.owner.commit_clean(timestep=timestep)
+                self.trace('clean_commit', layers=self.spec.layers, start_frame=start_frame, forward_id=self.forward_sequence, attention_branch=self.conditioning.get('attention_branch'))
+            self.trace('algorithm_forward_complete', forward_id=self.forward_sequence, start_frame=start_frame, clean=clean, layers=self.spec.layers, attention_branch=self.conditioning.get('attention_branch'))
+        except BaseException as error:
+            self.poisoned = True
+            abandon = bypass_failed_transaction_rollback(error)
+            if not abandon:
+                self.hook.owner.rollback()
+                self.trace('rollback', start_frame=start_frame, forward_id=self.forward_sequence, attention_branch=self.conditioning.get('attention_branch'))
+            raise
+        finally:
+            if not abandon:
+                self.active = None
+                self.pending.clear()
+
+    def attend(self, layer, query, key, value, native_keys, native_values, raw_query, raw_key, frame_tokens, grid_sizes, freqs, native_fa2, native_cache=None, *, fixed_prefix=None, native_geometry=None):
+        if self.active is None or layer in self.seen or layer in self.pending:
+            raise BackboneError('PARTIAL_NATIVE_WIRING', 'attention outside a unique layer transaction')
+        context = QKVContext(layer, query, key, value, raw_query, raw_key, native_keys, native_values, self.active['start_frame'], frame_tokens, key.shape[1] // frame_tokens, self.budget.sink, self.budget.capacity, self.sp, grid_sizes, freqs, self.conditioning, self.active['clean'], self.active['timestep'], native_cache, self.forward_sequence, fixed_prefix, native_geometry)
+        if key.shape[1] % frame_tokens:
+            raise BackboneError('KV_CONSTRAINT', 'partial frame in native current tokens')
+        selection = self.hook.route(context)
+        selection.validate(context)
+        selected_history = selection.local_ids + selection.retrieved_ids
+        contains = getattr(self.hook.owner, 'contains_history_ids', None)
+        present = contains(layer, selected_history) if callable(contains) else set(selected_history) <= set(self.hook.owner.history_ids(layer))
+        if not present:
+            raise BackboneError('KV_CONSTRAINT', "selected history absent from this layer's cache owner")
+        self.pending[layer] = selection
+        native_calls = 0
+
+        def counted_native(q, k, v, *, head_index=None):
+            nonlocal native_calls
+            native_calls += 1
+            consumer = native_fa2
+            if self.sp_mode == 'query_sequence_replicated_kv' and selection.metadata.get('representation') in ('query_head_paged', 'frame_head_full'):
+                consumer = getattr(native_fa2, '_draftkv_unsharded', native_fa2)
+            if context.fixed_prefix is not None:
+                import torch
+                (pk, pv) = context.fixed_prefix
+                if head_index is not None:
+                    (pk, pv) = (pk[:, :, head_index:head_index + 1], pv[:, :, head_index:head_index + 1])
+                (k, v) = (torch.cat((pk, k), 1).contiguous(), torch.cat((pv, v), 1).contiguous())
+            return consumer(q, k, v)
+        result = self.hook.consume(context, selection, native_fa2)
+        observe = getattr(self.hook, 'observe_attention_result', None)
+        if observe is not None:
+            observe(context, selection, result, native_calls)
+        self.hook.after_attention(context, selection)
+        self.trace('attention', layer=layer, attention_branch=self.conditioning.get('attention_branch'), clean=context.clean, start_frame=context.start_frame, forward_id=context.forward_id, sink_ids=selection.sink_ids, local_ids=selection.local_ids, retrieved_ids=selection.retrieved_ids, current_ids=selection.current_ids, pages=[vars(page) for page in selection.pages], consumer='streaming_fa2', native_fa2_calls=native_calls, consumer_symbol=('flash_attn.flash_attn_func' if getattr(self.spec, 'family', None) == 'solarwm' else 'wan.modules.attention.flash_attention(version=2)') if native_calls else None)
+        del self.pending[layer]
+        self.seen.add(layer)
+        return result
+
+def _native_frontier_cache_identity(cache):
+    """Identify a native Wan stream across FSDP container and float casts.
+
+    Wan keeps its integer frontier tensors in place for a stream's lifetime.
+    FSDP preserves these tensors even when it rebuilds containers or casts K/V.
+    bind_model retains the first cache, so counter identities cannot be reused.
+    Independent CFG caches have independent counters, even with shared K/V.
+    """
+    if not isinstance(cache, (list, tuple)) or not cache:
+        raise BackboneError('SOURCE_ABI_DRIFT', 'native Wan stream needs a nonempty cache')
+    counters = []
+    for layer in cache:
+        if not isinstance(layer, dict):
+            raise BackboneError('SOURCE_ABI_DRIFT', 'native Wan cache layer must be a mapping')
+        pair = tuple((layer.get(name) for name in ('global_end_index', 'local_end_index')))
+        if any((str(getattr(t, 'dtype', None)) not in ('torch.int32', 'torch.int64') or not callable(getattr(t, 'numel', None)) or t.numel() != 1 for t in pair)):
+            raise BackboneError('SOURCE_ABI_DRIFT', 'native Wan stream needs integer frontier counters')
+        counters.append(tuple((id(t) for t in pair)))
+    return ('native_frontier_counters', tuple(counters))
+_draftkv_cache_identity = _native_frontier_cache_identity
+
+def bind_model(core, session):
+    if session.registration.algorithm != 'draftkv':
+        raise BackboneError('BLOCKED_ALGORITHM_SEMANTICS', 'Only Full DraftKV is supported')
+    'Bind the exact same model to one plugin. Called only inside an isolated worker.'
+    if callable(getattr(core, 'bind_attention', None)):
+        return core.bind_attention(session)
+    target = getattr(core.model, 'module', core.model)
+    if hasattr(target, 'get_base_model'):
+        target = target.get_base_model()
+    modules = [block.self_attn for block in target.blocks]
+    if len(modules) != core.spec.layers:
+        raise BackboneError('SOURCE_ABI_DRIFT', 'model block count changed')
+    current_only = True
+    if core.spec.family == 'lingbot' and getattr(core, 'pipeline', None) is not None:
+        from .draftkv_native import install_empty_native_cache
+        install_empty_native_cache(core.pipeline, core.spec.family)
+    for (layer, module) in enumerate(modules):
+        original = module.forward.__func__
+        native_fa2 = core.native_fa2
+
+        def bridge(attn, query, key, value, nk, nv, rq, rk, tokens, grid, freqs, cache, _layer=layer, _consumer=native_fa2):
+            (rq, rk) = (rq[:, :query.shape[1]], rk[:, :key.shape[1]])
+            return current_session[0].attend(_layer, query, key, value, nk, nv, rq, rk, int(tokens), grid, freqs, _consumer, cache)
+        from .draftkv_native import compile_current_only
+        compiled = compile_current_only(original, bridge, family=core.spec.family)
+        module.forward = types.MethodType(compiled, module)
+    from copy import copy, deepcopy
+    branch_name = getattr(core, 'plan', {}).get('request', {}).get('attention_branch', 'native')
+    (sessions, native_caches, current_session) = ({}, {}, [session])
+    module_states = {}
+    forward_sequence = [0]
+    camera = [None]
+    release_history = False
+    (rollout_sessions, released_rollout) = ({}, [()])
+
+    def activate(selected):
+        previous = current_session[0]
+        if previous is selected:
+            return
+        module_states[id(previous)] = [{name: value for (name, value) in vars(module).items() if name.startswith('_portable_')} for module in modules]
+        for (index, module) in enumerate(modules):
+            for name in list(vars(module)):
+                if name.startswith('_portable_'):
+                    delattr(module, name)
+            for (name, value) in module_states.get(id(selected), [{} for _ in modules])[index].items():
+                setattr(module, name, value)
+        current_session[0] = selected
+
+    def select_session(params):
+        if getattr(session, 'native_observer', False):
+            return session
+        cache = params.get('kv_cache')
+        key = id(cache) if cache is not None else None
+        key = _native_frontier_cache_identity(cache)
+        if key not in sessions:
+            branch = branch_name if not sessions else branch_name + ':native_cache_' + str(len(sessions))
+            if not sessions:
+                selected = session
+            else:
+                host = copy(core)
+                host.plan = deepcopy(core.plan)
+                host.plan.setdefault('request', {})['attention_branch'] = branch
+                hook = session.registration.factory(host)
+                selected = HookSession(session.spec, hook, session.registration, session.trace, host.plan['request'], session.sp, physical_sp=session.physical_sp, sp_mode=session.sp_mode)
+                if camera[0] is not None and callable(getattr(hook, 'set_camera_poses', None)):
+                    hook.set_camera_poses(camera[0])
+            selected.conditioning = dict(selected.conditioning, attention_branch=branch)
+            sessions[key] = selected
+            native_caches[key] = cache
+        selected = sessions[key]
+        activate(selected)
+        return selected
+    if callable(getattr(getattr(session, 'hook', None), 'set_camera_poses', None)):
+        from .camera_capture import capture_native_camera
+
+        def bind_camera(poses):
+            camera[0] = poses.detach().clone()
+            session.hook.set_camera_poses(camera[0])
+            for other in sessions.values():
+                if other is not session:
+                    other.hook.set_camera_poses(camera[0])
+        camera_source_sha = capture_native_camera(core.pipeline, bind_camera)
+        core.trace('worldkv_native_camera_seam', source_sha256=camera_source_sha, capture='absolute_interpolation_before_native_relative_plucker')
+    forward_name = '_forward_inference' if core.spec.family == 'longlive' and hasattr(target, '_forward_inference') else 'forward'
+    original_forward = getattr(target, forward_name)
+    forward_signature = inspect.signature(original_forward)
+
+    @functools.wraps(original_forward)
+    def forward(*args, **kwargs):
+        bound = forward_signature.bind(*args, **kwargs)
+        bound.apply_defaults()
+        params = bound.arguments
+        timestep = params.get('t')
+        frame_tokens = params.get('frame_seqlen')
+        if frame_tokens is None and core.spec.family == 'longlive' and (params.get('x') is not None):
+            inputs = params['x']
+            latent = inputs[0] if isinstance(inputs, (list, tuple)) and inputs else inputs
+            patch = target.patch_size
+            frame_tokens = latent.shape[-2] * latent.shape[-1] // (patch[1] * patch[2])
+        if timestep is None or not frame_tokens:
+            raise BackboneError('SOURCE_ABI_DRIFT', 'native t/frame_seqlen missing')
+        start = int(params.get('current_start', 0))
+        if start % int(frame_tokens):
+            raise BackboneError('KV_CONSTRAINT', 'unaligned absolute frame offset')
+        if modules:
+            from .draftkv_native import discard_native_history
+            discarded = discard_native_history(params.get('kv_cache'))
+            core.trace('draftkv_native_history_storage', policy='cpu_history_no_native_gpu_rolling_kv', layers=len(modules), native_kv_storage_bytes=0, discarded_input_storage_bytes=discarded)
+        selected = select_session(params)
+        selected.forward_sequence = forward_sequence[0]
+        try:
+            with selected.forward(start_frame=start // int(frame_tokens), clean=bool((timestep == 0).all()), timestep=timestep):
+                return original_forward(*args, **kwargs)
+        finally:
+            forward_sequence[0] = selected.forward_sequence
+    setattr(target, forward_name, forward)

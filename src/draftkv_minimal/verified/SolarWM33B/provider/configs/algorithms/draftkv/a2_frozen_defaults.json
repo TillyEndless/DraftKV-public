@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "52f7fd2935018e5ea7fade0aa9e89bf60c02e9c7",
+  "algorithm": "draftkv",
+  "default_retrieval_ablation": "full",
+  "camera_gate_mode": "hard_top_m_no_backfill",
+  "early_fix": false,
+  "temporal_floor": false,
+  "candidate_backfill": false,
+  "position_policy": "chrono_compact",
+  "attention": "B01_Streaming_FA2",
+  "models": {
+    "LingBot1.3B": {
+      "sink": 3,
+      "local": 0,
+      "retrieved": 11,
+      "current": 4,
+      "protect_recent_frames": 3,
+      "camera_top_chunks": 3
+    },
+    "LingBot14B": {
+      "sink": 3,
+      "local": 0,
+      "retrieved": 11,
+      "current": 4,
+      "protect_recent_frames": 3,
+      "camera_top_chunks": 3
+    },
+    "SolarWM33B": {
+      "sink": 0,
+      "local": 0,
+      "retrieved": 25,
+      "current": 5,
+      "protect_recent_frames": 5,
+      "camera_top_chunks": 7
+    }
+  },
+  "longlive_camera_a2_status": "not_supported_no_camera_geometry",
+  "experiment_overrides": "explicit_SHA_bound_campaign_only_not_release_defaults",
+  "evaluation_policy": "unchanged",
+  "camera_only": {
+    "configuration_status": "P3_2026-11-10_FIXED_TOTAL_BUDGET_CAMERA_RANKED_FRAME_TRIM",
+    "models": {
+      "LingBot1.3B": {
+        "sink": 3,
+        "local": 0,
+        "retrieved": 12,
+        "current": 4,
+        "protect_recent_frames": 3,
+        "camera_top_chunks": 3,
+        "capacity": 19
+      },
+      "LingBot14B": {
+        "sink": 3,
+        "local": 0,
+        "retrieved": 12,
+        "current": 4,
+        "protect_recent_frames": 3,
+        "camera_top_chunks": 3,
+        "capacity": 19
+      },
+      "SolarWM33B": {
+        "sink": 0,
+        "local": 0,
+        "retrieved": 35,
+        "current": 5,
+        "protect_recent_frames": 3,
+        "camera_top_chunks": 7,
+        "capacity": 40
+      }
+    },
+    "remote_selection_policy": "camera_rank_then_frame_id_truncate_after_reserving_P"
+  }
+}

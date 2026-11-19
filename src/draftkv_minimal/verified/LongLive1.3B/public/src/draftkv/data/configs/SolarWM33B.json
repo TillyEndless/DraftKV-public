@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "id": "SolarWM33B",
+  "algorithm": "draftkv",
+  "paper_row": "table2.18",
+  "table": "table2",
+  "source_profile": "solar",
+  "runtime_source_revision": "d1362f232fd77148c569edc7109dc64a79c17d99",
+  "source_identity_kind": "EXACT_FILE_HASHES_GIT_COMMIT_OBJECT_UNAVAILABLE",
+  "budget": {
+    "sink": 0,
+    "local": 0,
+    "retrieved": 25,
+    "current": 5,
+    "capacity": 30
+  },
+  "method": {
+    "importance_config": "configs/algorithms/draftkv/scorer.json",
+    "importance_config_sha256": "80b5c32051b84b43d8731e7743c519ef84947ece85a5499341bc61c505c2cc7e",
+    "packing_policy": "chronological_frame_id",
+    "profile_admission": "runtime",
+    "host_pages_policy": "quality",
+    "protect_recent_frames": 5,
+    "retrieval_granularity": "block",
+    "camera_gate_mode": "hard_top_m_no_backfill",
+    "camera_top_chunks": 7,
+    "position_policy": "chrono_compact"
+  },
+  "historical_sp": 8,
+  "runtime_topologies": {
+    "historical": 8
+  },
+  "evaluation": {
+    "quality": "orbia",
+    "revisit": true
+  },
+  "native_worker": "draftkv.backbones.worker",
+  "required_components": [
+    "Draft Refinement",
+    "Streaming CG-Attention",
+    "Draft Grounding"
+  ],
+  "grounding_scope": "BILATERAL_FRUSTUM_TOP_M_NO_BACKFILL"
+}

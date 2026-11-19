@@ -1,0 +1,18 @@
+{
+  "LongLive1.3B": {
+    "public_commit": "970a7b887fc8492dafb8b9ac630a635465b18191",
+    "status": "EXISTING_NATIVE_DURATION_GENERATION_AND_SUMMARY"
+  },
+  "LingBot1.3B": {
+    "public_commit": "5fb858a1a7be5e5fc6f48ab5dda116edc099b2c3",
+    "status": "EXISTING_NATIVE_DURATION_GENERATION_AND_SUMMARY"
+  },
+  "LingBot14B": {
+    "public_commit": "ae6275734eff7dfddea2df0d5c679f576394d88e",
+    "status": "EXISTING_NATIVE_DURATION_GENERATION_AND_SUMMARY"
+  },
+  "SolarWM33B": {
+    "public_commit": "3d88f83c04be34eee42a93ffe9d9553973c59c66",
+    "status": "GENERATION_COMPLETE_SUMMARY_UNVERIFIED"
+  }
+}

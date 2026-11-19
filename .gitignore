@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.DS_Store
+build/
+dist/
+outputs/
+assets.local.json
+*.safetensors
+*.pt
+*.pth
+*.mp4
+
+.release-private/
+
+.venv/

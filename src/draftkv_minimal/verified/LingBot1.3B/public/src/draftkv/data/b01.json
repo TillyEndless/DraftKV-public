@@ -1,0 +1,13 @@
+{
+  "name": "B01 Streaming Attention",
+  "version": "B01_pipeline_autotune_v2_20261018",
+  "source_identity": "EXACT_ARCHIVE_BYTES_NOT_A_CLEAN_GIT_COMMIT",
+  "source_archive_sha256": "162cf8975c816bf9fe4bcb708326ecf968bffda0f59c86ba7c58f1d80e12db6c",
+  "source_archive_bytes": 728308,
+  "original_manifest_sha256": "c3973579a2f5b71da9e7d73430a15d83ac0f62a1a447d3de708e92cdb6e8ed4e",
+  "runtime_source_files": 195,
+  "distribution_status": "EXTERNAL_RUNTIME_DEPENDENCY_REQUIRED",
+  "bundled": false,
+  "public_legal_acquisition_url": null,
+  "acquisition_limitation": "No public, legally cleared acquisition route was located. Obtain original bytes and permission directly from the rights holder. No automatic download or attention substitution is provided."
+}

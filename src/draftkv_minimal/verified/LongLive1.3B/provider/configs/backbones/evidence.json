@@ -1,0 +1,120 @@
+{
+  "weights_loaded": false,
+  "gpu_executed": false,
+  "records": [
+    {
+      "benchmark": "Bench1",
+      "backbone": "LongLive 1.3B",
+      "relative_path": "longlive/v1_smoke/longlive_memflow044_60s_v1_separate_gpu_vae.mp4",
+      "sha256": "df8e699cfc99ae4d529e32b885cd8ffcad55bd7421ecb66f6c515762d220a44c",
+      "matches_inherited_sha": true,
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "width": 832,
+            "height": 480,
+            "avg_frame_rate": "16/1",
+            "nb_read_frames": "957"
+          }
+        ]
+      },
+      "scope": "T_ONLY_SIX_PROMPT_240_LATENT",
+      "sp": 1,
+      "latent_frames": 240,
+      "release_e2e": false
+    },
+    {
+      "benchmark": "Bench2",
+      "backbone": "LingBot 1.3B",
+      "relative_path": "lingbot13/e2e_v1_sp4_93f_gpu0_2_3_4/lingbot13_v1_sp4_93f.gpu_decode.mp4",
+      "sha256": "e124d6e07934d1ec098e62df5643d428e5aabc0c703b14a08cc62e5ab128ded8",
+      "matches_inherited_sha": true,
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "width": 832,
+            "height": 464,
+            "avg_frame_rate": "16/1",
+            "nb_read_frames": "93"
+          }
+        ]
+      },
+      "scope": "IMAGE_CAMERA_93_FRAME_SMOKE",
+      "sp": 4,
+      "latent_frames": 24,
+      "release_e2e": false
+    },
+    {
+      "benchmark": "Bench2",
+      "backbone": "LingBot 14B",
+      "relative_path": "lingbot14/e2e_v1_sp8_81f/lingbot14_v1_81frames.mp4",
+      "sha256": "62c72e45a6f705c0107b432ce9607ae50ca9b7147a14ef3b80f43106b8b0ffd9",
+      "matches_inherited_sha": true,
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "width": 832,
+            "height": 464,
+            "avg_frame_rate": "16/1",
+            "nb_read_frames": "77"
+          }
+        ]
+      },
+      "scope": "IMAGE_CAMERA_REQUEST81_ENCODE77",
+      "sp": 8,
+      "latent_frames": 20,
+      "release_e2e": false
+    }
+  ],
+  "scope": "INHERITED_DIAGNOSTIC_ONLY_NOT_RELEASE_E2E",
+  "origin": "4090:${DRAFTKV_HISTORY_ROOT}",
+  "reports": [
+    {
+      "root": "4090:${DRAFTKV_HISTORY_ROOT}",
+      "path": "V1_NON_WAN_FIVE_GROUPS_ACCEPTANCE_20261026.json",
+      "sha256": "c5d7a05fcc2dbced9f5df87d6bbbb395871d82a0c9168865246990fb91fd8764",
+      "scope": "INHERITED_ONLY_NOT_RERUN"
+    },
+    {
+      "root": "4090:${DRAFTKV_HISTORY_ROOT}",
+      "path": "longlive/PATCH_MANIFEST.json",
+      "sha256": "65ca9ad7e02eb84eb227cb7d0dca4e63baddedcfd30b2f6c543721bc3bbff134",
+      "scope": "INHERITED_ONLY_NOT_RERUN"
+    },
+    {
+      "root": "4090:${DRAFTKV_HISTORY_ROOT}",
+      "path": "lingbot13/V1_B01_SELECTED_GPU_GOLDEN.json",
+      "sha256": "26f7815d4f0217488eb1b6d7702e66ee9fafa61d13968d404cb959986d2f77fc",
+      "scope": "INHERITED_ONLY_NOT_RERUN"
+    },
+    {
+      "root": "4090:${DRAFTKV_HISTORY_ROOT}",
+      "path": "lingbot13/V1_NATIVE_ROUTE_GPU_GOLDEN.json",
+      "sha256": "5ac93731588f121bd7e039f11ff80b3c58092b119a799fa386e2ee0f1ca15c2b",
+      "scope": "INHERITED_ONLY_NOT_RERUN"
+    },
+    {
+      "root": "4090:${DRAFTKV_HISTORY_ROOT}",
+      "path": "lingbot14/V1_B01_SELECTED_GPU_GOLDEN.json",
+      "sha256": "8469a23ee3c3c172c76287829200ae1a8355a3d689ba4f4939b30e7c9e41aa05",
+      "scope": "INHERITED_ONLY_NOT_RERUN"
+    },
+    {
+      "root": "4090:${DRAFTKV_HISTORY_ROOT}",
+      "path": "lingbot14/V1_NATIVE_ROUTE_GPU_GOLDEN.json",
+      "sha256": "c48f3d69a32f7559411e360501c478b5a2adbd31680a327ddd1ab03aac691b2b",
+      "scope": "INHERITED_ONLY_NOT_RERUN"
+    },
+    {
+      "root": "4090:${DRAFTKV_HISTORY_ROOT}",
+      "path": "lingbot14_sixprompt/bench1_6prompt_sp8_smoke/STAGED_ACCEPTANCE.json",
+      "sha256": "74804e635398f8e587ade7937f3b3e174936e3c14858cc19d1e97affd2abb2c8",
+      "scope": "INHERITED_ONLY_NOT_RERUN"
+    }
+  ],
+  "official_dataset_e2e": false,
+  "orbia_conditioning_inherited_smokes": "C01_DERIVED_NOT_OFFICIAL_ORBIA_ACCEPTANCE"
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "profile_id": "lingbot14b-sp8-bf16-stream-20261102",
+  "selection": {
+    "benchmark": "bench2",
+    "backbone": "LingBot14B",
+    "algorithm": "draftkv",
+    "sp": 8
+  },
+  "invocation_flag": "--draftkv-sp8-profile",
+  "frozen_legacy_ref": "draftkv-legacy-pre-sp8-lowmem-20261102",
+  "frozen_legacy_commit": "c70dbc86a4f22eb347f69263a9a4659d23d59470",
+  "resource_policy": {
+    "model_load": "strict_tensorwise_fp32_to_bf16",
+    "fsdp": "FULL_SHARD",
+    "scope": "constructor_only",
+    "draftkv_plugin": "unchanged",
+    "phase_profile": "KVRAG_PROFILE_OUTPUT"
+  },
+  "performance_provenance": {
+    "system": "RTX4090x8 SP8",
+    "benchmark_case": "ORBIA case_0051",
+    "native_steady_chunk_seconds": 20.18,
+    "draftkv_mature_chunk_seconds_approx": 22.5,
+    "draftkv_relative_latency_approx": 1.12,
+    "measurement_scope": "generation only",
+    "remote_retrieval_event_rate_percent": 4.2,
+    "caveats": [
+      "single case dominated by recent history",
+      "separate frozen profile checkout",
+      "final video postprocess stalled; no full E2E pass",
+      "no bytewise quality equivalence certification"
+    ]
+  }
+}

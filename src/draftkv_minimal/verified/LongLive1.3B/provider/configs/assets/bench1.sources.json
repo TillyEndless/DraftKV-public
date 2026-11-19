@@ -1,0 +1,37 @@
+{
+  "schema": "draftkv.bench1.assets.v1",
+  "cache_default": "~/.cache/draftkv",
+  "assets": {
+    "wan21-t2v-1.3b": {
+      "kind": "huggingface_model",
+      "id": "Wan-AI/Wan2.1-T2V-1.3B",
+      "revision": "37ec512624d61f7aa208f7ea8140a131f93afc9a",
+      "role": "LongLive original base Wan2.1"
+    },
+    "longlive-1.3b": {
+      "kind": "huggingface_model",
+      "id": "Efficient-Large-Model/LongLive-1.3B",
+      "revision": "cda9138d93872ef109d9a74c270184eb3a5acc6e",
+      "role": "LongLive frozen fine-tune"
+    },
+    "lingbot-v2-14b": {
+      "kind": "huggingface_model",
+      "id": "robbyant/lingbot-world-v2-14b-causal-fast",
+      "revision": "5c33dd40b213598c418fd25bff30fdbd23fd38a7",
+      "role": "LingBot causal-fast model"
+    },
+    "vbench-long": {
+      "kind": "git_repo",
+      "url": "https://github.com/Vchitect/VBench.git",
+      "revision": "fd18b3d055cb0fc6f066ca90fe2c3c8cbb698490",
+      "subdirectory": "vbench2_beta_long",
+      "role": "Official evaluator code, install separately"
+    },
+    "penguin98": {
+      "kind": "local_frozen",
+      "manifest": "configs/assets/bench1_penguin98.selected.json",
+      "role": "Locally generated 98 case image assets plus Penguin prompts",
+      "official_download_verified": false
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "paper": "Addressable Memory for Video World Models",
+  "paper_version": "arXiv:2608.07408v1",
+  "project_url": "https://research.nvidia.com/labs/sil/projects/WorldTrace/",
+  "implementation_provenance": "paper-based adapted reproduction",
+  "preset": "table2-budget-matched",
+  "tau": 0.1,
+  "detector_aggregation": "spatial_mean_per_head_l2_cosine_then_mean_heads_layers",
+  "seed_first_frame": true,
+  "detector_provenance": "user_authorized_fixed_adaptation_2026-10-27_not_an_author_default_not_benchmark_tuned",
+  "canonical_storage_dtype": "float32",
+  "update_cadence": "once_per_completed_clean_chunk_per_latent_frame",
+  "author_default": {
+    "landmark_slots": 4,
+    "recent_slots": 2
+  },
+  "training_class": "TF-A",
+  "selection_type": "scene-transition",
+  "memory_type": "episodic-landmark",
+  "position_policy": "slot-rank-virtual-temporal",
+  "eviction": "fifo",
+  "attention_backend": "native-fa2",
+  "reproduction_class": "TF-A adapted reproduction",
+  "tau_choice_basis": "predeclared cosine_similarity_below_0.90_no_model_or_data_calibration",
+  "paper_unspecified_adaptation": [
+    "tau",
+    "detector_aggregation",
+    "seed_first_frame",
+    "clean_forward_cadence_resolution",
+    "warmup_nonnegative_slot_ranks",
+    "host_budget_and_current_chunk_mapping"
+  ]
+}

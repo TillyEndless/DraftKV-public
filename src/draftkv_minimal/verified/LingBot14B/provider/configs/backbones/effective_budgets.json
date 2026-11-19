@@ -1,0 +1,471 @@
+{
+  "schema_version": 1,
+  "scope": "video_attention_only_fixed_condition_prefix_excluded",
+  "author_policies": {
+    "shadowkv": {
+      "policy_name": "author_ratio_inspired_minimum_nonzero_frame",
+      "official_sparse_ratio": 0.015625,
+      "video_policy": "minimum_nonzero_frame_retrieval",
+      "retrieved_frames": 1,
+      "physical_unit": "latent_frame",
+      "local_fill": true,
+      "frame_aggregation": "sum_author_landmark_probability_mass",
+      "rank": 160
+    },
+    "infinigen": {
+      "policy_name": "author_cap_preserving_dynamic_frame",
+      "official_cap_ratio": 0.2,
+      "video_cap_mode": "floor_W_frame_cap",
+      "dynamic": true,
+      "partial_ratio": 0.1,
+      "alpha": 1,
+      "frame_aggregation": "max_token_partial_score",
+      "count_policy": "threshold_frames_mean_over_global_heads_capped_no_fill"
+    },
+    "infllm": {
+      "basis": "official n_init:n_retrieved:n_local = 1:16:32 (n_init=128, topk=16 x block128, n_local=4096)",
+      "mode": "historical_frame_ratio_scaled",
+      "historical_ratio": {
+        "retrieved": 16,
+        "sink": 1,
+        "local": 32
+      },
+      "policy_name": "author_allocation_ratio_preserving",
+      "rounding": "reserve_one_sink_then_split_remaining_R_L_1_to_2"
+    },
+    "freekv": {
+      "basis": "official README default budget=2048,sink=512,recent=512 -> retrieved:sink:recent=2:1:1",
+      "mode": "historical_frame_ratio_scaled",
+      "historical_ratio": {
+        "retrieved": 2,
+        "sink": 1,
+        "local": 1
+      },
+      "recipe": "README_default_2_1_1",
+      "policy_name": "author_default_budget_ratio_preserving",
+      "rounding": "largest_remainder_ties_retrieved_local_sink",
+      "physical_unit": "author_page_frame_equivalent"
+    },
+    "worldkv": {
+      "basis": "official W21 effective attention: sink3 + retrieved12eq (18 raw C3 at keep_ratio=.5) + recent6",
+      "mode": "effective_frame_ratio_scaled",
+      "effective_ratio": {
+        "sink": 1,
+        "retrieved_equivalent": 4,
+        "recent_including_current": 2
+      },
+      "keep_ratio": 0.5,
+      "policy_name": "author_effective_budget_ratio_preserving",
+      "source_unit": "native_chunk",
+      "effective_unit": "compressed_frame_equivalent"
+    },
+    "worldtrace-landmark": {
+      "policy_name": "worldtrace_landmark_frame_ratio_2_to_1",
+      "basis": "WorldTrace arXiv:2608.07408v1 Sec.4.3/App.G.3 N_L4:N_R2",
+      "physical_unit": "latent_frame",
+      "preset": "table2-budget-matched",
+      "rounding": "min_abs_landmark_over_recent_minus_2_then_motion_continuity_then_landmarks",
+      "mandatory_native_condition_prefix": "preserved_outside_video_budget",
+      "native_video_sink": "configurable_retention_replaced_by_landmarks",
+      "archive": "bounded_landmark_and_recent_only",
+      "training_class": "TF-A",
+      "selection_type": "scene-transition",
+      "memory_type": "episodic-landmark",
+      "position_policy": "slot-rank-virtual-temporal",
+      "eviction": "fifo",
+      "attention_backend": "native-fa2"
+    }
+  },
+  "backbones": {
+    "LongLive1.3B": {
+      "native": {
+        "capacity": 12,
+        "retrieved": 0,
+        "sink": 3,
+        "local": 6,
+        "current": 3
+      },
+      "draftkv": {
+        "capacity": 12,
+        "retrieved": 6,
+        "sink": 3,
+        "local": 0,
+        "current": 3
+      },
+      "shadowkv": {
+        "capacity": 12,
+        "retrieved": 1,
+        "sink": 0,
+        "local": 8,
+        "current": 3,
+        "policy_name": "author_ratio_inspired_minimum_nonzero_frame",
+        "retrieval_unit": "frame",
+        "dynamic_retrieval": false
+      },
+      "infinigen": {
+        "capacity": 12,
+        "retrieved": 9,
+        "sink": 0,
+        "local": 0,
+        "current": 3,
+        "policy_name": "longlive_w12_dynamic_frame_retrieval_cap9",
+        "retrieval_unit": "frame",
+        "dynamic_retrieval": true
+      },
+      "infllm": {
+        "capacity": 12,
+        "retrieved": 3,
+        "sink": 1,
+        "local": 5,
+        "current": 3,
+        "policy_name": "author_allocation_ratio_preserving",
+        "retrieval_unit": "block",
+        "dynamic_retrieval": false
+      },
+      "freekv": {
+        "capacity": 12,
+        "retrieved": 5,
+        "sink": 2,
+        "local": 2,
+        "current": 3,
+        "policy_name": "author_default_budget_ratio_preserving",
+        "retrieval_unit": "frame",
+        "dynamic_retrieval": false
+      },
+      "deep-forcing": {
+        "capacity": 12,
+        "retrieved": 3,
+        "sink": 5,
+        "local": 1,
+        "current": 3,
+        "policy_name": "longlive_w12_deep_s5_l1_r3",
+        "retrieval_unit": "equivalent_frame"
+      },
+      "future-forcing": {
+        "capacity": 10,
+        "retrieved": 7,
+        "sink": 0,
+        "local": 0,
+        "current": 3,
+        "policy_name": "author_primary_frame_equivalent",
+        "retrieval_unit": "equivalent_frame"
+      },
+      "worldtrace-landmark": {
+        "capacity": 12,
+        "retrieved": 0,
+        "sink": 0,
+        "local": 5,
+        "current": 3,
+        "landmark_slots": 4,
+        "retrieval_unit": "landmark",
+        "policy_name": "longlive_w12_landmark4_local5"
+      }
+    },
+    "LingBot1.3B": {
+      "native": {
+        "capacity": 18,
+        "retrieved": 0,
+        "sink": 6,
+        "local": 8,
+        "current": 4
+      },
+      "draftkv": {
+        "capacity": 18,
+        "retrieved": 11,
+        "sink": 3,
+        "local": 0,
+        "current": 4
+      },
+      "shadowkv": {
+        "capacity": 18,
+        "retrieved": 1,
+        "sink": 0,
+        "local": 13,
+        "current": 4,
+        "policy_name": "author_ratio_inspired_minimum_nonzero_frame",
+        "retrieval_unit": "frame",
+        "dynamic_retrieval": false
+      },
+      "infinigen": {
+        "capacity": 18,
+        "retrieved": 4,
+        "sink": 6,
+        "local": 4,
+        "current": 4,
+        "policy_name": "lingbot13b_explicit_s6_l4_r4_v1",
+        "retrieval_unit": "frame",
+        "dynamic_retrieval": true
+      },
+      "infllm": {
+        "capacity": 18,
+        "retrieved": 4,
+        "sink": 1,
+        "local": 9,
+        "current": 4,
+        "policy_name": "author_allocation_ratio_preserving",
+        "retrieval_unit": "block",
+        "dynamic_retrieval": false
+      },
+      "freekv": {
+        "capacity": 18,
+        "retrieved": 7,
+        "sink": 3,
+        "local": 4,
+        "current": 4,
+        "policy_name": "author_default_budget_ratio_preserving",
+        "retrieval_unit": "frame",
+        "dynamic_retrieval": false
+      },
+      "worldkv": {
+        "capacity": 18,
+        "retrieved": 4,
+        "sink": 6,
+        "local": 4,
+        "current": 4,
+        "keep_ratio": 0.3333333333333333,
+        "retrieved_equivalent": true,
+        "policy_name": "lingbot13b_recommended_20261104_worldkv",
+        "retrieval_unit": "equivalent_frame",
+        "dynamic_retrieval": false,
+        "retrieved_source_frames": 8,
+        "retrieved_equivalent_frames": 4,
+        "compressed_equivalent_per_chunk": 2.0
+      },
+      "worldtrace-landmark": {
+        "capacity": 18,
+        "retrieved": 0,
+        "sink": 0,
+        "local": 10,
+        "current": 4,
+        "landmark_slots": 4,
+        "retrieval_unit": "landmark",
+        "policy_name": "lingbot13b_recommended_20261104_worldtrace_landmark"
+      },
+      "deep-forcing": {
+        "capacity": 18,
+        "sink": 8,
+        "local": 4,
+        "retrieved": 2,
+        "current": 4,
+        "policy_name": "lingbot13b_recommended_20261104_deep_forcing",
+        "retrieval_unit": "equivalent_frame"
+      },
+      "future-forcing": {
+        "capacity": 18,
+        "sink": 0,
+        "local": 0,
+        "retrieved": 14,
+        "current": 4,
+        "policy_name": "lingbot13b_recommended_20261104_future_forcing",
+        "retrieval_unit": "equivalent_frame"
+      }
+    },
+    "LingBot14B": {
+      "native": {
+        "capacity": 18,
+        "retrieved": 0,
+        "sink": 6,
+        "local": 8,
+        "current": 4
+      },
+      "draftkv": {
+        "capacity": 18,
+        "retrieved": 11,
+        "sink": 3,
+        "local": 0,
+        "current": 4
+      },
+      "shadowkv": {
+        "capacity": 18,
+        "retrieved": 4,
+        "sink": 6,
+        "local": 4,
+        "current": 4,
+        "policy_name": "lingbot14b_explicit_s6_l4_r4_v1",
+        "retrieval_unit": "frame",
+        "dynamic_retrieval": false
+      },
+      "infinigen": {
+        "capacity": 18,
+        "retrieved": 4,
+        "sink": 0,
+        "local": 4,
+        "current": 4,
+        "policy_name": "lingbot14b_recommended_20261104_infinigen",
+        "retrieval_unit": "frame",
+        "dynamic_retrieval": true
+      },
+      "infllm": {
+        "capacity": 18,
+        "retrieved": 4,
+        "sink": 6,
+        "local": 4,
+        "current": 4,
+        "policy_name": "lingbot14b_explicit_s6_l4_r4_v1",
+        "retrieval_unit": "block",
+        "dynamic_retrieval": false
+      },
+      "freekv": {
+        "capacity": 18,
+        "retrieved": 4,
+        "sink": 6,
+        "local": 4,
+        "current": 4,
+        "policy_name": "lingbot14b_explicit_s6_l4_r4_v1",
+        "retrieval_unit": "frame",
+        "dynamic_retrieval": false
+      },
+      "worldkv": {
+        "capacity": 18,
+        "retrieved": 4,
+        "sink": 6,
+        "local": 4,
+        "current": 4,
+        "keep_ratio": 0.3333333333333333,
+        "retrieved_equivalent": true,
+        "policy_name": "lingbot14b_explicit_s6_l4_r4_v1",
+        "retrieval_unit": "equivalent_frame",
+        "dynamic_retrieval": false,
+        "retrieved_source_frames": 8,
+        "retrieved_equivalent_frames": 4,
+        "compressed_equivalent_per_chunk": 2.0
+      },
+      "worldtrace-landmark": {
+        "capacity": 18,
+        "retrieved": 0,
+        "sink": 0,
+        "local": 10,
+        "current": 4,
+        "landmark_slots": 4,
+        "retrieval_unit": "landmark",
+        "policy_name": "lingbot14b_recommended_20261104_worldtrace_landmark"
+      },
+      "deep-forcing": {
+        "capacity": 18,
+        "retrieved": 2,
+        "sink": 8,
+        "local": 4,
+        "current": 4,
+        "policy_name": "lingbot14b_recommended_20261104_deep_forcing",
+        "retrieval_unit": "equivalent_frame"
+      },
+      "future-forcing": {
+        "capacity": 18,
+        "retrieved": 14,
+        "sink": 0,
+        "local": 0,
+        "current": 4,
+        "policy_name": "lingbot14b_recommended_20261104_future_forcing",
+        "retrieval_unit": "equivalent_frame"
+      }
+    },
+    "SolarWM33B": {
+      "native": {
+        "capacity": 30,
+        "retrieved": 0,
+        "sink": 0,
+        "local": 25,
+        "current": 5
+      },
+      "draftkv": {
+        "capacity": 30,
+        "retrieved": 25,
+        "sink": 0,
+        "local": 0,
+        "current": 5
+      },
+      "shadowkv": {
+        "capacity": 30,
+        "retrieved": 20,
+        "sink": 0,
+        "local": 5,
+        "current": 5,
+        "policy_name": "solarwm33b_explicit_w30_v1",
+        "retrieval_unit": "frame",
+        "dynamic_retrieval": false
+      },
+      "infinigen": {
+        "capacity": 30,
+        "retrieved": 25,
+        "sink": 0,
+        "local": 0,
+        "current": 5,
+        "policy_name": "solarwm33b_explicit_w30_v1",
+        "retrieval_unit": "frame",
+        "dynamic_retrieval": true
+      },
+      "infllm": {
+        "capacity": 30,
+        "retrieved": 19,
+        "sink": 0,
+        "local": 6,
+        "current": 5,
+        "block_size": 252,
+        "policy_name": "solarwm33b_explicit_w30_v1",
+        "retrieval_unit": "block",
+        "dynamic_retrieval": false
+      },
+      "freekv": {
+        "capacity": 30,
+        "retrieved": 15,
+        "sink": 5,
+        "local": 5,
+        "current": 5,
+        "policy_name": "solarwm33b_explicit_w30_v1",
+        "retrieval_unit": "frame",
+        "dynamic_retrieval": false
+      },
+      "worldkv": {
+        "capacity": 30,
+        "retrieved": 3,
+        "sink": 5,
+        "local": 15,
+        "current": 5,
+        "keep_ratio": 0.5,
+        "retrieved_equivalent": true,
+        "policy_name": "solarwm33b_explicit_s5_l15_r3eq_v2",
+        "retrieval_unit": "equivalent_frame",
+        "dynamic_retrieval": false,
+        "retrieved_source_frames": 5,
+        "retrieved_equivalent_frames": 3,
+        "compressed_equivalent_per_chunk": 3.0
+      },
+      "worldtrace-landmark": {
+        "capacity": 30,
+        "retrieved": 0,
+        "sink": 0,
+        "local": 15,
+        "current": 5,
+        "landmark_slots": 10,
+        "retrieval_unit": "landmark",
+        "policy_name": "solarwm33b_explicit_s0_l15_n10_v2"
+      },
+      "deep-forcing": {
+        "capacity": 30,
+        "sink": 13,
+        "local": 3,
+        "retrieved": 9,
+        "current": 5,
+        "policy_name": "solarwm33b_recommended_20261104_deep_forcing",
+        "retrieval_unit": "equivalent_frame"
+      },
+      "future-forcing": {
+        "capacity": 30,
+        "sink": 0,
+        "local": 0,
+        "retrieved": 25,
+        "current": 5,
+        "policy_name": "solarwm33b_recommended_20261104_future_forcing",
+        "retrieval_unit": "equivalent_frame"
+      }
+    }
+  },
+  "granularity_policy": {
+    "formal_video_retrieval": "latent_frame",
+    "exceptions": {
+      "infllm": "author_blocks_with_frame_domain_limits",
+      "freekv": "author_pages_with_frame_equivalent_token_cap",
+      "worldkv": "native_source_chunks_with_compressed_frame_equivalent_cap"
+    }
+  }
+}

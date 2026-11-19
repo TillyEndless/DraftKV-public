@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "version": "paper-efficiency-v2",
+  "measurement_protocol": "paper-efficiency",
+  "status": "PARTIALLY_RECOVERED",
+  "backbones": {
+    "LongLive1.3B": {
+      "status": "PROTOCOL_UNVERIFIED",
+      "paper_sp": null,
+      "paper_source_sha": null,
+      "paper_memory_scope": "PROTOCOL_UNVERIFIED",
+      "paper_input": null,
+      "historical_evaluator_sha256": null,
+      "paper_fps_denominator": "diffusion-only wall time (model_only_fps); must not relabel decode-inclusive throughput",
+      "decode_scope": "included, caller video encode excluded"
+    },
+    "LingBot1.3B": {
+      "status": "VERIFIED_BOUNDARY",
+      "paper_sp": 1,
+      "paper_source_sha": "94adf3cee881a8e4f50b560ad01a08ded384bf41",
+      "paper_memory_scope": "NVML_WHOLE_DEVICE_SAMPLED",
+      "paper_input": "H200_WorldAtlas_case144_seed42_480frame_SP1",
+      "historical_evaluator_sha256": "7c024eeb15dee9fea54d0dd545daabaa00d26ae85ef8edbb9a3a5bc91aed1b02",
+      "paper_fps_denominator": "diffusion-only wall time (model_only_fps); must not relabel decode-inclusive throughput",
+      "decode_scope": "included, caller video encode excluded"
+    },
+    "LingBot14B": {
+      "status": "VERIFIED_BOUNDARY",
+      "paper_sp": 1,
+      "paper_source_sha": "89120f6c04304df86b3902f861d1e80213f4aa98",
+      "paper_memory_scope": "PYTORCH_PROCESS_ALLOCATED",
+      "paper_input": "H200_WorldAtlas_case144_seed42_480frame_SP1",
+      "historical_evaluator_sha256": "c0ba9406a911629b037781497db875b429021c50c9bc7197a46b9f278b73411b",
+      "paper_fps_denominator": "diffusion-only wall time (model_only_fps); must not relabel decode-inclusive throughput",
+      "decode_scope": "included, caller video encode excluded"
+    },
+    "SolarWM33B": {
+      "status": "VERIFIED_BOUNDARY",
+      "paper_sp": 1,
+      "paper_source_sha": "89120f6c04304df86b3902f861d1e80213f4aa98",
+      "paper_memory_scope": "PYTORCH_PROCESS_ALLOCATED",
+      "paper_input": "H200_WorldAtlas_case144_seed42_480frame_SP1",
+      "historical_evaluator_sha256": "c0ba9406a911629b037781497db875b429021c50c9bc7197a46b9f278b73411b",
+      "paper_fps_denominator": "diffusion-only wall time (model_only_fps); must not relabel decode-inclusive throughput",
+      "decode_scope": "included, with native video write"
+    }
+  },
+  "metrics": {
+    "generation_e2e_s": {
+      "unit": "s",
+      "scope": "CUDA fence before native generate through fence after return; after model load; decode included; Solar native video writing included",
+      "aggregation": "max rank wall interval per case, sum cases",
+      "warmup": "ORBIA native extensions prepared before model construction outside E2E. Runtime cold initialization remains included; no subtraction. Exact external CompilationWatch records whether remaining compilation prevents paper latency admission. LongLive observer not recovered."
+    },
+    "diffusion_s": {
+      "unit": "s",
+      "scope": "Exact native calls to diffusion_start/end, before autoregressive diffusion and before decode; synchronized source marker fences",
+      "aggregation": "max rank per case; sum cases; model_only_fps uses counted frames divided by this interval",
+      "status": "BOUNDARIES_FROM_PINNED_NATIVE_MARKERS_WHEN_EXECUTED; null otherwise"
+    },
+    "throughput_fps": {
+      "unit": "display frames/s",
+      "numerator": "ffprobe counted output video frames",
+      "denominator": "generation_e2e_s including native decode; not historical model_only_fps"
+    },
+    "fetch_attention_ms": {
+      "unit": "ms",
+      "scope": "Per attention call CUDA envelope from prepared KV before producer/consumer submission through completion; native grouped routes exclude route construction and measure ready to consumer done",
+      "aggregation": "sum calls/layers/steps on each rank; max rank total; sum cases",
+      "status": "PROTOCOL_UNVERIFIED: exact paper microbenchmark input/denominator cannot be established from E2E records"
+    },
+    "h2d_transfer_ms": {
+      "unit": "ms",
+      "scope": "Producer stream begin/end event envelope, may include frontier/slot/rotation waits; not active DMA-only time",
+      "aggregation": "sum observed transfer envelopes per rank; max rank total; do not add to fetch_attention_ms or E2E",
+      "status": "PROTOCOL_UNVERIFIED: event envelope is not disjoint DMA activity"
+    },
+    "h2d_bytes": {
+      "unit": "bytes",
+      "scope": "Actual selected native producer payload byte counters; resident-only path contributes measured zero",
+      "aggregation": "sum per rank; report max rank total with per-rank values retained; not cross-rank total"
+    },
+    "receive_buffer_mib": {
+      "unit": "MiB (2^20 bytes)",
+      "scope": "Actual receiving/staging tensor capacities, excluding model weights and allocator reserve",
+      "aggregation": "maximum observed capacity over calls/cases/ranks; no addition of reused buffers"
+    },
+    "peak_gpu_memory_gib": {
+      "unit": "GiB (2^30 bytes)",
+      "scope": "L13 paper NVML whole-device sampled peak; others process PyTorch allocator peak; Table1 paper scope unverified",
+      "aggregation": "per-rank values retained; peak-of-ranks across cases",
+      "sampling": "NVML device UUID, 50ms requested; whole device includes other processes; no guessed device mapping"
+    },
+    "peak_reserved_memory_gib": {
+      "unit": "GiB",
+      "scope": "torch.cuda.max_memory_reserved since reset immediately before native generate",
+      "aggregation": "max rank/case"
+    },
+    "streaming_overlap": {
+      "status": "UNAVAILABLE",
+      "reason": "No active kernel/DMA timeline intersection; overlapping event envelopes must not be added."
+    }
+  },
+  "output_precision": "Raw measured floating point seconds/milliseconds and integer bytes; no paper rounding before aggregation",
+  "new_run_comparison": "Historical values are never injected into measured fields; hardware/source/SP/input and compilation admission must match before numerical comparisons.",
+  "build_admission": {
+    "source_sha256": "c2f06595f42250404f695bcf3751bb1a1c7e2a01e658623e3ebb5377a3715e55",
+    "observer": "Exact authorized external latency_build.CompilationWatch",
+    "public_preparation": "Load the same public native modules before model construction; no alternate kernel/model warmup",
+    "raw_e2e": "Always retain real successful native wall interval; paper admission is separate and requires all ranks PASS",
+    "scope": "ORBIA profiles; LongLive marks observer unavailable"
+  }
+}

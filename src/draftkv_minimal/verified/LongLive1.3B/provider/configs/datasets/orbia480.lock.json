@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "dataset_family": "orbia",
+  "benchmark": "bench2",
+  "official_repository": "https://github.com/worldbench/Orbia",
+  "official_commit": "f7d8ddde3069a6d5ce75a87fa6b4fc896cc78a59",
+  "scoring_version": "orbia-1.0",
+  "source_files": {
+    "evaluate.py": "c0f0f247df2a01b7997940bf2315fbf15991073d1c291ac652041caf51aba777",
+    "generate.py": "c73556ec6a465af23f1ffaac617582965bd8ce28f487ab33232ad9901d613439",
+    "src/evaluate.py": "f30aa08a9bd586467fe8f8bf469e42a4a47a426a376c58865d43387801905ad3",
+    "src/data/bundle.py": "28e2db8d807229899ffb0aa833462d2e310b24e84e170a749241f395c67ba198",
+    "src/data/case_loader.py": "4a8197936b53f164dc9af87798cc718e9dc622bfcb1c55bddbbd875db8347dd1",
+    "src/data/canonical.py": "aaaa862c2b02896eb9aea264521c63f59471a3ff67409a2b49c43ddbefdd4237",
+    "src/models/base.py": "11776d6daffad42938647c5dc4f15fa87ee47abec6b2446f5b10afc7213748e0",
+    "src/models/case.py": "8e2a20502eeb526fcc42c1b6f3ff40999b6bdf29b9cf32f3e001a0d84b17fa14",
+    "src/models/actions.py": "2c528565a1324cc147df46fff8101b06f2110b74f27a8360ebabeebc689ccf7b",
+    "src/models/camera_text.py": "78d42a768937e63bc3a06f95729500ea3fba42f7baa70133efc3fde656564c03",
+    "src/metrics/scoring.py": "17530039a2a763923521fb4daa04126375f182b4a2065899db945439e736488e",
+    "src/metrics/scoring.json": "1e85f8b4d2b05c82196da66e98701586fe0f5e2e8ecfbad80e1107ec11ab2f36",
+    "configs/evaluation.yaml": "90ad2cf24f8baf30fdcbc2cf466cb1a93500227c4de9f056bb9af1b3b8bc9764",
+    "requirements/sam.txt": "4141c3cb11b50f3a007b6b29b673f1220c1c957a94f31530e003c516667619d8",
+    "requirements/evaluation.txt": "e9f4eb0a7a9c20e9d5c75d4b4d6bef1a5d7eced43bc88bb455ae0ae731bebf6c",
+    "requirements/evaluation-constraints.txt": "c8ba40d1f42eb5fdc08c1adf151d7a5c60b2cdbddb9a3010deec2cc8966d1e0a",
+    "tools/download_weights.py": "62d9f06cfe8dd57d2a5f9ab1ee7da193940259d23b563c358d18dec2cc9ed06e",
+    "docs/data.md": "a38a6da4818283a6d1f36f8f81e4ad480284359a2f2d84801ae6ba9cfcc01778",
+    "docs/models.md": "c241e0b73f475e098f28112c03aae8467155b66187510c8b5079af00f02b9470",
+    "docs/evaluation.md": "c85e34278e85ab99ca71686ad095d626194beec9086cb79d025216851dde86bf",
+    "README.md": "3e0591bd84cf73a64ea289891d18a5e3ba1d9c975454fddc3b4c968baa534dc5",
+    "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "tools/install_evaluation.sh": "e78f17a0ad1175d078c05d66e529f6c2fecc7595ac076da1df92506d4da92478",
+    "docs/installation.md": "dac02ccf8e37203f72a0ad7d874354069ac0bf8bc6a2d639b28571a55583427b",
+    "examples/camera_model.py": "0df984dbfebd726dc7a5809d284f80a7cf91356fd7191e23d5d0148556df3acc",
+    "examples/action_model.py": "3f385e99f49e290328c410c1f33730776a6b3e2613bbb9c6d7152efc8d7d9f15",
+    "examples/text_model.py": "dbae7946a9f6655e5ac0dedc8fbdc49c1288dc9e6715066ef176f6efebcb83e8",
+    "src/metrics/registry.py": "dfaae4a0193db52f6c1bb5965a0e0c8d0d2afd68833d43e928c8325d9b8f9a32",
+    "src/metrics/supporting.py": "75e9632b1ac2b735f745ddfc1869bc6f8064cca6f96f48893bdaf5308514f1d4"
+  },
+  "distribution": {
+    "repository": "Orbia/Orbia",
+    "base_url": "https://huggingface.co/datasets/Orbia/Orbia",
+    "metadata_url": "https://huggingface.co/api/datasets/Orbia/Orbia/tree/main?recursive=true&expand=false&limit=1000",
+    "revision": "5edae28cca27eaed64a144882237ab70a539747e",
+    "manifest": {
+      "path": "manifest.json",
+      "git_blob_sha1": "e7b20c2b9895c2f11578925ffdd826d7ceca255c",
+      "size": 136186,
+      "sha256": "2b7dd965885db5138339811f3c858514ff4913757403b10d5b98a8e18a318218"
+    },
+    "public": {
+      "path": "public.tar.gz",
+      "git_blob_sha1": "0adb96646a0cdae4cbefa38a4a356c5578722352",
+      "size": 1038430258,
+      "sha256": "bef7c7f16623bc6169471fb8b361c8fb2a68cc92ce116a20429773118e493c6e"
+    },
+    "references": {
+      "path": "references.tar.gz",
+      "git_blob_sha1": "60a2fd748168ac1eea642b6b3190b4b468d6fc09",
+      "size": 4734842244,
+      "sha256": "1e0e379baa55142616671bb12cc7c721681aec3fae755a20f564b6de1833cb62"
+    },
+    "gated": "auto",
+    "data_card_sha256": "a7f5c90968f94636f00f1be7e1a99b0e335def71a7c9b115f2cfa909e39fef91",
+    "data_card_original_sha256": "2e9119a2f47f5530a52f8031802c6bb938163e523ffa21deb5e073f8a5231cec",
+    "data_card_note": "Official data card copy; trailing blank lines normalized for Git. License content unchanged; original bytes retained in external cache."
+  },
+  "selection": {
+    "frame_count": 357,
+    "fps": 16,
+    "short_cases": 480,
+    "long_cases": 240,
+    "order": "official manifest cases order filtered by frame_count == 357"
+  },
+  "licenses": {
+    "code": "Apache-2.0",
+    "dataset": "CC-BY-NC-SA-4.0",
+    "source_terms": [
+      "SpatialVID",
+      "Sekai",
+      "MiraData",
+      "ScanNet++"
+    ],
+    "evidence": "Pinned official README.md and configs/datasets/orbia.dataset-card.md",
+    "third_party_models": "Original model licenses apply"
+  },
+  "acquisition_status": "COMPLETE",
+  "acquisition_reason": "Authenticated official distribution downloaded, both archive SHA256 values verified; all480 short public/reference cases deployed. All8478 original files indexed and real pinned official public/reference CPU preflights passed. No GPU model generation/scoring.",
+  "installed_files": {
+    "path": "configs/datasets/orbia480.installed-files.json",
+    "sha256": "de9bdf571d76a3b8ab97443c0c33052e0d9182b85349d9102ad142cd55aeac0d",
+    "file_count": 8478,
+    "stage": "references"
+  }
+}

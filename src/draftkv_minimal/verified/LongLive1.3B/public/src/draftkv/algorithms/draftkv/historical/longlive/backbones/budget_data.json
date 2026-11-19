@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "backbones": {
+    "LongLive1.3B": {
+      "draftkv": {
+        "capacity": 12,
+        "retrieved": 6,
+        "sink": 3,
+        "local": 0,
+        "current": 3
+      }
+    }
+  },
+  "author_policies": {
+    "draftkv": {}
+  }
+}

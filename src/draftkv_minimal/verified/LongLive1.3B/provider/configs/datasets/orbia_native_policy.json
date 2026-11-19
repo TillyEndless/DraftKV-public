@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "scope": "STATIC_SOURCE_VERIFIED_GPU_UNVERIFIED",
+  "reference_source_files": {
+    "src/draftkv/vendor/backbones/lingbot14/wan/image2video.py": "cfefdeb695f3e9630be7b910af7d5567b9262b84b37d403be63a53b1e57d698e",
+    "src/draftkv/vendor/backbones/lingbot14/wan/modules/vae2_1.py": "7b8134a4b6497aea0f2c0ca492c3550b6a1cecc1a23d63c421c876ef8d976a2f",
+    "src/draftkv/vendor/backbones/lingbot14/wan/utils/cam_utils.py": "379a97a2f17bcc90ab868382fef8cbd1f2735d6eefbbbc88b4533c269c2f9538"
+  },
+  "native_processing": {
+    "generation": "WanI2VCausal.generate -> generate_causal_fast, image aspect/VAE8/patch2; lat_f=((F-1)//4+1), floor to chunk_size4",
+    "decoder": "WanVAE.decode -> WanVAE_.decode; first latent emits1; two cached temporal upsample3d stages emit4 per subsequent latent; frames=1+4*(latent_frames-1)",
+    "camera": "poses.npy OpenCV C2W -> linear translation/Slerp rotation at linspace(0,F-1,latent_frames); compute_relative_poses(framewise=True,normalize_trans=True) owned by native source",
+    "intrinsics": "Native get_Ks_transformed assumes832x480 calibration reference. Adapter rescales original K to reference; native maps reference to actual output. Original q0 bytes unchanged.",
+    "minimal_padding": {
+      "target_frames": 357,
+      "latent_frames": 92,
+      "native_frames": 365,
+      "padding_frames": 8,
+      "trim_frames": 8,
+      "tail": "repeat original final C2W, never edit original files"
+    },
+    "source_binding": "Both backbones use shared LingbotCore and native WanI2VCausal. Each external image2video/vae/cam_utils still verified against configs/backbones/source_locks.json by planner before execution."
+  }
+}
