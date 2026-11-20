@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "algorithm": "worldkv",
+  "origin": "WorldKV author snapshot from historical 20261020 H200 evidence; unchanged author source and frozen portable route",
+  "position_policy": "LingBot native absolute Wan RoPE, not SolarWM/H3 PRoPE",
+  "files": {
+    "src/draftkv/algorithms/worldkv/vendor/LICENSE.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "src/draftkv/algorithms/worldkv/vendor/author/wan/image2video_fast.py": "decb831ab8c3e46a202ec02d7ab59c2fa9a5603339e6a974524d16d2adc54091",
+    "src/draftkv/algorithms/worldkv/vendor/author/wan/modules/model_fast.py": "494a68b91acd12028ba88a2b4814ad4c5fc32d1bac6686071cd3cb02d564e280",
+    "src/draftkv/vendor/backbones/lingbot14/runtime/rag_portable/base.py": "824ddf589bd87076c8c6b84822342b5cfd3c8a8de7dbac263e34bb749c63f44f",
+    "src/draftkv/vendor/backbones/lingbot14/runtime/rag_portable/world_core.py": "ee9bca337949968f76f7797883c039b4861d705594017c8343a49771b3f76f12",
+    "src/draftkv/vendor/backbones/lingbot14/runtime/rag_portable/world_route.py": "42cbf74ef639171603b08de0dfd082725a89af2e8ef274852f492d735282eb01"
+  }
+}

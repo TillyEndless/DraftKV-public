@@ -1,129 +1,47 @@
 # DraftKV
 
-DraftKV retrieves historical key/value context for long video generation. A
-persistent **Draft Bank** stores compact key summaries. **Draft Grounding**
-uses camera geometry when available, and **Draft Refinement** selects relevant
-historical context for the current query. **Streaming CG-Attention** transfers
-and consumes selected KV through reusable GPU buffers.
+DraftKV research implementation. This source release keeps the original Draft Bank, Draft Grounding, Draft Refinement and Streaming CG-Attention implementations in separate historical source trees. Retained algorithm and configuration files are unchanged.
 
-This release contains Full DraftKV and its original backbone integrations.
-Algorithm, CUDA/C++ and profiling source bodies are preserved from deployed
-versions. Independent baselines and Camera-only/Draft-only runners are omitted.
+**Four Full DraftKV backbones passed complete H200 SP1 case acceptance with the preserved original code and separately installed dependencies. See [verified coverage](docs/RELEASE_STATUS.md) for performance differences and scope. External dependencies require separate authorized installation.**
 
-## Supported backbones
+## Supported original paths
 
-| CLI name | Historical SP | Recorded source-version evidence |
-|---|---:|---|
-| `LongLive1.3B` | 1 | Native-duration generation and v1 Summary |
-| `LingBot1.3B` | 8 | Generation and v2 Summary; timing caveat |
-| `LingBot14B` | 8 | Generation and v1 Summary |
-| `SolarWM33B` | 8 | Generation; `SOLAR_PROFILE_SUMMARY_UNVERIFIED` |
+| Backbone | SP1 original tree | Additional original topology |
+|---|---|---|
+| LongLive-1.3B | `versions/longlive` | — |
+| LingBot-1.3B | `versions/lingbot13` | — |
+| LingBot-14B | `versions/h200_large` | SP8: `versions/sp8_lingbot14_d546` |
+| SolarWM-33B | `versions/h200_large` | SP8: `versions/sp8_solar_de790` |
 
-These records identify preserved source versions. The new distribution is
-**NEW_PACKAGE_GPU_NOT_TESTED**. See [release status](docs/RELEASE_STATUS.md).
+Only Full DraftKV generation is selected by the outer CLI. Shared files keep their original paths, including historical algorithm names. These names do not expose those baselines as supported CLI methods. LongLive and ORBIA remain distinct original integrations.
 
-## Installation
+## Installation and execution
 
-Python 3.10 or newer is required for the public interface:
+See [installation](docs/INSTALL.md), [original command mapping](docs/ORIGINAL_COMMAND_MAPPING.md), [profiling](docs/PROFILING.md) and [reproduction status](docs/REPRODUCTION.md).
 
-```bash
-git clone https://github.com/TillyEndless/DraftKV-public.git
-cd DraftKV-public
-python -m venv .venv
-. .venv/bin/activate
-python -m pip install -e .
-./reproduce.sh list
-./reproduce.sh plan --backbone LingBot14B
+```sh
+./run.sh list
+./run.sh check
+./run.sh plan --backbone longlive1.3b --sp 1 \
+  --devices GPU-REPLACE-WITH-ALLOCATED-PHYSICAL-UUID \
+  --python /path/to/original/environment/bin/python \
+  --plan /path/outside/checkout/approved-plan.json
+# Change `plan` to `run` after checking allocation and all external dependencies.
 ```
 
-Static plans need neither CUDA nor model weights. Native generation needs its
-original model environment. Follow [INSTALL](docs/INSTALL.md).
+Plans are the original worker's execution metadata, prepared separately under the approved operational path mapping. The wrapper does not generate scientific configurations, load a new provider, change kernels or install timing callbacks. External campaign workers are required for the ORBIA rows.
 
-## Model weights and external dependencies
+`--profile {off,summary}` defaults to `off`, which preserves the existing worker command and immutable plan settings. `summary` selects a SHA-pinned original external profiling controller. LongLive and LingBot-1.3B have conditional dispatch in their separately provisioned original environments; 14B and Solar remain explicitly blocked because their unchanged controllers cannot safely bind this release. No new-switch GPU test is claimed. See [profiling requirements and measurement scopes](docs/PROFILING.md).
 
 The repository includes the DraftKV research implementation
 but is not a fully self-contained, out-of-the-box reproduction
 environment. Certain native attention and backbone dependencies
 must be obtained separately with appropriate authorization.
 
-Weights, inputs and evaluator assets are not bundled. B01, modified attention
-kernels and upstream backbone bodies remain exact, hash-checked external
-requirements. Fingerprints do not grant redistribution rights. Read
-[dependency setup](docs/INSTALL.md#external-sources-and-assets) and
-[third-party notices](docs/THIRD_PARTY_NOTICES.md).
-
-## Quick start and video generation
-
-Configure real paths and SHA256 values using `configs/assets.example.json` and
-[INSTALL](docs/INSTALL.md), then run:
-
-```bash
-./reproduce.sh preflight --backbone LingBot14B --asset-config assets.local.json
-./reproduce.sh run --backbone LingBot14B \
-  --devices 0,1,2,3,4,5,6,7 --asset-config assets.local.json \
-  --workspace outputs/lingbot14b-off --generation-only --profile off
-```
-
-Use one GPU for historical LongLive and eight for historical LingBot/Solar.
-Use a new output directory per run. Missing assets or changed source hashes
-block execution; there is no substitute baseline or attention implementation.
-
-## Performance profiling
-
-`off` is the default; only `off` and `summary` are supported:
-
-```bash
-./reproduce.sh run --backbone LingBot14B \
-  --devices 0,1,2,3,4,5,6,7 --asset-config assets.local.json \
-  --workspace outputs/lingbot14b-summary --generation-only --profile summary
-```
-
-Summary writes supported runtime observations to `profile/summary.json` and
-per-rank records. Available fields and timing scopes differ across preserved
-versions. This is not automatically the paper's original efficiency protocol.
-See [PROFILING](docs/PROFILING.md).
-
 ## Evaluation
 
-Interfaces support VBench-Long for LongLive, ORBIA quality for LingBot/Solar,
-and revisit evaluation for camera-conditioned backbones. Evaluators and assets
-are external and source-locked.
-
-```bash
-./reproduce.sh evaluate --backbone LingBot14B --evaluator orbia \
-  --devices 0 --asset-config assets.local.json \
-  --video-map outputs/lingbot14b-off/video-map.json --workspace outputs/orbia
-./reproduce.sh evaluate --backbone LingBot14B --evaluator revisit \
-  --devices 0 --asset-config assets.local.json \
-  --video-map outputs/lingbot14b-off/video-map.json --workspace outputs/revisit
-```
-
-Select `--backbone LongLive1.3B --evaluator vbench-long` for LongLive quality.
-Evaluation validates video/source/config bindings and does not generate videos.
-See [REPRODUCTION](docs/REPRODUCTION.md) for evaluator configuration.
-
-## Reproduction status
-
-Four scientific configurations and their source fingerprints are included.
-CPU tests, static plans and package builds have a CI template in `ci/cpu.yml`. Historical GPU
-records do not establish full-paper numerical reproduction or GPU validation
-of this distribution. Solar Summary remains unverified. Detailed scope is in
-[RELEASE_STATUS](docs/RELEASE_STATUS.md).
+Original evaluation modules remain in each retained tree where required by the audited dependency closure. Complete ORBIA/VBench-Long quality replication still requires the original benchmark inputs, cohorts and metrics. A single generated video validates that case only.
 
 ## License
 
-[Apache-2.0](LICENSE) covers authorized project-owned code. External code,
-weights and datasets retain their own terms. See
-[THIRD_PARTY_NOTICES](docs/THIRD_PARTY_NOTICES.md).
-
-## Citation
-
-[CITATION.cff](CITATION.cff) provides software citation metadata. A verified
-paper citation will be added when available; no publication or acceptance
-status is asserted here.
-
-## Acknowledgements
-
-This implementation builds on the LongLive, LingBot-World and SolarWM model
-ecosystems, PyTorch, FlashAttention and Triton, and uses VBench-Long and ORBIA
-evaluation interfaces. Their respective licenses and asset terms apply.
+The root Apache-2.0 applies to project code that the project has the right to license. Third-party files keep their own terms; see [third-party notices](docs/THIRD_PARTY_NOTICES.md). Some retained vendor leaves are CC-BY-NC-SA-4.0. Ragged-2D and the torchvision video adapter retain their matched public Apache/BSD attribution and original notices. No model weights, private run receipts, native archives or compiled binaries are included.

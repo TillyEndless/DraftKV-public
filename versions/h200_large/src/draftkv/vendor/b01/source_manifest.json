@@ -1,0 +1,1735 @@
+{
+  "schema": 1,
+  "authority_archive": "B01_pipeline_autotune_v2_20261018",
+  "authority_reported_commit": "410948e",
+  "authority_clean_commit": false,
+  "frozen_4090_reported_commit": "1a598feded230abd12a489a0ce3a88ae8be95865",
+  "compile_file_count": 185,
+  "external_includes": [
+    "ATen/cuda/CUDAContext.h",
+    "ATen/cuda/CUDAGeneratorImpl.h",
+    "ATen/cuda/detail/UnpackRaw.cuh",
+    "algorithm",
+    "assert.h",
+    "c10/cuda/CUDAException.h",
+    "c10/cuda/CUDAGuard.h",
+    "cassert",
+    "cfenv",
+    "cinttypes",
+    "ciso646",
+    "cmath",
+    "cpuid.h",
+    "cstddef",
+    "cstdint",
+    "cstdio",
+    "cstdlib",
+    "cstring",
+    "cuComplex.h",
+    "cuda.h",
+    "cuda/atomic",
+    "cuda/std/cassert",
+    "cuda/std/cstddef",
+    "cuda/std/cstdint",
+    "cuda/std/limits",
+    "cuda/std/tuple",
+    "cuda/std/type_traits",
+    "cuda/std/utility",
+    "cudaTypedefs.h",
+    "cuda_bf16.h",
+    "cuda_fp16.h",
+    "cuda_fp8.h",
+    "cuda_runtime.h",
+    "cuda_runtime_api.h",
+    "driver_types.h",
+    "functional",
+    "immintrin.h",
+    "intrin.h",
+    "iomanip",
+    "iosfwd",
+    "iostream",
+    "limits",
+    "map",
+    "mma.h",
+    "mutex",
+    "stdexcept",
+    "stdint.h",
+    "stdlib.h",
+    "string",
+    "torch/extension.h",
+    "tuple",
+    "type_traits",
+    "typeinfo",
+    "utility",
+    "vector",
+    "vector_types.h",
+    "x86intrin.h"
+  ],
+  "compile_roots": [
+    "build/producer_plan.cpp",
+    "build/frontier_streamwrite_ext.cpp",
+    "fa2_custom/streaming_binding.cpp",
+    "fa2_custom/streaming_producer.cu",
+    "fa2_custom/ready_binding.cpp",
+    "fa2_custom/ready_kernels.cu",
+    "fa2_custom/frontier_opt_binding.cpp",
+    "fa2_custom/frontier_opt_kernels.cu",
+    "fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/flash_fwd_hdim128_bf16_sm80.cu",
+    "fa2_custom/autotune_binding.cpp",
+    "fa2_custom/autotune_kernels.cu"
+  ],
+  "files": [
+    {
+      "path": "sources/build/frontier_streamwrite_ext.cpp",
+      "sha256": "d9615c8816ff5e282bb26e49e7a9114e3a48455ed03c92b2871577068dbca485",
+      "bytes": 1040,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/build/generate_autotune_header.py",
+      "sha256": "c590751866976bd1b15c6ba4599a3715d261d44573ee646f3be7b0056f976fa6",
+      "bytes": 2428,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": false,
+      "source": "B01_pipeline_autotune_v2_20261018/build/generate_autotune_header.py"
+    },
+    {
+      "path": "sources/build/generate_frontier_opt.py",
+      "sha256": "09ec0539b9619ce0d8213b72b2426b1d0bff97b0f49eb35d1087f33e9f2281db",
+      "bytes": 2551,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": false
+    },
+    {
+      "path": "sources/build/generate_ready_header.py",
+      "sha256": "b04c9f46b605b158863ca8feda232e61661e8ada86662c510647b61ff50d3147",
+      "bytes": 1731,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/build/producer_plan.cpp",
+      "sha256": "d568e036c3ba237a20cc0a668bbe51fdb4c75cc992fe0f440de0471dd80ec8c0",
+      "bytes": 3620,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/build/setup_autotune.py",
+      "sha256": "5fb7810f819d80c022076f54f2013caa93cfd74acbd9a80858bb183e552b5268",
+      "bytes": 1848,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": false,
+      "source": "B01_pipeline_autotune_v2_20261018/build/setup_autotune.py"
+    },
+    {
+      "path": "sources/build/setup_frontier_opt.py",
+      "sha256": "741dfa67bd2692f10170483a316908ffc5c9d920ca9ff1e576f2d10620f3afc9",
+      "bytes": 1813,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": false
+    },
+    {
+      "path": "sources/build/setup_frontier_streamwrite.py",
+      "sha256": "914ac0dd747539bbecbcc66a57edce708e8702e1d6b54d1beca1265d8baddabd",
+      "bytes": 712,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/build/setup_producer_plan.py",
+      "sha256": "613e34e94c7e7658d2990d146cd0a16ec0a32e795f875123fae2d8b4b6f7a651",
+      "bytes": 687,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/build/setup_ready.py",
+      "sha256": "2965788bf894a7691114562f9276b75c9d08c898afbeb9ec595f5a1fa3db94d9",
+      "bytes": 1785,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/build/setup_streaming_portable.py",
+      "sha256": "98a88078bb0b1c315ea1eb585dcdf0bdc38fa1acde8fc743c7e42516c1dd88d8",
+      "bytes": 1893,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/autotune_binding.cpp",
+      "sha256": "da74d86be24ebf7de91ffd86baf99d435b60f5997875c341c585cf4023ed0b58",
+      "bytes": 6332,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": false,
+      "source": "B01_pipeline_autotune_v2_20261018/fa2_custom/autotune_binding.cpp"
+    },
+    {
+      "path": "sources/fa2_custom/autotune_fwd_kernel.h",
+      "sha256": "9210493749f291243519ff5b35b209489be2e9182291548b6c596862b2874322",
+      "bytes": 78677,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": false,
+      "source": "B01_pipeline_autotune_v2_20261018/fa2_custom/autotune_fwd_kernel.h"
+    },
+    {
+      "path": "sources/fa2_custom/autotune_kernels.cu",
+      "sha256": "9593ab2071453ef768f71e3826d8e95eeb7e2279d2e2f523fb5cd32409e262e0",
+      "bytes": 3459,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": false,
+      "source": "B01_pipeline_autotune_v2_20261018/fa2_custom/autotune_kernels.cu"
+    },
+    {
+      "path": "sources/fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/block_info.h",
+      "sha256": "89cb30fd392372f0313db50cde8a93632ae8dc8c02a5902a245d985fc3fa609b",
+      "bytes": 2476,
+      "classification": "archived FA2 with streaming modifications",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/dropout.h",
+      "sha256": "a1d14c0c10227d67bfd36bada415565f4deefa604e6eb1863d7dcc0fd8f12098",
+      "bytes": 5843,
+      "classification": "archived FA2 with streaming modifications",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/flash.h",
+      "sha256": "1e4d1988d6a010e2edf3f5e027c381f6660f871e4bdbce7e4e14b43f1d7f660c",
+      "bytes": 6541,
+      "classification": "archived FA2 with streaming modifications",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/flash_fwd_hdim128_bf16_sm80.cu",
+      "sha256": "568dfced7e6676c60ad358d94118292133231321240c1e650cbfd80b21982561",
+      "bytes": 489,
+      "classification": "archived FA2 with streaming modifications",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/flash_fwd_kernel.h",
+      "sha256": "c01aacef53f7556f924f4509752eb3af29851ca4029da5ce9687f64f829e4809",
+      "bytes": 77945,
+      "classification": "archived FA2 with streaming modifications",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/flash_fwd_launch_template.h",
+      "sha256": "d9e9f4b92cb731d7955b514449e59b8e411bf7a0c929aafb454f2402d41fe976",
+      "bytes": 19961,
+      "classification": "archived FA2 with streaming modifications",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/hardware_info.h",
+      "sha256": "deef803b86266ec3f3c6f3f3a4c414ad91cc92d637ba9be02eec520db712cfe3",
+      "bytes": 1634,
+      "classification": "archived FA2 with streaming modifications",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/kernel_traits.h",
+      "sha256": "880a6f432613dc01979a605d304da75985f9ed34ff66f1f4ded85fc90b7047ac",
+      "bytes": 17697,
+      "classification": "archived FA2 with streaming modifications",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/mask.h",
+      "sha256": "4ea99928f81a7861894a6fbeb9ab127abccce49fdb81fdca0b8e570b3f6f1a22",
+      "bytes": 11284,
+      "classification": "archived FA2 with streaming modifications",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/namespace_config.h",
+      "sha256": "2f50a22748285224426a7d374715fc63123ad4b4153e1f46b455a87a8a07f4a5",
+      "bytes": 1764,
+      "classification": "archived FA2 with streaming modifications",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/philox.cuh",
+      "sha256": "81ef706f740783b4e035b8a78d7f579ee5750d4defdb2068781b3b7cb027abee",
+      "bytes": 1730,
+      "classification": "archived FA2 with streaming modifications",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/philox_unpack.cuh",
+      "sha256": "14d35e2e51b5f248d7007d4f783c46c29f5803444ba7d4e30204a50fd6811ac5",
+      "bytes": 163,
+      "classification": "archived FA2 with streaming modifications",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/rotary.h",
+      "sha256": "f000eba29dade79f629849ed5dbce654d475d61826142a0f94011506be3d2427",
+      "bytes": 9002,
+      "classification": "archived FA2 with streaming modifications",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/softmax.h",
+      "sha256": "77e70b8d0dbe72f459ced29199a554a0d1e0559cad2370a2e5b5f1fa5faf73f1",
+      "bytes": 9464,
+      "classification": "archived FA2 with streaming modifications",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/static_switch.h",
+      "sha256": "52da74dec74f8b9a26ef34bf4a311950c28c0c77b73eab8b9a169f8e65ae1616",
+      "bytes": 3795,
+      "classification": "archived FA2 with streaming modifications",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/flash-attention-v2.8.3-streaming/csrc/flash_attn/src/utils.h",
+      "sha256": "abc6d4c73522af35f6c31be3938830b9474f620d7c8083168d80dab226a0fdc9",
+      "bytes": 18486,
+      "classification": "archived FA2 with streaming modifications",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/frontier_opt_binding.cpp",
+      "sha256": "03ea5577d0717019a125a941e5144699a0fa37a0f1401a386b0a4231d112a9dd",
+      "bytes": 5410,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": false
+    },
+    {
+      "path": "sources/fa2_custom/frontier_opt_fwd_kernel.h",
+      "sha256": "aba388bcc12e989555a19063dacf1f78c4c4e3723d819bf9d7576bf60707b796",
+      "bytes": 29354,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": false
+    },
+    {
+      "path": "sources/fa2_custom/frontier_opt_kernels.cu",
+      "sha256": "405b99d7665df84bee11242a616141ff8c0871dd93ed2628895a3b82bf2d1ca7",
+      "bytes": 3231,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": false
+    },
+    {
+      "path": "sources/fa2_custom/ready_binding.cpp",
+      "sha256": "2a86d2591672c0678999616f694caa41fcd3b6934fa1bd074c1f054c02763b58",
+      "bytes": 5278,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/ready_fwd_kernel.h",
+      "sha256": "0b64ff37c3aee4207c5aad8b987c2955cdf74a33df2badb71797bc2010a70d86",
+      "bytes": 28102,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/ready_kernels.cu",
+      "sha256": "351102c25472f3ff8fd145577f0836d825c0c10c0153d7f1f6f9df9b507a66cb",
+      "bytes": 1024,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/ready_params.h",
+      "sha256": "24f1f0fad8638cd239892854b68500a024dbd8265d7f900f8dbb4a56181a3201",
+      "bytes": 330,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/streaming_binding.cpp",
+      "sha256": "99f83cc5a8a097a007634ce80aca4edce0182b64615fe1ffa17ef4fd84b2059a",
+      "bytes": 8193,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/fa2_custom/streaming_producer.cu",
+      "sha256": "09eda96df3e723cdeb5700654db6ed6f5ae3db10ec4daef2ca7389b755fbc8f9",
+      "bytes": 2702,
+      "classification": "B01 engineering addition",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/LICENSE.txt",
+      "sha256": "80a7a18b73d41f64dd9ca881af35938f8de88b18c728703251f4c94d1299884d",
+      "bytes": 1854,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/algorithm/axpby.hpp",
+      "sha256": "2b11f2d6dc6d00c3374b68b0cfbd69c6e3529611a6e56b86e38d025f42c69a0b",
+      "bytes": 3254,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/algorithm/clear.hpp",
+      "sha256": "28f97f81b281fea7ccde08a6e1f082f63384e741943b64d304df2e00bc2e5965",
+      "bytes": 2418,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/algorithm/cooperative_copy.hpp",
+      "sha256": "e03e105882db8a5df784bfb08a817b8d90789b297fd0ad6e113314486c34965a",
+      "bytes": 14553,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/algorithm/cooperative_gemm.hpp",
+      "sha256": "d0de07433f3be215a196acc0cfc969db16ca6b162193634ee0eb502378aee029",
+      "bytes": 24449,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/algorithm/copy.hpp",
+      "sha256": "bbadea0a2620d36eb3cc1f5626731178ac366b337049adfad02c18975c9588e7",
+      "bytes": 20538,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/algorithm/fill.hpp",
+      "sha256": "e06904e6b029b9a96f4806abd9d7a2006052bff8249fe54d010dc3f682580bce",
+      "bytes": 2911,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/algorithm/functional.hpp",
+      "sha256": "db90b96cc1e9b76f1dbbbda3f455367fe2e90cb60a95d91940dccffdb162680b",
+      "bytes": 10955,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/algorithm/gemm.hpp",
+      "sha256": "25272aefdc06ac7b90ac8b638b651730d9ffd0b9e89b6bc56440deef21e2e0ea",
+      "bytes": 18280,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/algorithm/prefer.hpp",
+      "sha256": "4faa5471b2712b90de71825644025212246a5cdd499fae27f4da6c1ec71e38d7",
+      "bytes": 2124,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/algorithm/prefetch.hpp",
+      "sha256": "d708f5dad04c2da8138d2e88e120c75ccab34b3da7702821b9db29b7f977ed55",
+      "bytes": 5666,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/algorithm/tensor_algorithms.hpp",
+      "sha256": "36d7105ddd3e1adf8fa2248b111efd93bda03855024c08bd3e1ec06869d97d28",
+      "bytes": 5501,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/algorithm/tuple_algorithms.hpp",
+      "sha256": "4e1e2fceff0dee3cb073aae9bb3b0073b357d30b2a5ec77f2b67fb65b86ce395",
+      "bytes": 26041,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/cluster_sm90.hpp",
+      "sha256": "d70030bec8a3ebb36949408c3ee0951124aa1d1d0b610ac5682c1bc3bda2d5d6",
+      "bytes": 7678,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/config.hpp",
+      "sha256": "c0de8fc217134ff6b92c749c8849ed04158dec647e32f1030682804d75bb2440",
+      "bytes": 6641,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/copy.hpp",
+      "sha256": "ec31401d27eb23ace72211c1345178934c6a242a36adc8e2f7196bef08920eea",
+      "bytes": 3626,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/copy_sm100.hpp",
+      "sha256": "12c146b27ef2de19b06dd55750353973eb6570ec56ad9c2e95a7162e8e7b37db",
+      "bytes": 353986,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/copy_sm100_tma.hpp",
+      "sha256": "9a9f051c5efead9a0d810905603f2806c76b6b902f66b577814645c750f5f6c7",
+      "bytes": 28728,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/copy_sm50.hpp",
+      "sha256": "523dc2ea1257bb0efff64f626c3aadcfc623e02cbdef249ab8ab57d6475796a5",
+      "bytes": 3449,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/copy_sm75.hpp",
+      "sha256": "dbffdbb5e9425898fa342471d021b212ced2e3b2340637fe7fde5a8109d4ec9a",
+      "bytes": 7739,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/copy_sm80.hpp",
+      "sha256": "f98ebf662eb95419bf2dfcbcbe9b9e54ba0fd965b8d65f5a850f56c71b158b94",
+      "bytes": 6780,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/copy_sm90.hpp",
+      "sha256": "7668c6f9304866f65655555c39f5e10fa6ffb02df964a8e7918ac877d41cc0db",
+      "bytes": 7267,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/copy_sm90_desc.hpp",
+      "sha256": "5afb140619f0486e919f7ba11dfef49c772f4ca778b446d49be6ddfa943e22fa",
+      "bytes": 19878,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/copy_sm90_tma.hpp",
+      "sha256": "d31756a7105dc875751fdef875be1b9f2bc008111d0c45734fed39465c12c636",
+      "bytes": 57107,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma.hpp",
+      "sha256": "8f65943f681e16ed11df4bc7bcf6c97ebd808b6b2d950f6cc5ef29805a154029",
+      "bytes": 2492,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma_sm100.hpp",
+      "sha256": "68306540dfc897b8247e456a271479c66e15c74de9d204997d67daf48470f5a3",
+      "bytes": 3046,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma_sm100_desc.hpp",
+      "sha256": "3fdf3acfa952e514e19e8539cea20555fd25a4b2a2ef4e189a72ef6973586fe5",
+      "bytes": 25872,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma_sm100_umma.hpp",
+      "sha256": "e3d855544c26b25c23cbef001b9ec1b1430c6723f1bff95b70f69d6f70bfc159",
+      "bytes": 65592,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma_sm120.hpp",
+      "sha256": "4de2816faaf3176326eb9fea837f5ea06dbb21d2b49dacd8f9a8f33d89c98133",
+      "bytes": 112483,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma_sm120_sparse.hpp",
+      "sha256": "9926f677ef823178f653c9e6c6d810ccec16a6f34ab781901a57797c2388a724",
+      "bytes": 129088,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma_sm61.hpp",
+      "sha256": "33e3511cf8884660145c946cb75c05763bfafdcb2932b4763ceedf9b59bbcffa",
+      "bytes": 3172,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma_sm70.hpp",
+      "sha256": "c7ecaf1ab57557ed6c4baab62032b27d372b6f71138c5b2adf6da9f53402b302",
+      "bytes": 12500,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma_sm75.hpp",
+      "sha256": "68f7a26da6c89c3b219afc5f65a2e44da83c8f7bff8f9491799c27257dcafdd5",
+      "bytes": 4274,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma_sm80.hpp",
+      "sha256": "4d1315c12cccc6652a1dced6d6cb2d13a0390da5829978b5e01895571b677a60",
+      "bytes": 71897,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma_sm89.hpp",
+      "sha256": "d32ca9bf45e776617e2bc0c25619b56109b952c38ac2ea4f357787e82ad6caf0",
+      "bytes": 6612,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma_sm90.hpp",
+      "sha256": "eede4c08af6c2d79a6a956072c91a902026dec8112fa8f43392fd11a2dab9de5",
+      "bytes": 363677,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma_sm90_desc.hpp",
+      "sha256": "4ae842109e111094fe5fd5276e46bb99f5446f97e806b50ecd55ac47dc9fa658",
+      "bytes": 6036,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma_sm90_gmma.hpp",
+      "sha256": "bbe378e69891013e93ae348850a80d39ea299249d0211758c5d849cd46b4c17a",
+      "bytes": 969217,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma_sm90_gmma_ext.hpp",
+      "sha256": "af6c9ea73dce26b0e19e66d9d8596fea671f2a2b730d6b9a1579a513ccc647e1",
+      "bytes": 2785259,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma_sm90_gmma_sparse.hpp",
+      "sha256": "0831b148aff7d99793625f9f10669555ab8b97fa506cb9fcf11f267411b4101e",
+      "bytes": 1031915,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/mma_sm90_gmma_sparse_ext.hpp",
+      "sha256": "d9208b9dfcfefe4a4bd26e343f5d6b164c4916b6673bf559767660764af951e0",
+      "bytes": 2932673,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/simd_sm100.hpp",
+      "sha256": "b566b7e35f5237c9caacf7e8d8a99231c31cadb2f167eff1a1ab6fdee72d31cf",
+      "bytes": 3222,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/tmem_allocator_sm100.hpp",
+      "sha256": "2452d93263bfbdf2fe0523d57267fc2bb111148072b6752307894049737a52e4",
+      "bytes": 7209,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/arch/util.hpp",
+      "sha256": "6c4f78507adbfc43094eb1770d60c96ce3e02cc53c5d1b49edb0a8444c6ad7f2",
+      "bytes": 9422,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/copy_atom.hpp",
+      "sha256": "a9609a5811ea955288a30401da56252c0f4aaf13c65e05990e21a0fbdedc1862",
+      "bytes": 29811,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/copy_traits.hpp",
+      "sha256": "f1434137f94707650fba379eb53b8c307273917d33329e2688f556e5e5d162ca",
+      "bytes": 5956,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/copy_traits_sm100.hpp",
+      "sha256": "93ac53170f27107eca7128cac2cd170311b4f4fd9fa312325c2e1fe9a4171828",
+      "bytes": 145732,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/copy_traits_sm100_tma.hpp",
+      "sha256": "1cb82de8a634f72cabca92fa58ca2aebbeb1f5406eae618e7e5f203bc08f2cda",
+      "bytes": 21098,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/copy_traits_sm50.hpp",
+      "sha256": "312058966e3779166e8eb164cd9b5845b3a716f91fd5590c347b04b8c6a103b7",
+      "bytes": 3062,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/copy_traits_sm75.hpp",
+      "sha256": "353af92d4da6f63dfbab76702b0935d9be01064b3dbeb6561df40be80f7ee9ad",
+      "bytes": 5087,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/copy_traits_sm80.hpp",
+      "sha256": "9d768405d7ddcb1612572cb7439fb522fb96f3121337bfc0bc188e4d5ebd1e78",
+      "bytes": 6269,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/copy_traits_sm90.hpp",
+      "sha256": "843805a1b64a5c9c2d21871cb96e5b49f2c2a202bea17c3dd18812264fb22c9b",
+      "bytes": 4589,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/copy_traits_sm90_tma.hpp",
+      "sha256": "e3fa31ddfd411f72bfd30218347358622c2e92f6598835593ed9cdd853a0bb73",
+      "bytes": 65488,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/copy_traits_sm90_tma_swizzle.hpp",
+      "sha256": "ab2331957477cb12f1f1161a072b3643c5847f5f5338872d7f16e528df11a561",
+      "bytes": 4268,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/mma_atom.hpp",
+      "sha256": "68c4f5ef714b4b914591ac7a30eb1a453ce01ad6afb62654d67f52ed0b3bfb44",
+      "bytes": 39656,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/mma_traits.hpp",
+      "sha256": "c4d72caf948ac44900792a8617698fe76bbf507f6733a2221928a3db3f1f0016",
+      "bytes": 7252,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/mma_traits_sm100.hpp",
+      "sha256": "1e52ce9b854db3af395396c3ad9b8db65870f1779d0c133db1ff220cdb25554c",
+      "bytes": 180625,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/mma_traits_sm120.hpp",
+      "sha256": "084d939b07fd21651841edfeca3edfa679c2fd59279e769d65256d9a865c2bcb",
+      "bytes": 11592,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/mma_traits_sm120_sparse.hpp",
+      "sha256": "be6f0182446037c966eb98404580457b5434021e07e8044b4236b3034129e456",
+      "bytes": 14353,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/mma_traits_sm61.hpp",
+      "sha256": "9a9d01cbfea0a69525d073bc7b973740d5ba2e0929f76067d54858357d8ef057",
+      "bytes": 2773,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/mma_traits_sm70.hpp",
+      "sha256": "23c72c128f8d58cac840089bcf07b120a2f4f6cb1b1b95c3b055dae2c34df8eb",
+      "bytes": 6092,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/mma_traits_sm75.hpp",
+      "sha256": "6cc3179ea53ef83d2f12373c2c421fd94dad84afab477876f43f77d24c281b0f",
+      "bytes": 3303,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/mma_traits_sm80.hpp",
+      "sha256": "58b972a2ec119bb15db0605a2613cd39ca52e09f630095e35677f5a17770d084",
+      "bytes": 21919,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/mma_traits_sm89.hpp",
+      "sha256": "f8e2e4f27ad0ab93f505fd2c61331eda4a19ffa8e6c289e20fcdfa57be7041e8",
+      "bytes": 3467,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/mma_traits_sm90.hpp",
+      "sha256": "10965f179974148f8febbe9cd771a5f5c742c4d2444d72cad22bc23b5693ec25",
+      "bytes": 5478,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/mma_traits_sm90_gmma.hpp",
+      "sha256": "956d254e25fbc5a0f400424bdfecb5a5857d258a0da3839bfa971f0fc56f19d3",
+      "bytes": 284435,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/mma_traits_sm90_gmma_ext.hpp",
+      "sha256": "d0e1e9736ad8eadda9ef36268a9e92d1488d37579566c4936f3a9ccdffdb0e42",
+      "bytes": 634907,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/mma_traits_sm90_gmma_sparse.hpp",
+      "sha256": "3e4fde935f2c1134dfb99de542358f0d5aa3b23f53473b97b8b102424fdb7205",
+      "bytes": 268085,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/mma_traits_sm90_gmma_sparse_ext.hpp",
+      "sha256": "6b5b3fd9c3a115bba3af79fb4c3525b4ad9340dcd4e5211a6bb8daf551f1b986",
+      "bytes": 603207,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/atom/partitioner.hpp",
+      "sha256": "3c23e2fe7e93f85163d818080cff3b758090b40c18c2a9a087af1f64ec896642",
+      "bytes": 3589,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/config.hpp",
+      "sha256": "0abde1dda75c7f8e75f1661ba30815449590da23c7bf86f615d35de5ef86fc3d",
+      "bytes": 5323,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/container/alignment.hpp",
+      "sha256": "7b7944102b31e03d868548d44c2555baa7b167a9a42200361269860af0f06260",
+      "bytes": 3164,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/container/array.hpp",
+      "sha256": "0b73e0922ec56db8284aaac660c91044c12b8ba77b3ad14eaa51e24c99f644ba",
+      "bytes": 9064,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/container/array_aligned.hpp",
+      "sha256": "def0627cc4c07ea19b41f2582c30832ba44daa1cab68ba26418c52c176a0f765",
+      "bytes": 2119,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/container/array_subbyte.hpp",
+      "sha256": "c3a2dcf73642be42e3cbec1ce386c5b21ea2f3e9f5896790af1d2fb6e043c37e",
+      "bytes": 18529,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/container/bit_field.hpp",
+      "sha256": "44c497437463c5b0e44289b4c0c7d9c69043c3095ab93132ce855ada7158ff8a",
+      "bytes": 5587,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/container/cuda_types.hpp",
+      "sha256": "2726a840e42e21c4840127fcb9c492ba99b5de2ee368034e837e0d4da2088443",
+      "bytes": 4640,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/container/tuple.hpp",
+      "sha256": "3fe2de09d1da2dd70a1fcfbbb74a49b844b40d4336f5131ef86b987c7231569c",
+      "bytes": 20904,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/container/type_list.hpp",
+      "sha256": "cbbfbf214046726a7db6bf4d7ce155a4374e957d756ec44b2d337c9928a1f7a8",
+      "bytes": 4107,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/int_tuple.hpp",
+      "sha256": "c24e9f65815221a0c81ddd59dece334ad5169ebd3e82527181cc6859931df9b3",
+      "bytes": 26801,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/layout.hpp",
+      "sha256": "e82936f04802ad5f749bb1bc2175368292e5fb3256677ccbf8b9f15e0e5b6ff1",
+      "bytes": 70650,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/layout_composed.hpp",
+      "sha256": "54f1fbd500c43c68755c018f8eb1706b43e463e5a35527714e7e9e7eef2d34f1",
+      "bytes": 18748,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/numeric/arithmetic_tuple.hpp",
+      "sha256": "1fb61bb20e6332977d3f387c1f96026f8781f1c9b89825554a8bbd116409e386",
+      "bytes": 14377,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/numeric/complex.hpp",
+      "sha256": "2852d6ca5131305f3e6c9c40082a616afd1085b8c1420d31a7a22c5d91803223",
+      "bytes": 2886,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/numeric/int.hpp",
+      "sha256": "b00f882518fc0bbd74f60b1150ae83d25c718a684e47eb80c79f5fb9d7d88a31",
+      "bytes": 4025,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/numeric/integer_sequence.hpp",
+      "sha256": "34dcf102cedc0bf4e30891fec07cffee5d2e7ad7f0998ca64dd981cc45fe69d3",
+      "bytes": 5143,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/numeric/integral_constant.hpp",
+      "sha256": "e7f31b04fc2d76e3f239c4df691bd4d394b3df2aab471c4276130a2ef94254c0",
+      "bytes": 15270,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/numeric/integral_ratio.hpp",
+      "sha256": "3ef86e565a871b333686675b788676acd3780d204146669412a84fec64cb699c",
+      "bytes": 7976,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/numeric/math.hpp",
+      "sha256": "bed15cfe8363236e8c7ac06cf94efeb086ed30309c61fa30716afc770b8c10ff",
+      "bytes": 9993,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/numeric/numeric_types.hpp",
+      "sha256": "31182a9e1a13a409cf0640a017c91aa47d42c6c6dfa3ecaf7bf488d804f74eab",
+      "bytes": 5084,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/numeric/real.hpp",
+      "sha256": "04d22a2a9a9f7d7a02b744de255a55df30ba12b2105ce0585b2f7f8a10724fa1",
+      "bytes": 2538,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/pointer.hpp",
+      "sha256": "df9127e7a1be031faffa89ac8413653f12af3bb6d2d2459d9e972e8905e659c1",
+      "bytes": 12495,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/pointer_base.hpp",
+      "sha256": "b5abdc6ed02e90ea2098a7094b13ce06f98abf562b53b5f1acc9992131ff651f",
+      "bytes": 11156,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/pointer_flagged.hpp",
+      "sha256": "ff5bcbac22857bc9195b948f55560211091305c35d3465b727f208ae57c9bfaf",
+      "bytes": 7932,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/pointer_sparse.hpp",
+      "sha256": "21a60a84ded6bcb2243292ca5ec7a5e495928921071848935e99ebef8659cbca",
+      "bytes": 7239,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/pointer_swizzle.hpp",
+      "sha256": "5452d2cd15476b2d0e62fcb739b918f5b2dc1cc7fff1f9c3aaee068f30d51fa2",
+      "bytes": 6415,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/stride.hpp",
+      "sha256": "e77d5febafa814d8bc6150261e099f3b54dcbb74d653415fd6f4c8c4c68fbeb8",
+      "bytes": 21477,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/swizzle.hpp",
+      "sha256": "308f641a775688413cc2c0e2ba5a5b52670589b731e468acb8929dd6ff6c0a34",
+      "bytes": 16120,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/swizzle_layout.hpp",
+      "sha256": "481415b5c76197ae64af2091c0e498c6b0286aedc302c718452f42ada1af4be2",
+      "bytes": 22172,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/tensor.hpp",
+      "sha256": "7314b5bae972984606fc712489d9887443e14990d4aea564b83e085aad3c775e",
+      "bytes": 2429,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/tensor_impl.hpp",
+      "sha256": "d2fd53af49a1a8baad4c83114b304b7d57dec94c31cfed6eac05db0f8c48028e",
+      "bytes": 39954,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/tensor_zip.hpp",
+      "sha256": "aec4c5c59b3c603af1d4b91f2251f4ea2b253d9c4894a2112ed5fdd47c31d41f",
+      "bytes": 8755,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/underscore.hpp",
+      "sha256": "65edce496beb4b954cc64602ccb9b81a11635187b0626c9a95e327a68604f5f5",
+      "bytes": 6282,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/util/debug.hpp",
+      "sha256": "11960fcac4506a9ef06f25cc0cddc3a01c5a9f3a09b06e86fe837d6195093043",
+      "bytes": 5115,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/util/print.hpp",
+      "sha256": "de44a6e9bce60ba5e3ddc601bbb815d2248d65e6ce87fa94f134374dc0cb175f",
+      "bytes": 5351,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cute/util/type_traits.hpp",
+      "sha256": "031421a7511e2644c8f40b238103376c3c310a95f46b7f5047e86eeda1264939",
+      "bytes": 9248,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/arch/config.h",
+      "sha256": "bce8d8f59a33a86c480995e18e96d04da0e4061cf4b10246f980268514b5dd76",
+      "bytes": 6980,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/arch/synclog.hpp",
+      "sha256": "d26f6f79ce325e8c5aea964cbadb4ea239e9e26faffe7320d6725eefe0b9d5fd",
+      "bytes": 49527,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/array.h",
+      "sha256": "038bdd0e14c8aca1ef163957175a02f7cdca5db37b330f9f494001d19b52527d",
+      "bytes": 74316,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/array_subbyte.h",
+      "sha256": "c1f59483ae0e2ffe1378dabe5779d3a4dcf30ce841fd7b1e214473e915d53eb2",
+      "bytes": 13536,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/bfloat16.h",
+      "sha256": "355024524c529f73ac8a8d7e406cad60e9cb1f4aac9ae5fa203216bf7a1dc86d",
+      "bytes": 19170,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/complex.h",
+      "sha256": "fc335a8d29b5120c194cb48dd5dbce29e3d0154185f8968a556ea7e276712f60",
+      "bytes": 24041,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/conv/conv2d_problem_size.h",
+      "sha256": "a341c409c9ff1eeeb82b70fd20c0b23f61390086a16081f71b435cfd00e2fa15",
+      "bytes": 23454,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/conv/conv3d_problem_size.h",
+      "sha256": "17e17e6f572a8abe2da85c856a71a72191c6f52ed3c7a0eac902804b12af6738",
+      "bytes": 18548,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/conv/convolution.h",
+      "sha256": "bcd79d6d36415c0082fb1d16329d05ee25b27cab0d30c0f33df8fdd035c9d247",
+      "bytes": 7293,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/coord.h",
+      "sha256": "0d921cbfa4e2b586f0523dddec213925c92ab15793be926676a4a5d6b99ebfef",
+      "bytes": 11826,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/core_io.h",
+      "sha256": "47649140f1df9d488a306dc2fed79aaae9e1f7982db9cc7bab25b5f0da81484b",
+      "bytes": 11901,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/cuda_host_adapter.hpp",
+      "sha256": "3211a0f68d4835b92d0c1d84b038b97c1204350b1d81a77bedcf8f0b283ad91c",
+      "bytes": 14902,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/cutlass.h",
+      "sha256": "07f5cf03084d62bcb9848c6c8c0e823f07305433491195001c06fed00c6543bf",
+      "bytes": 6514,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/detail/dependent_false.hpp",
+      "sha256": "4bf38c035f080d1a0cd49722cd81990f0ae34368ada7efa304f76f7367231513",
+      "bytes": 3710,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/detail/helper_macros.hpp",
+      "sha256": "f59a5e9fc0f822ce6411d1f6d0979ded68efdb1bf6755d322b93163f31e3b01a",
+      "bytes": 8169,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/exmy_base.h",
+      "sha256": "49bdc92fd4e2f2264ab777358b7a2810d697ef7069b484a5eaa9715def8db859",
+      "bytes": 45116,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/fast_math.h",
+      "sha256": "21b92aec79d98f910dc1227dc0777caa8f7fb72581ca7bec2c313de444510fd6",
+      "bytes": 29414,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/float8.h",
+      "sha256": "fd58616e2616d5cac1aaf73f152c30b7eb87cfd839bf9a504099d042cb2617c8",
+      "bytes": 49963,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/float_subbyte.h",
+      "sha256": "1c289e9f5dc312d9fd757677c4066ba903019a99ce0a3c2de9d4b8caf03f8464",
+      "bytes": 24561,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/floating_point_nvrtc.h",
+      "sha256": "9e460f494422cc738a3d9c224df0ff89079002eec477b99cfcb475033d784c2c",
+      "bytes": 3365,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/functional.h",
+      "sha256": "0f331598ec621fc1e8541b46449f0fccffa1e62c938c8b12dcc777529c347557",
+      "bytes": 29930,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/gemm/gemm_enumerated_types.h",
+      "sha256": "93833fb86b1a2bf87f0ec4b64d51d2d5f65399ea40ba84cdef2e8b3489a8c144",
+      "bytes": 3174,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/gemm_coord.h",
+      "sha256": "1b9d463105ef5a9f3b66b7ee4c589e3e9535241ec44d146fe4a12c5209f29ac9",
+      "bytes": 10599,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/half.h",
+      "sha256": "b581963b046639d07f4891d9b6e2081bc886150f1db688732e453f406dc3c07c",
+      "bytes": 23872,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/integer_subbyte.h",
+      "sha256": "4985c385318e0eda0361562b6fc0f6961da4c750b8bdd88df9489935945336dc",
+      "bytes": 9165,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/layout/layout.h",
+      "sha256": "259da643dfd0498946ea81718676afbd68d2348cac171da6b41bf896f94b0d08",
+      "bytes": 3020,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/layout/matrix.h",
+      "sha256": "f7ff90051e0b2c7ea6f1295e62a2550e89aec5f8385a26c38ad38890a670341d",
+      "bytes": 34719,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/layout/pitch_linear.h",
+      "sha256": "f3d01d0cafed30d817c41ec5c4acc8c89d405bce9854eb7f0cd68f8363ed146a",
+      "bytes": 4697,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/layout/tensor.h",
+      "sha256": "5476d9db5a0ac0427f2397d55c8ffa45df0526080ada4a79ada61b6d33930eab",
+      "bytes": 18665,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/layout/tensor_op_multiplicand_sm70.h",
+      "sha256": "9299f947d97c8a66c0a39fb2904bdd1513e54743e204e02fd144f770cc023f2e",
+      "bytes": 29657,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/layout/tensor_op_multiplicand_sm75.h",
+      "sha256": "d4fef95a420e5724b775f854252352fa0447742d19e35fd26e7e70c72051db2f",
+      "bytes": 33494,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/layout/vector.h",
+      "sha256": "4c08c6e7935d76ba92318c281abb803b3cf669a76ac87f15881fdc8ab526c90a",
+      "bytes": 3354,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/matrix.h",
+      "sha256": "e0ed28bc4740250ef1b0c0cd980134f56639336fa970d9d0c45ccf1220718eaf",
+      "bytes": 364119,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/matrix_coord.h",
+      "sha256": "22b96274790f0f1dfd44aa476c1575c3ba44ac905353efc3325404530e39fe7e",
+      "bytes": 4991,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/matrix_shape.h",
+      "sha256": "a5aa67691c6391a462696556df9a50d84746005d52f5980ee57870165edc0722",
+      "bytes": 2726,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/numeric_conversion.h",
+      "sha256": "3afecfdb4b7492d6713ff3fc8872fd1c2af9163069be6bc5cb63137acf9cea35",
+      "bytes": 239789,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/numeric_size.h",
+      "sha256": "b942cacdbfeee03c23a7b6259624693de042b1c46054f3a358ae2c83c887714f",
+      "bytes": 3347,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/numeric_types.h",
+      "sha256": "7d34dd8a8db77549eb2d635c6c7f223ca85d210ca0bb640b2144287a02d68aa5",
+      "bytes": 4855,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/pitch_linear_coord.h",
+      "sha256": "5ae2681cc9098e616dafebe3386bdd5d56c7dce33754beb6f6485716d127c952",
+      "bytes": 5492,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/platform/platform.h",
+      "sha256": "e4f00bea10f586f24481b1ae8652ddaedd3cccab4351e7ba775adcc4a02fec0a",
+      "bytes": 27391,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/quaternion.h",
+      "sha256": "521209fca5d47f6a11fecbcbe03af5ad0e84375e63f44d2031614b3b4e1d4bd6",
+      "bytes": 20891,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/real.h",
+      "sha256": "6fd96474fd128d6ee44bfdc9274a9cabf805bd726ff7a1563b70fd3b41fbbf44",
+      "bytes": 2432,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/subbyte_reference.h",
+      "sha256": "e49ab0b69c5d1cff243946d4678dc3bf56e0835d2278235f49de6894feca276b",
+      "bytes": 40804,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/tensor_coord.h",
+      "sha256": "e97dbe66edce5c63d4207355163188fc50c10a86359f51e111478f51f7089214",
+      "bytes": 8964,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/tensor_ref.h",
+      "sha256": "734908cf9b867f28439ae59023fde6b1e36a71f7aacd8ee065146e8d3b23863e",
+      "bytes": 12344,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/tensor_view.h",
+      "sha256": "026cc5dd6c3352da4785365f1184ad17af34c77523df04d447d552bc3ed6bc68",
+      "bytes": 9509,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/tfloat32.h",
+      "sha256": "16a926b8caf6eef11d511f998fa51b922f6065a1fc4a5bde788dceaf241b2228",
+      "bytes": 12912,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/trace.h",
+      "sha256": "b124b4c1cb13a7877188f142a39fb88f652ac3ff0bf7a1d8af9faed29b805f96",
+      "bytes": 2581,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/transform/thread/unary_op.h",
+      "sha256": "7f9a91bdc04947599cecede830e1f33ed90d9ee8beb4c446cb0d62d66a1929f5",
+      "bytes": 4309,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    },
+    {
+      "path": "sources/third_party/cutlass/include/cutlass/uint128.h",
+      "sha256": "8637bb2379477ec4850d6c97a2cd3507a460bc2f8dabc48d0264866fbba0dda8",
+      "bytes": 7857,
+      "classification": "CUTLASS upstream dependency",
+      "archive_manifest_match": true,
+      "frozen_4090_match": true
+    }
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive_README.md",
+      "sha256": "3b84bf4482172010c488a90ccf8b91c63c36e2bfa4b4d8619f43d40a361993f1",
+      "origin": "authoritative-v2/README.md"
+    },
+    {
+      "path": "evidence/archive_CODE_REVIEW.md",
+      "sha256": "2c8b0e40b2666e9d7ce95f9da42d38796e1ac006590da31977594e4947a110ac",
+      "origin": "authoritative-v2/CODE_REVIEW_20261019.md"
+    },
+    {
+      "path": "evidence/later_frontier_best_config.json",
+      "sha256": "93da0d3a9e80a517d51f1a1ba87c79ef142ae45d193ef5b2f527d3de89b61931",
+      "origin": "authoritative-v2/bench/frontier_best_config.json"
+    },
+    {
+      "path": "evidence/h200_real_overlap_validation.md",
+      "sha256": "256d25ac114ddfe6db65e4663237df5beabc80df8fab38d2c407408707e4c64c",
+      "origin": "authoritative-v2/evidence/h200_real_overlap_validation.md"
+    },
+    {
+      "path": "evidence/4090_SOURCE_REVISION.json",
+      "sha256": "d7266011a80100b63007dd3480f4c1e116eb7b0be02e8fb01ed8bc8576254e45",
+      "origin": "4090-frozen/SOURCE_REVISION.json"
+    },
+    {
+      "path": "evidence/4090_ARCHIVE_BEST.md",
+      "sha256": "117b45637b06acb77a267ed63aba8c37e95029c8cb43f4d8a679db7f069adba4",
+      "origin": "4090-frozen/ARCHIVE_BEST.md"
+    },
+    {
+      "path": "evidence/4090_sm89_optimization.md",
+      "sha256": "bebe6f519b3eccfaeb9b12106d4d0aa2327e380252002d3ce258ee5aeedebe5e",
+      "origin": "4090-frozen/evidence/sm89_optimization_20261013.md"
+    },
+    {
+      "path": "evidence/4090_best_config.json",
+      "sha256": "1510f08c1a87f14bde09a8812ef8cef70a492c418b6ed6210ef9c0203ff4ce31",
+      "origin": "4090-frozen/bench/best_config.json"
+    },
+    {
+      "path": "licenses/flash-attention-LICENSE",
+      "sha256": "8c9ccb96c065e706135b6cbad279b721da6156e51f3a5f27c6b3329af9416d73",
+      "origin": "https://raw.githubusercontent.com/Dao-AILab/flash-attention/v2.8.3/LICENSE",
+      "supplemental_upstream": true
+    },
+    {
+      "path": "licenses/flash-attention-AUTHORS",
+      "sha256": "f3bf4144826a62841b7f9aebc5057f75da2d32a652a573edc67250ec94a377a7",
+      "origin": "https://raw.githubusercontent.com/Dao-AILab/flash-attention/v2.8.3/AUTHORS",
+      "supplemental_upstream": true
+    },
+    {
+      "path": "evidence/h200_real_overlap_profile.csv",
+      "sha256": "27973caa8ca337faca234918764754bc07b53b0a713c7d73004aaf1c4ad41c59",
+      "origin": "historical H200 CSV; original external reference documented in docs/b01_vendor.md",
+      "scope": "historical Python-DMA H200 generation; not new Vendor validation"
+    },
+    {
+      "path": "licenses/cutlass-LICENSE.txt",
+      "sha256": "80a7a18b73d41f64dd9ca881af35938f8de88b18c728703251f4c94d1299884d",
+      "origin": "verbatim copy of sources/third_party/cutlass/LICENSE.txt"
+    }
+  ],
+  "license_clearance": "BLOCKED: no explicit redistribution grant for B01 engineering modifications was found in the authority archive",
+  "source_archive": {
+    "path": "source_snapshot.tar.gz",
+    "sha256": "162cf8975c816bf9fe4bcb708326ecf968bffda0f59c86ba7c58f1d80e12db6c",
+    "bytes": 728308
+  },
+  "evidence_archive": {
+    "path": "historical_evidence.tar.gz",
+    "sha256": "6a1bab1ce04a6eae03cda52de9189a97b470b3b155de81d42fa77dd8021dd85a",
+    "bytes": 19576
+  },
+  "p6_b01_import": {
+    "source": "Original Mac v2 snapshot; original bytes, no kernel edits",
+    "added": [
+      "fa2_custom/autotune_binding.cpp",
+      "fa2_custom/autotune_kernels.cu",
+      "fa2_custom/autotune_fwd_kernel.h",
+      "build/setup_autotune.py",
+      "build/generate_autotune_header.py"
+    ],
+    "provider": "offload_fa2_ext",
+    "capability": "B1/D128/BF16/MHA/noncausal; actual local heads divisible by group; M64/M128 N32/64/128 S1..16 (M128 S1 only)"
+  }
+}

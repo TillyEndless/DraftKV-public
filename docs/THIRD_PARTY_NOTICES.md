@@ -1,33 +1,15 @@
-# Third-party notices and dependency boundaries
+# Third-party and external boundaries
 
-Apache-2.0 covers project-owned DraftKV source and glue that the project owner
-is authorized to license. It does not relicense upstream models, kernels,
-weights, datasets or evaluators. Existing source notices remain unchanged.
+The root Apache-2.0 does not relicense dependencies.
 
-## Bundled shared project glue
+The outer profile CLI records known external campaign hashes and invokes separately installed original scripts. Those scripts, their private environment modules and GPU receipts are not added to this distribution. Their identity checks do not grant redistribution rights or change any existing third-party terms.
 
-`forcing.geometry` and `forcing.budget` provide local shape/frame-equivalent
-accounting required by native planners. `worldkv.source` is project integration,
-loader and camera-observation glue used by shared native paths. Keeping these
-project-authored helpers does not bundle or license the external WorldKV or
-DeepForcing algorithms they reference. No independent baseline runner is
-supplied. Original generic workers/catalogs retain dormant names where required
-for byte identity; independent baseline implementations are excluded.
+* Necessary shared `forcing.geometry`, `forcing.budget`, `worldkv.source`, `shadowkv.source` and `worldtrace_landmark.solarwm` project integration files retain original paths and bytes. Their loaded third-party model bodies have separate rights.
+* The seven retained LingBot `rag_portable` namespace leaves carry the original LingBot CC-BY-NC-SA-4.0 license (`versions/*/src/draftkv/vendor/backbones/lingbot14/LICENSE.txt`). They are required by the direct camera-frustum import. Preserve attribution and all applicable NC/SA terms.
+* Existing FreeKV/InfLLM/InfiniGen/ShadowKV/WorldKV license leaves are preserved where bound metadata reads them. Keeping a license leaf is not a claim that the corresponding full baseline is distributed or supported.
+* B01 complete archive, derived native headers, modified FA/native binaries, broad native backbone bodies and the Solar SP8 dependency overlay are external. Exact source locks identify their expected content; they do not grant redistribution rights. No archive or compiled binary is included.
+* `src/draftkv/retrieval/ragged2d.py` is a package-local copy of the host-side Ragged-2D implementation from [official Anemoi](https://github.com/anemoi-project/anemoi/blob/270ddf8c3f0a43be47cf586873e7758bc76b822d/anemoi/layers/attention/mpa/ragged_2d.py), commit `270ddf8c3f0a43be47cf586873e7758bc76b822d`, Copyright 2026 Anemoi Project Contributors, Apache-2.0. All 14 function/class definitions and the complete module AST excluding the module docstring match that exact official source. DraftKV's retained file has different package-attribution documentation; it does not add the compact-partition helpers or selection branch relative to this official commit. The complete license is preserved in `licenses/Anemoi-LICENSE`. This canonical official attribution supersedes the frozen file header's historical repository identifier. No private repository, Anemoi package installation, native Anemoi kernel or runtime network lookup is required by that local module. The older `d77d8f5` comparison is not its precise upstream identity.
 
-## External dependencies
+Exact retained bytes and historical commits are recorded in `RETAINED_SOURCE_SHA256.json`. The detailed private rights audit is kept outside the tracked source repository.
 
-| Dependency | Boundary |
-|---|---|
-| B01 engineering sources and cache | Not bundled; exact authorized archive/manifest/build specification required |
-| Modified FlashAttention/native kernel variants | Uncleared bodies/headers omitted; exact original fingerprints required |
-| Native LongLive/LingBot/SolarWM backbone bodies | Separately obtained and source-locked |
-| PyTorch, FlashAttention, Triton, model libraries | Installed separately under their own licenses; no binaries bundled |
-| Checkpoints and conditioning data | Separately obtained under owners' terms |
-| VBench-Long, ORBIA and revisit assets | External source locks, licenses and asset permissions apply |
-
-`verified_runtime_source_map.json` has 49 context-specific external records
-(19 distinct path/hash pairs). Fingerprints specify identity, not redistribution
-permission. Do not publish restricted code merely because the runner can load
-it. Omitted exact dependencies must be supplied with appropriate authorization;
-otherwise the runtime fails closed. The root license grants no additional rights
-to those sources or assets.
+* `src/draftkv/vendor/evaluator_compat/torchvision_legacy_video.py` contains a project compatibility adapter with video-writing statements matching PyTorch/torchvision v0.23.0 `torchvision/io/video.py` (with `frames` renamed to `video_array`). Those portions are BSD-3-Clause, Copyright (c) Soumith Chintala 2016, All rights reserved. The complete original terms and disclaimer are retained in `licenses/Torchvision-LICENSE`. This is independent of the DraftKV attention implementation and is not relicensed as exclusively project Apache code.

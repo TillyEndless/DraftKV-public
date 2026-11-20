@@ -1,0 +1,579 @@
+{
+  "schema_version": 1,
+  "status": "A2_RELEASE_FROZEN_20261108_WITH_PARTIAL_SP8_CAMPAIGN_EVIDENCE",
+  "scope": "Freeze Full A2 (LingBot1.3B/14B K3 P3, SolarWM-H3 K7 P5) with no Early Fix. LongLive stays text-only P3, no camera A2. Streaming B01 maintained.",
+  "algorithm": "draftkv",
+  "implementation": "Single source-ordered Direct Block Top-K + configurable protected P2/P3/P5; native Post-RoPE Spatial8x16, Chrono-Compact and B01.",
+  "importance_scorer": {
+    "path": "configs/algorithms/draftkv/scorer.json",
+    "sha256": "80b5c32051b84b43d8731e7743c519ef84947ece85a5499341bc61c505c2cc7e",
+    "schema_version": 1,
+    "name": "draftattention2_postrope_spatial8x16_meanmax",
+    "qk_space": "post_qknorm_post_rope",
+    "partition": "spatial2d_fixed8x16",
+    "pool_h": 8,
+    "pool_w": 16,
+    "capacity": 128,
+    "fusion": "probability_mean_max",
+    "maxpool_weight": 0.04,
+    "draft_descriptor_dtype": "fp16",
+    "draft_logit_dtype": "fp16",
+    "draft_gemm_accumulation": "fp32",
+    "softmax_accumulation": "fp32",
+    "mixed_precision_attention": false,
+    "autotune_status": "INHERITED_WEIGHT_NOT_RETUNED_FOR_SPATIAL8X16"
+  },
+  "new_profile_cache_required": false,
+  "new_hostpages_pool_required": false,
+  "groups": {
+    "LongLive1.3B": {
+      "status": "BLOCK_TOPK_P3_GPU_UNVERIFIED_CAMERA_A2_BLOCKED_TEXT_ONLY",
+      "sp": 1,
+      "pre_importance_update_gpu_status": "GPU_PASS_REAL_5S_SMOKE",
+      "preferred_runtime": "canonical_block_topk_p3_chrono_compact_b01_text_only_no_camera",
+      "frozen_manifest": {
+        "repo_path": "receipts/bench1-draftkv-release-ready-20261026/longlive-v11-freeze-manifest.json",
+        "sha256": "7c4accbe0290c4a5976225c051524e0809bbc93d587842cf3eb0d5bb4b9e4b10"
+      },
+      "fresh_5s_smoke": {
+        "repo_path": "receipts/bench1-draftkv-release-ready-20261026/longlive-5s-result.json",
+        "sha256": "498238bda439742aaeaa208df7537925c84747dc491a907b4df8283033eb58b6",
+        "status": "REAL_VIDEO_SMOKE_PASS",
+        "video_sha256": "8f4deb496cc3f826eef2c03d83f8e39f0322527cf3b7a6cf0c1c3f37c7e95d56"
+      },
+      "gpu_status": "NOT_RUN_FOR_NEW_BLOCK_PATH",
+      "runtime_sources": {
+        "algorithm": "src/draftkv/algorithms/draftkv",
+        "retrieval": "src/draftkv/retrieval/block_topk_p3.py",
+        "streaming": "src/draftkv/streaming",
+        "b01_vendor": "src/draftkv/vendor/b01",
+        "b01_archive": "src/draftkv/streaming/vendor/b01-original.tar.gz",
+        "importance": "src/draftkv/retrieval/draftattention2_importance.py",
+        "attention_positions": "src/draftkv/algorithms/draftkv/position.py",
+        "spatial_pooling": "src/draftkv/retrieval/draftattention2_importance.py",
+        "adapter": "src/draftkv/algorithms/draftkv/block_backbone.py",
+        "trace_validation": "src/draftkv/algorithms/draftkv/block_trace.py",
+        "block_policy": "src/draftkv/algorithms/draftkv/block_policy.py"
+      },
+      "historical_runtime_provenance": {
+        "archive_sha256": "ebeca735110390e2b18d140e73c3bb6a29d76f45d56932a497ae0f1d18c895fa",
+        "location": "external provenance; original machine path intentionally not executable configuration",
+        "source_location": "external provenance; current release uses vendored/source-locked repo paths"
+      },
+      "importance_config_sha256": "80b5c32051b84b43d8731e7743c519ef84947ece85a5499341bc61c505c2cc7e",
+      "pre_chrono_compact_status": "STATIC_CAPABLE_GPU_UNVERIFIED_AFTER_IMPORTANCE_UPDATE",
+      "historical_preferred_runtime": "frozen_v11_frame_dma",
+      "historical_release_basis": [
+        "frozen v11 GPU Golden + real 30-layer/15-frame Forward",
+        "fresh 81-frame/5.0625s MP4 smoke with B01 Resident and historical-fetch paths"
+      ],
+      "pre_spatial8x16_status": "CHRONO_COMPACT_STATIC_CAPABLE_FULL_MATRIX_GPU_UNVERIFIED",
+      "physical_kv_order": "source_frame_then_spatial_token_ascending",
+      "selection_policy": {
+        "name": "direct_block_topk_p3",
+        "protected_full_frames": 3,
+        "remote_equivalent_frames": 3,
+        "softmax_domain": "all_nonsink_history_including_protected",
+        "threshold_z": null,
+        "relative_floor": null
+      },
+      "packed_temporal_rule": "packed_token_offset//frame_tokens",
+      "requested_a2_camera_gate": {
+        "requested_top_chunks": 2,
+        "chunk_frames": 3,
+        "protect_recent_frames": 3,
+        "integration_status": "BLOCKED_MISSING_CAMERA_TRAJECTORY",
+        "reason": "WorldAttention160 six-prompt native T2V has no observed C2W/intrinsics",
+        "fallback_policy": "P3 Direct Block Top-K, not falsely reported as A2"
+      }
+    },
+    "LingBot14B": {
+      "status": "BLOCK_TOPK_P3_GPU_UNVERIFIED",
+      "sp": 8,
+      "pre_importance_update_gpu_status": "GPU_PASS_FROZEN_SP8_E2E",
+      "preferred_runtime": "a2_frustum_v2_camera_top3_p3_no_early_fix_chrono_compact_streaming_fa2",
+      "frozen_manifest": {
+        "repo_path": "receipts/bench1-draftkv-release-ready-20261026/lingbot-v7-frozen-manifest.json",
+        "sha256": "1ec4a7338946458049049a781a1f85d65e8aef0d68fec8ad8eb62b5104ca5460"
+      },
+      "sp8_e2e": {
+        "repo_path": "receipts/bench1-draftkv-release-ready-20261026/lingbot-v7-sp8-81f-report.json",
+        "sha256": "6a304d3badc856ec6bddc4659e289acd6f66bd02a7aebcd728e2bb8065dca0b7",
+        "status": "REAL_SP8_81F_TOPK_CLEAN_COMMIT_PARITY_ACCEPTED",
+        "video_sha256": "2f6717f7a6d6aa3a45427e0c2338b240bfdb3e0dbdbe2bb03be57b59905dc0"
+      },
+      "gpu_status": "NOT_RUN_FOR_NEW_BLOCK_PATH",
+      "oom_capacity_gate": false,
+      "runtime_sources": {
+        "algorithm": "src/draftkv/algorithms/draftkv",
+        "retrieval": "src/draftkv/retrieval/block_topk_p3.py",
+        "streaming": "src/draftkv/streaming",
+        "b01_vendor": "src/draftkv/vendor/b01",
+        "b01_archive": "src/draftkv/streaming/vendor/b01-original.tar.gz",
+        "importance": "src/draftkv/retrieval/draftattention2_importance.py",
+        "attention_positions": "src/draftkv/algorithms/draftkv/position.py",
+        "spatial_pooling": "src/draftkv/retrieval/draftattention2_importance.py",
+        "adapter": "src/draftkv/algorithms/draftkv/block_backbone.py",
+        "trace_validation": "src/draftkv/algorithms/draftkv/block_trace.py",
+        "block_policy": "src/draftkv/algorithms/draftkv/block_policy.py"
+      },
+      "historical_runtime_provenance": {
+        "archive_sha256": "d9a012481a20a51fd6b7b85f1cdaccc19c89b76c0a6f3d7ef768dff93ee52206",
+        "location": "external provenance; original machine path intentionally not executable configuration",
+        "source_location": "external provenance; current release uses vendored/source-locked repo paths",
+        "runner_location": "external provenance; current release uses scripts/bench1_release.py"
+      },
+      "importance_config_sha256": "80b5c32051b84b43d8731e7743c519ef84947ece85a5499341bc61c505c2cc7e",
+      "pre_chrono_compact_status": "STATIC_CAPABLE_GPU_UNVERIFIED_AFTER_IMPORTANCE_UPDATE",
+      "historical_preferred_runtime": "frozen_v7_frame_dma",
+      "historical_release_basis": [
+        "frozen v7 SP8 81-frame E2E",
+        "8-rank 1000-call Dynamic Top-K parity",
+        "8-rank 5 Clean Commit parity",
+        "bitwise-identical MP4"
+      ],
+      "pre_spatial8x16_status": "CHRONO_COMPACT_STATIC_CAPABLE_FULL_MATRIX_GPU_UNVERIFIED",
+      "physical_kv_order": "sink_ascending_selected_ascending_current_ascending",
+      "selection_policy": {
+        "name": "direct_block_topk_p3",
+        "protected_full_frames": 3,
+        "softmax_domain": "all_nonsink_history_including_protected",
+        "threshold_z": null,
+        "relative_floor": null,
+        "remote_equivalent_frames": 5
+      },
+      "final_camera_gate": {
+        "name": "A2-Frustum-V2",
+        "ranking": "bilateral_frustum_overlap_8x8x3",
+        "camera_top_chunks": 3,
+        "camera_gate_mode": "hard_top_m_no_backfill",
+        "eligible_remote_chunks": "exclude_sink_ceil_C4_and_recent_two_C4_chunks",
+        "protected_recent_frames": 3,
+        "cold_start_fallback": false,
+        "temporal_c4_floor": false,
+        "sink_tail_backfill": false,
+        "retrieval_budget": {
+          "sink": 3,
+          "retrieved": 11,
+          "local": 0,
+          "current": 4
+        },
+        "policy": "Camera candidates only + protected latest P3; no borrowing from unselected frames",
+        "runtime": "src/draftkv/algorithms/draftkv/camera_frustum_v2.py",
+        "source_sha256": "57517e24c38bce66ad240f3130504543b2f783994929edc699a11a9588d3fd54",
+        "evidence": "LingBot14B case0005 SP8 357 frames, seed42, no Early Fix; no new release E2E claim"
+      }
+    },
+    "LingBot1.3B": {
+      "status": "BLOCK_TOPK_P3_GPU_UNVERIFIED",
+      "gpu_status": "NOT_RUN_FOR_NEW_BLOCK_PATH",
+      "preferred_runtime": "a2_frustum_v2_camera_top3_p3_no_early_fix_chrono_compact_b01",
+      "physical_kv_order": "source_frame_then_spatial_token_ascending",
+      "selection_policy": {
+        "name": "direct_block_topk_p3",
+        "protected_full_frames": 3,
+        "remote_equivalent_frames": 8,
+        "softmax_domain": "camera_top3_eligible_chunks_plus_true_latest_p3_no_backfill",
+        "threshold_z": null,
+        "relative_floor": null,
+        "camera_top_chunks": 3,
+        "camera_gate_mode": "hard_top_m_no_backfill",
+        "cold_start_fallback": false,
+        "sink_tail_backfill": false,
+        "temporal_floor": false
+      },
+      "packed_temporal_rule": "packed_token_offset//frame_tokens",
+      "runtime_sources": {
+        "algorithm": "src/draftkv/algorithms/draftkv",
+        "retrieval": "src/draftkv/retrieval/block_topk_p3.py",
+        "streaming": "src/draftkv/streaming",
+        "b01_vendor": "src/draftkv/vendor/b01",
+        "b01_archive": "src/draftkv/streaming/vendor/b01-original.tar.gz",
+        "adapter": "src/draftkv/algorithms/draftkv/block_backbone.py",
+        "trace_validation": "src/draftkv/algorithms/draftkv/block_trace.py",
+        "importance": "src/draftkv/retrieval/draftattention2_importance.py",
+        "block_policy": "src/draftkv/algorithms/draftkv/block_policy.py"
+      },
+      "final_camera_gate": {
+        "name": "A2-Frustum-V2",
+        "top_chunks": 3,
+        "chunk_frames": 4,
+        "protect_recent_frames": 3,
+        "camera_gate_mode": "hard_top_m_no_backfill",
+        "recent_history_exclusion_chunks": 2,
+        "no_candidate_backfill": true,
+        "cold_start_fallback": false,
+        "temporal_c4_floor": false,
+        "sink_tail_backfill": false,
+        "intrinsics_policy": "native_lingbot_pixel_intrinsics",
+        "budget": {
+          "sink": 3,
+          "local": 0,
+          "retrieved": 11,
+          "current": 4
+        },
+        "path": "src/draftkv/algorithms/draftkv/camera_frustum_multibackbone.py",
+        "gpu_e2e": "NOT_RUN"
+      }
+    },
+    "SolarWM33B": {
+      "status": "BLOCK_TOPK_P5_GPU_UNVERIFIED",
+      "gpu_status": "NOT_RUN_FOR_NEW_BLOCK_PATH",
+      "preferred_runtime": "a2_frustum_v2_camera_top7_p5_no_early_fix_chrono_compact_b01",
+      "physical_kv_order": "source_frame_then_spatial_token_ascending",
+      "selection_policy": {
+        "name": "direct_block_topk_p5",
+        "protected_full_frames": 5,
+        "remote_equivalent_frames": 20,
+        "softmax_domain": "camera_top7_eligible_chunks_plus_true_latest_p5_no_backfill",
+        "threshold_z": null,
+        "relative_floor": null,
+        "camera_top_chunks": 7,
+        "camera_gate_mode": "hard_top_m_no_backfill",
+        "cold_start_fallback": false,
+        "sink_tail_backfill": false,
+        "temporal_floor": false
+      },
+      "packed_temporal_rule": "packed_token_offset//frame_tokens",
+      "runtime_sources": {
+        "algorithm": "src/draftkv/algorithms/draftkv",
+        "retrieval": "src/draftkv/retrieval/block_topk_p3.py",
+        "streaming": "src/draftkv/streaming",
+        "b01_vendor": "src/draftkv/vendor/b01",
+        "b01_archive": "src/draftkv/streaming/vendor/b01-original.tar.gz",
+        "adapter": "src/draftkv/algorithms/draftkv/block_backbone.py",
+        "trace_validation": "src/draftkv/algorithms/draftkv/block_trace.py",
+        "importance": "src/draftkv/retrieval/draftattention2_importance.py",
+        "block_policy": "src/draftkv/algorithms/draftkv/block_policy.py"
+      },
+      "final_camera_gate": {
+        "name": "A2-Frustum-V2",
+        "top_chunks": 7,
+        "chunk_frames": 5,
+        "protect_recent_frames": 5,
+        "camera_gate_mode": "hard_top_m_no_backfill",
+        "recent_history_exclusion_chunks": 2,
+        "no_candidate_backfill": true,
+        "cold_start_fallback": false,
+        "temporal_c4_floor": false,
+        "sink_tail_backfill": false,
+        "intrinsics_policy": "original_opencv_K_scaled_for_bfo_only_native_prorope_unchanged",
+        "budget": {
+          "sink": 0,
+          "local": 0,
+          "retrieved": 25,
+          "current": 5
+        },
+        "path": "src/draftkv/algorithms/draftkv/camera_frustum_multibackbone.py",
+        "gpu_e2e": "NOT_RUN"
+      }
+    }
+  },
+  "bench2_representative_gpu_revalidation": {
+    "status": "GPU_PASS_CURRENT_POSTROPE_SCORER_AND_B01_OVERLAP",
+    "scope": "LingBot1.3B / SP1 / RTX4090 / case_0051 representative current-main revalidation; does not promote the full Bench2 hardware/SP matrix",
+    "tested_source_commit": "34dabdb145c18c2f00f66860607c3213da6c6b9f",
+    "receipt": {
+      "repo_path": "receipts/bench2-draftkv-postrope-gpu-revalidation-20261027/summary.json",
+      "sha256": "aa42aba16ee5a8586992fab4cbdbf39df146bd56e773855ad54b20954c6994e1"
+    },
+    "importance_config_sha256": "a0f326f37f3f89afd137cc84a1c4fb17e4fd3e328a6705d46d804e2784293bd9",
+    "gpu_correctness": "CURRENT_MAIN_GPU_D2_POSTROPE_HIER_V1_REPLAY_PASS",
+    "real_qkv_cuda_golden": "REAL_QKV_CUDA_GOLDEN_PASS",
+    "overlap": {
+      "status": "PAIRED_CUDA_ACTIVITY_OBSERVED",
+      "measured_dma_consumer_kernel_residency_overlap": true,
+      "sm_math_overlap_verified": false
+    },
+    "evidence_scope": "Historical pre-Chrono-Compact and pre-spatial8x16 scorer/B01 evidence; not current combined-default video acceptance"
+  },
+  "non_blocking_items": [
+    "official VBench-Long scoring",
+    "new dynamic Profile cache",
+    "new HostPages pooling optimization",
+    "fresh duplicate LingBot 5s rerun",
+    "CUDA OOM during duplicate LingBot smoke on the current 24GB RTX4090 is a capacity-only condition and not a release gate; rerun the unchanged frozen v7 runtime on a higher-memory GPU"
+  ],
+  "next_stage": "Validate new source-bound full model/video and distributed SP runs independently; do not relabel historical absolute-time results",
+  "gpu_validation_policy": {
+    "non_oom_failures": "BLOCKING_UNTIL_FIXED",
+    "cuda_oom_on_current_rtx4090": "NON_BLOCKING_CAPACITY_LIMIT",
+    "oom_action": "rerun unchanged frozen runtime on higher-memory GPU"
+  },
+  "path_policy": {
+    "runtime_paths": "repo-relative or runtime-resolved external cache paths only",
+    "historical_machine_paths": "excluded from this executable release binding",
+    "canonical_sources": {
+      "algorithm": "src/draftkv/algorithms/draftkv",
+      "retrieval": "src/draftkv/retrieval/block_topk_p3.py",
+      "streaming": "src/draftkv/streaming",
+      "b01_vendor": "src/draftkv/vendor/b01",
+      "b01_archive": "src/draftkv/streaming/vendor/b01-original.tar.gz"
+    },
+    "model_retrieval_sources": {
+      "LongLive1.3B": "src/draftkv/retrieval/block_topk_p3.py",
+      "LingBot14B": "src/draftkv/retrieval/block_topk_p3.py",
+      "LingBot1.3B": "src/draftkv/retrieval/block_topk_p3.py",
+      "SolarWM33B": "src/draftkv/retrieval/block_topk_p3.py"
+    }
+  },
+  "attention_position_policy": "chrono_compact",
+  "retrieval_position_policy": "native_post_rope",
+  "position_contract": "docs/draftkv_chrono_compact.md",
+  "canonical_groups": [
+    {
+      "benchmark": "bench1",
+      "backbone": "LongLive1.3B",
+      "algorithm": "draftkv",
+      "attention_position_policy": "chrono_compact",
+      "importance_partition": "spatial2d_fixed8x16",
+      "importance_pool_hw": [
+        8,
+        16
+      ],
+      "importance_config_sha256": "80b5c32051b84b43d8731e7743c519ef84947ece85a5499341bc61c505c2cc7e",
+      "protect_recent": 3,
+      "packing_policy": "chronological_frame_id",
+      "retrieval_granularity": "block",
+      "packing_unit": "source_token",
+      "temporal_rule": "packed_token_offset//frame_tokens"
+    },
+    {
+      "benchmark": "bench2",
+      "backbone": "LingBot1.3B",
+      "algorithm": "draftkv",
+      "attention_position_policy": "chrono_compact",
+      "importance_partition": "spatial2d_fixed8x16",
+      "importance_pool_hw": [
+        8,
+        16
+      ],
+      "importance_config_sha256": "80b5c32051b84b43d8731e7743c519ef84947ece85a5499341bc61c505c2cc7e",
+      "protect_recent": 3,
+      "packing_policy": "chronological_frame_id",
+      "retrieval_granularity": "block",
+      "packing_unit": "source_token",
+      "temporal_rule": "packed_token_offset//frame_tokens"
+    },
+    {
+      "benchmark": "bench2",
+      "backbone": "LingBot14B",
+      "algorithm": "draftkv",
+      "attention_position_policy": "chrono_compact",
+      "importance_partition": "spatial2d_fixed8x16",
+      "importance_pool_hw": [
+        8,
+        16
+      ],
+      "importance_config_sha256": "80b5c32051b84b43d8731e7743c519ef84947ece85a5499341bc61c505c2cc7e",
+      "protect_recent": 3,
+      "packing_policy": "chronological_frame_id",
+      "retrieval_granularity": "block",
+      "packing_unit": "source_token",
+      "temporal_rule": "packed_token_offset//frame_tokens"
+    },
+    {
+      "benchmark": "bench2",
+      "backbone": "SolarWM33B",
+      "algorithm": "draftkv",
+      "attention_position_policy": "chrono_compact",
+      "importance_partition": "spatial2d_fixed8x16",
+      "importance_pool_hw": [
+        8,
+        16
+      ],
+      "importance_config_sha256": "80b5c32051b84b43d8731e7743c519ef84947ece85a5499341bc61c505c2cc7e",
+      "protect_recent": 5,
+      "packing_policy": "chronological_frame_id",
+      "retrieval_granularity": "block",
+      "packing_unit": "source_token",
+      "temporal_rule": "packed_token_offset//frame_tokens"
+    }
+  ],
+  "chrono_compact_validation": {
+    "status": "SYNTHETIC_CUDA_B01_PASS_FULL_MODEL_MATRIX_UNVERIFIED",
+    "scope": "H200 single GPU; two-layer synthetic noisy/clean lifecycles, no model checkpoint/video or distributed run",
+    "receipts": [
+      {
+        "repo_path": "receipts/draftkv-chrono-compact-20261029/LingBot1.3B.json",
+        "sha256": "02a365b642a8773ea9b301278605c8ed40492f68f62ac27a98ecdc0b7a6efc58",
+        "backbone": "LingBot1.3B",
+        "b01_calls": 28,
+        "local_heads": 12
+      },
+      {
+        "repo_path": "receipts/draftkv-chrono-compact-20261029/SolarWM33B.json",
+        "sha256": "f0fa1477a0f8d62604903668706e593e503cc6e9b79234bea651285ee31fda8a",
+        "backbone": "SolarWM33B",
+        "b01_calls": 32,
+        "local_heads": 7
+      }
+    ],
+    "cpu_regression": {
+      "passed": 1275,
+      "skipped": 6,
+      "subtests_passed": 988,
+      "seconds": 188.22,
+      "command": "PYTHONPATH=<isolated-PyYAML-target>:src <Python3.11-with-Torch-and-pytest> -m pytest -q tests",
+      "supplemental_dependency": "PyYAML 6.0.3 installed into an isolated task-local target",
+      "log": {
+        "repo_path": "receipts/draftkv-chrono-compact-20261029/cpu-regression.txt",
+        "sha256": "e8d25adaeb9b18735268349d88902a2d063c97636d6cade537647a81d984f437"
+      }
+    },
+    "evidence_scope": "Historical Ragged64 plus Chrono-Compact evidence, prior to spatial8x16; original receipts and hashes retained"
+  },
+  "spatial8x16_validation": {
+    "status": "CPU_AND_SYNTHETIC_CUDA_PASS_FULL_MODEL_MATRIX_UNVERIFIED",
+    "scope": "All five canonical groups use fixed spatial8x16 + Chrono-Compact; new CUDA evidence covers synthetic LingBot/H3 two-layer lifecycles only",
+    "validation": {
+      "repo_path": "receipts/draftkv-spatial8x16-20261029/validation.json",
+      "sha256": "3215832cec4031bfcba42c8989a6ee6c93f35f75ac45aa0c0a87a522996284fe"
+    },
+    "receipts": [
+      {
+        "repo_path": "receipts/draftkv-spatial8x16-20261029/LingBot1.3B.json",
+        "sha256": "740cfd09a2072f0403584c6322997c2bbb5a2729efd1fb2310d042667fee9e31",
+        "backbone": "LingBot1.3B",
+        "b01_calls": 28,
+        "local_heads": 12
+      },
+      {
+        "repo_path": "receipts/draftkv-spatial8x16-20261029/SolarWM33B.json",
+        "sha256": "81b79f79d5fcc4ef3e74f55b10aed2b226276fa6e2c76f75c70645a9095ebcb8",
+        "backbone": "SolarWM33B",
+        "b01_calls": 32,
+        "local_heads": 7
+      }
+    ],
+    "cpu_regression": {
+      "passed": 1279,
+      "skipped": 6,
+      "subtests_passed": 1005,
+      "seconds": 188.14,
+      "log": {
+        "repo_path": "receipts/draftkv-spatial8x16-20261029/cpu-regression.txt",
+        "sha256": "cd3c0b47d736a097680d64d5edd04eb4a2b7f4849654bd367fabf21c7744719e"
+      }
+    }
+  },
+  "selector_policy": {
+    "name": "model_specific_direct_block_topk",
+    "block_backbones": [
+      "LingBot14B",
+      "LingBot1.3B",
+      "LongLive1.3B",
+      "SolarWM33B"
+    ],
+    "frame_backbones": [],
+    "block_threshold_z": null,
+    "block_relative_floor": null,
+    "protected_recent_by_backbone": {
+      "LingBot14B": 3,
+      "LingBot1.3B": 3,
+      "LongLive1.3B": 3,
+      "SolarWM33B": 5
+    },
+    "warmup": "min(protected_recent_by_backbone[model], actual_budget)"
+  },
+  "packing_policy": "chronological_frame_id",
+  "physical_kv_order": "sink_ascending_selected_ascending_current_ascending",
+  "gpu_history_policy": {
+    "scope": "all_five_canonical_draftkv_groups",
+    "persistent_video_kv_gpu_bytes": 0,
+    "persistent_draft_descriptor_gpu_bytes": 0,
+    "sink_protected_retrieved_source": "immutable_clean_cpu_bank",
+    "descriptor_source": "clean_postrope_fp16_cpu_bank",
+    "scoring_stage": "temporary_batched_cpu_to_gpu_per_attention_layer",
+    "attention_stage": "temporary_gpu_sink_selected_current_kv_per_attention_layer",
+    "clean_stage": "immediate_cpu_copy_after_every_clean_attention_layer",
+    "atomic_commit": "whole_model_only",
+    "native_rolling_video_gpu_history": false,
+    "budget_and_rope_policy": "unchanged",
+    "validation": "CPU_CONTRACT_REQUIRED_GPU_E2E_REVALIDATION_PENDING"
+  },
+  "final_lingbot14b_method": "A2-Frustum V2 camera Top-3 S3/R11/L0/C4 P3 without Early Fix",
+  "table2_retrieval_ablations": {
+    "supported_backbones": [
+      "LingBot1.3B",
+      "LingBot14B",
+      "SolarWM33B"
+    ],
+    "cli_flag": "--draftkv-ablation",
+    "default": "full",
+    "modes": {
+      "full": {
+        "selection": "original_A2_frustum_BFO_then_DraftAttention_BlockTopK",
+        "camera_top_chunks": [
+          3,
+          3,
+          7
+        ],
+        "compute_draft_importance": true
+      },
+      "draft-only": {
+        "selection": "original_DraftKV_BlockTopK",
+        "camera_top_chunks": null,
+        "compute_draft_importance": true
+      },
+      "camera-only": {
+        "selection": "BFO_camera_ranked_whole_frames_with_latest_P3_and_partial_last_chunk",
+        "camera_top_chunks": [
+          3,
+          3,
+          7
+        ],
+        "compute_draft_importance": false,
+        "compute_draft_descriptors": false,
+        "protect_recent_frames": [
+          3,
+          3,
+          3
+        ],
+        "capacity": [
+          19,
+          19,
+          40
+        ],
+        "configuration_status": "P3_2026-11-10_FIXED_TOTAL_BUDGET_CAMERA_RANKED_FRAME_TRIM",
+        "retrieved": [
+          12,
+          12,
+          35
+        ],
+        "remote_retrieved_frames": [
+          9,
+          9,
+          32
+        ],
+        "remote_selection_policy": "camera_rank_then_frame_id_truncate_after_reserving_P",
+        "budget_source": "configs/algorithms/draftkv/a2_frozen_defaults.json#camera_only.models"
+      }
+    },
+    "history_budget_includes_protected_frames": true,
+    "short_history": "no_backfill",
+    "position_and_attention": "original_chrono_compact_CPU_KV_B01_streaming_FA2",
+    "gpu_e2e_status": "REAL_CUDA_ATTENTION_ALL_BACKBONES_AND_LINGBOT14B_VIDEO_VALIDATED",
+    "camera_chunk_formula": "camera-only Top-K=ceil((retrieved_budget-protected_recent_frames)/native_chunk_frames)",
+    "validation_report": "docs/validation/camera-only-p3-all-backbones-20261110.md"
+  },
+  "a2_frozen_release_config": "configs/algorithms/draftkv/a2_frozen_defaults.json",
+  "experiment_repair_status": {
+    "campaign_source_commits": [
+      "e736007",
+      "fc1a04e",
+      "87b2c81",
+      "9241c26",
+      "43ac086",
+      "bb23887",
+      "d8ca12c",
+      "4c58b93"
+    ],
+    "verified_gpu_screening_e2e": 48,
+    "formally_accepted_original_sp8_e2e": 3,
+    "postwindow_solarwm_latent_decode_only": 3,
+    "lingbot1p3_sp8_vae_oom": "UNRESOLVED",
+    "solarwm_sp8_inprocess_sampler_release": "UNRESOLVED",
+    "scoring": "UNCHANGED"
+  }
+}

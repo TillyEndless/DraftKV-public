@@ -1,69 +1,18 @@
 # Installation
 
-## Public package
+Use a separate environment for the original source path being executed. This tree deliberately preserves five original layouts rather than installing conflicting `draftkv` packages into one interpreter. No new common runtime is provided.
 
-Use Python 3.10 or newer, with a separate environment for native models:
+1. Obtain the matching backbone source and checkpoint under its applicable license.
+2. Provision the Python/PyTorch/CUDA/kernel versions recorded for that original run. Do not substitute a different attention binary and call it source-identical acceptance.
+3. Install authorized original B01/native source at the original package-relative location required by `device_route.py`. This file reads the archive before checking its cache. A prebuilt cache alone cannot replace the missing archive.
+4. Install external original campaign worker and companion modules for ORBIA, plus its original environment. Solar SP8 additionally needs its original dependency overlay. Keep these outside the distribution.
+5. Prepare fresh operational metadata outside the Git tree. Map actual paths and record actual source identity. Do not modify the original scientific request, budget, kernel flags, timer or producer/consumer implementation.
+6. Run `./run.sh check`, then inspect `./run.sh plan ...`. Allocate exclusive devices before `run`.
 
-```bash
-python -m venv .venv
-. .venv/bin/activate
-python -m pip install -e .
-./reproduce.sh list
-./reproduce.sh plan --backbone LingBot14B --profile off
-```
+No model or dependency downloads occur in the wrapper. Missing external dependencies remain a reported blocker. Native/model imports on a CPU-only system are not GPU-generation acceptance. Outputs, compilation caches, logs and execution plans must remain outside the source Git tree.
 
-The interface does not install a generic CUDA stack. Recorded profiling used
-PyTorch `2.8.0+cu128` and CUDA 12.8; this is provenance, not a guarantee that
-arbitrary wheels, GPUs or extensions are interchangeable. Original native
-planners verify backbone-specific dependencies, FlashAttention ABI and kernel
-fingerprints. Provide ffmpeg and ffprobe in the model environment.
+H200 large-model original external workers have a fixed startup source-root literal. Use the approved external operational copy containing only that literal mapped to the selected candidate tree, with `--original-worker` naming the exact historical original and `--worker-sha256` naming the mapped copy. The thin CLI validates that exact one-path diff without generating or executing transformed source. All companion tools and the Solar FA3 adapter remain the original files. SP8 original workers instead require their existing external `source` symlink to resolve to the selected version.
 
-## External sources and assets
+`EXTERNAL_DEPENDENCY_SHA256.json` records the exact original package-relative identities of dependencies intentionally not distributed. The CLI accepts their presence in an original execution inventory only at those hashes, and checks referenced installed files before exec. It never creates, downloads, links or materializes them. A separately installed private validation tree records its real dependency integration commit; it does not hide untracked files or claim to have tested the uninstalled source-only checkout.
 
-1. Select `src/draftkv_minimal/verified/<backbone>/`. Its `public/` runtime and
-   `provider/` native-planner subset form one preserved context. Do not mix
-   versions.
-2. Obtain authorized omitted native/backbone/B01 sources. The
-   `external_dependencies` array in `verified_runtime_source_map.json` gives
-   exact paths and SHA256 values. Original source/runtime locks remain in each
-   context's `provider/configs/backbones/` and `public/src/draftkv/data/locks/`.
-   Supply exact authorized files in a separate local deployment.
-3. Use compatible original environments and binaries. B01 requires its exact
-   source archive and original manifest, compiled cache, and a hash-bound build
-   specification containing ABI/source-generation identity. Inspect the
-   original requirements with `dependencies --backbone BACKBONE`. This release
-   does not provide a public download for restricted B01 code.
-4. Obtain model checkpoints and frozen conditioning inputs under their original
-   terms. Directory checkpoints require an exact relative-file SHA256 index;
-   a path or fabricated combined checksum is insufficient.
-5. Copy `configs/assets.example.json` to `assets.local.json`. Replace every
-   `/deployment/...` placeholder and `REPLACE_WITH_SHA256`. Set `model_python`,
-   authorized deployment `source_root`, checkpoint pins, per-case config paths
-   and hashes, and `b01` data. Each case config binds its frozen request,
-   source lock, scientific budget and `algorithm_plugin` to that deployment;
-   it is not a free-form prompt specification.
-6. After pruning changes an inventory, regenerate only that inventory with the
-   original provider helper `draftkv.release.audit.release_source_files(root)`.
-   Store it in the case config's `algorithm_plugin.files`; its `root` must
-   equal `source_root`. Rehash the case config in `assets.local.json`. Keep
-   scientific budgets, kernel pins, checkpoint/input hashes and source-lock
-   values unchanged. This metadata operation does not certify GPU execution.
-7. Run the original validators:
-
-   ```bash
-   ./reproduce.sh preflight --backbone LingBot14B --asset-config assets.local.json
-   ```
-
-Missing or changed dependencies block execution. Do not disable source checks.
-Keep local assets, private dependencies, weights and outputs out of Git.
-
-## CPU validation
-
-```bash
-python -m pip install pytest build
-python -m pytest -q
-python -m build
-```
-
-No private data, model downloads or GPU are needed. Passing CPU tests does not
-validate native kernels or model generation. See [RELEASE_STATUS](RELEASE_STATUS.md).
+The original Solar parent controller also imports `measurement_admission.py` during CPU post-run qualification. Install that exact original companion next to the controller (SHA-256 `ffc75d45d404be8dcaa3bf893060fc5a17015e9ca3da57ae688e2a23ce611c19`, 2,985 bytes). Copying only the controller's `tools/` directory omits this required dependency. Its qualification writes derived summaries after generation; include it before launch and preserve raw timing receipts. It is not an algorithm, CUDA producer or direct-worker dependency.

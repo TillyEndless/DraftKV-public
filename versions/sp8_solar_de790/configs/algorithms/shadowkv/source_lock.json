@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "algorithm": "shadowkv",
+  "origin": "Pinned author math with current shared portable adapter; budget allocation is author-ratio scaled by configs/backbones/effective_budgets.json",
+  "files": {
+    "src/draftkv/algorithms/shadowkv/vendor/LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "src/draftkv/algorithms/shadowkv/vendor/__init__.py": "d60b08a7d03b532cde743f2607d16bbe5f9888bd1d52b9174d9f168ff18bf8a6",
+    "src/draftkv/algorithms/shadowkv/vendor/author/kv_cache.py": "62f790d3e2cdafb7bb713c898524b0be16e68c94745c4077fd0fc8e7252f2da4",
+    "src/draftkv/algorithms/shadowkv/vendor/base.py": "2bc0b610274ba56c069534b4e4d2184719ea7b4b748ee1945c500906e0563a4b",
+    "src/draftkv/algorithms/shadowkv/vendor/shadow_cache.py": "b0e8f261ee17fe96bee894d969df0a9ab579415e878a2fcb401af60e554189d0",
+    "src/draftkv/algorithms/shadowkv/vendor/shadow_core.py": "86bcba32c94456499dab34da9de53e0ac52ae2c3bc5ae2ed61cdaa2ed30af443",
+    "src/draftkv/algorithms/shadowkv/vendor/shadow_route.py": "2c12b3be30fff05171a242c7de8712650b55482c5eacaf5f2dc0315baebab3be"
+  }
+}

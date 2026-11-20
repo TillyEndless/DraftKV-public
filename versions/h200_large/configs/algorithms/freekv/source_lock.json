@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "algorithm": "freekv",
+  "origin": "FreeKV original author digest/correction AST and existing original RAFT selector",
+  "files": {
+    "src/draftkv/algorithms/freekv/vendor/LICENSE": "3554e5dc61d766ac4b55b7594524bb83e954322340c0c0b9b041846065ec72d7",
+    "src/draftkv/algorithms/freekv/vendor/__init__.py": "1bf4cc588bd8a516da9be313c0099668c1caec7b37b3cc00e5d4f6e57a0986d9",
+    "src/draftkv/algorithms/freekv/vendor/infer_state.py": "c88f31cb06f2aa364f066981ee0d772cff5d3397d92c93db731e74b2fb728bdd",
+    "src/draftkv/algorithms/freekv/vendor/modeling.py": "6700b9e80dd480f5acc01755ee81ea4730814fd26558794d2db63416ccfa5cfc",
+    "src/draftkv/algorithms/freekv/vendor/raft_selector.py": "6eb2ef13322d02a208478b4e1284cba1bea6c8f125a5ef8dae6ae61ddd4be2cc"
+  }
+}

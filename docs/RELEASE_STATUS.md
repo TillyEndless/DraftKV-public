@@ -1,50 +1,26 @@
-# Release status
+# Verified source-release coverage
 
-## Preserved source versions
+The outer CLI now accepts `--profile {off,summary}` (default `off`). This is a CPU-tested dispatch addition, not a new GPU acceptance. Existing four-backbone H200 measurements below are unchanged. LongLive/LingBot-1.3B summary dispatch requires their original external controllers/environments and fresh immutable metadata; LingBot-14B/Solar summary is BLOCKED by the unchanged controllers' plan/source bindings. All four new-summary-interface GPU tests are NOT_RUN. See [profiling](PROFILING.md).
 
-| Backbone | Deployed public commit | Source-version evidence |
-|---|---|---|
-| LongLive1.3B | `970a7b887fc8492dafb8b9ac630a635465b18191` | 957 frames; v1 Summary |
-| LingBot1.3B | `5fb858a1a7be5e5fc6f48ab5dda116edc099b2c3` | 357 frames; v2 Summary with timing caveat |
-| LingBot14B | `ae6275734eff7dfddea2df0d5c679f576394d88e` | 357 frames; v1 Summary; outer harness had missing ffprobe |
-| SolarWM33B | `3d88f83c04be34eee42a93ffe9d9553973c59c66` | 357 frames at 16 FPS after decode resume; incomplete Summary |
+The minimum acceptance covers four Full DraftKV configurations, one real original case per backbone, using one H200 per process group (SP1). Separately installed original external dependencies were recorded in private integration commits. Each run completed diffusion, historical attention, decode, a full video, original timing admission and process/resource cleanup. Video hashes match the respective historical references.
 
-All 846 retained implementation-body records remain byte-identical to their
-selected snapshots (285 distinct contents). Public snapshots match these
-commits; provider files match run-plan hashes. Provider revision labels do not
-assert that the corresponding Git commit objects are available. Exact pins are
-in `verified_runtime_source_map.json`; configurations are in
-[REPRODUCTION](REPRODUCTION.md).
+| Candidate backbone | Output frames | Admitted E2E s | Frames/E2E | Profile classification |
+|---|---:|---:|---:|---|
+| LongLive1.3B | 957 | 271.7921 | 3.5211 | PROFILE_MATCH_INITIAL_TOLERANCES_SINGLE_CASE |
+| LingBot1.3B | 480 | 92.0233 | 5.2161 | PROFILE_MATCH_INITIAL_TOLERANCES_SINGLE_CASE |
+| LingBot14B | 480 | 272.5749 | 1.7610 | PROFILE_MATCH_INITIAL_TOLERANCES_SINGLE_CASE |
+| SolarWM33B | 480 | 523.4181 | 0.9170 | PROFILE_MATCH_INITIAL_TOLERANCES_SINGLE_CASE |
 
-Recorded profiling used RTX 4090 for LongLive/Solar and RTX 5090 for LingBot.
-Historical SP is 1/8/8/8 respectively. These are separate workloads/environments,
-not controlled cross-model timings or four newly reproduced 30-second runs.
+Solar is FUNCTIONAL_PASS_WITH_SUPPLEMENTAL_CPU_ADMISSION: its original controller exited with code 1 because the original CPU-only measurement_admission companion was omitted from the private validation copy; that failed parent/status/queue and every raw receipt remain unchanged. The exact historical helper and original aggregate/eight checks/qualification were executed once in a new CPU-only copy, passing without new generation, subprocess launch, timer change or subtraction. Full independent video/source/native/cache/teardown verification passed. This is not a clean automatic parent exit; the failure is disclosed separately. The missing external companion and exact hash are now documented in INSTALL.
 
-## Solar final verification
+LongLive's original decode path records completion/shape and produces the verified byte-identical video; elementwise floating-point tensor finiteness is NOT_RECORDED. A LingBot-specific finite event is not inferred for LongLive.
 
-The first Summary attempt failed because a CUDA compiler was unavailable.
-The existing successor completed sampling and hit the original guard
-`KV_CONSTRAINT: sampling tensors remain before independent VAE decode`.
-The preserved independent decoder-resume path produced the final video without
-rerunning sampling. Its SHA256 and ffprobe metadata were checked independently.
-All eight sampler ranks report failure at that guard. Summary remains
-`INCOMPLETE`, with aggregate E2E/throughput and other fields unavailable.
-The wrapper's successful video result is not complete Summary acceptance.
-Status: **SOLAR_PROFILE_SUMMARY_UNVERIFIED**.
+These are single-case source-release checks, not quality-cohort replication. PROFILE_MATCH_INITIAL_TOLERANCES_SINGLE_CASE means the compared case/protocol meets the initial E2E/memory tolerances; it does not establish historical environment/binary identity. The original first-FA3 CUPTI witness remains in Solar's E2E. Memory scopes differ across backbones and are documented with the original profile evidence. LongLive diffusion is 174.3025 s versus the historical 150.5391 s (+15.79%); the specified 15% timing tolerance applies to E2E.
 
-## Distribution validation boundary
+Retained source/config integrity: 1,216 file memberships, 294 unique SHA-256 contents, 0 changes. Independent clean-clone validation covers five CPU integrity/CLI tests and six static original-worker plans. Native compilation/loading/full generation was checked only in the corresponding original GPU environments, not inferred from CPU plans. Historical complete inherited environments/live Python/ELF maps remain partially unavailable.
 
-**NEW_PACKAGE_GPU_NOT_TESTED.** Historical GPU source-version records are not
-dynamic acceptance of the pruned distribution. CPU tests cover source/config
-identity, static plans, native imports, profile guards, invalid CLI rejection
-and missing-dependency failures. The `ci/cpu.yml` template builds wheel/sdist
-and checks runtime payload agreement without private models or kernels. To
-enable it, install it at `.github/workflows/cpu.yml` with workflow-write
-authorization. No hosted Actions run is claimed for this release. CPU validation
-does not validate
-CUDA ABI, SP collectives, decoding or full generation.
+The additional original SP8 layouts are retained but **candidate SP8 GPU acceptance is NOT_RUN**. Optional private CPU checks exposed two legacy CLI Git-top-level assumptions in each SP8 layout; those failures were not skipped, patched or called PASS. No SP8 performance claim is made for this candidate. The original-source SP8 historical/replay evidence is a separate class.
 
-Full-paper numerical reproduction and clean cross-model performance
-reproduction are not asserted. B01 availability remains deployment dependent.
-These boundaries do not change the preserved algorithms or authorize fallback
-attention. [INSTALL](INSTALL.md) explains the required external setup.
+Source rights review preserves project Apache, vendor NC/SA and other applicable terms. Official Anemoi `270ddf8` is an exact implementation copy except attribution documentation; the torchvision video derivative retains BSD terms. See THIRD_PARTY_NOTICES.md. Complete B01/native archives, modified native attention binaries and broad backbone/model bodies are not distributed and require separate authorization. A source hash is not a redistribution grant.
+
+This source repository adds no common wheel runtime; wheel/sdist installation/build acceptance is not claimed. Original source trees are used separately. No algorithm/provider/compatibility patch, scientific configuration change, profiling-timer redesign or hot-path source-validation layer was added.

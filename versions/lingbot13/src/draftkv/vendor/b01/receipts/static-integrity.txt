@@ -1,0 +1,8 @@
+STATIC only
+Source/evidence archive hashes and all member SHA256: PASS
+Compile inputs: 182; original snapshot files: 190
+source_generation: 0db298a38ad6c1709c4734094c042ae6d82dc8c25459446bcc447e790a6044a5
+compatibility_generation: 54ab11e6cd9ce93de96c7c286e2a5d0eccc8ce623cf77cddec4956f5be1eefeb
+git diff --check: exit 0
+git diff --cached --check: exit 0
+CUDA compile and all GPU gates: NOT_RUN

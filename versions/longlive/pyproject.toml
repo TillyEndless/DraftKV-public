@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "draftkv"
+version = "0.1.0"
+description = "Explicit, reproducible routing for DraftKV benchmark implementations"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+draftkv = "draftkv.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["draftkv*"]
+
+# Private candidate only: the B01 engineering sources are NOT cleared for
+# public redistribution. Clone and local wheel installs retain all hash locks.
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.md", "*.txt", "*.tar.gz", "licenses/*", "receipts/*", "evidence/*", "vendor/*", "fixtures/*"]

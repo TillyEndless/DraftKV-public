@@ -1,0 +1,340 @@
+{
+  "H100": {
+    "compute_capability": "9.0",
+    "policy": "source_bound_h200_sm90_token",
+    "e2e_status": "not_tested_in_release",
+    "status": "source_bound_sm90_token_streaming_gpu_unverified",
+    "parameters": {
+      "consumer": "original",
+      "head_group": 12,
+      "block_n": 64,
+      "gate_tiles": 4,
+      "host_pages": "pytorch",
+      "dispatch": "all"
+    },
+    "source_basis": "Same B01 original SM90 Token Streaming FA2 consumer and optimized CPU KV route as H200; no old H100 Autotune/Frontier/Ready consumer",
+    "historical_scope": "H100/SP1/SP2/SP4/SP8 can launch with source-bound token Streaming FA2 after real SM90 build/ABI/driver checks; GPU numerical and E2E unverified without H100",
+    "source_family": "H100",
+    "capability": {
+      "recipe": "h100-original-sm90-token-first-run",
+      "provider": "fa2_streaming_consumer_ext.streaming_fwd",
+      "producer": "producer_plan_ext.ProducerPlan",
+      "local_heads": [
+        5,
+        7,
+        10,
+        12,
+        14,
+        20,
+        28,
+        40,
+        56
+      ],
+      "kernel_arch": "9.0",
+      "requires_compiled_binary": true,
+      "requires_preexisting_autotune_receipt": false,
+      "gpu_validation_status": "NOT_RUN",
+      "allows_legacy_consumer": false
+    }
+  },
+  "H200": {
+    "compute_capability": "9.0",
+    "policy": "fixed_mac",
+    "e2e_status": "not_tested_in_release",
+    "status": "static_source_capable_gpu_unverified_for_new_sp",
+    "parameters": {
+      "consumer": "original",
+      "head_group": 12,
+      "block_n": 64,
+      "gate_tiles": 4,
+      "host_pages": "pytorch",
+      "dispatch": "all"
+    },
+    "source_config": "configs/B01_h200_clean_grouped_f120.yaml",
+    "evidence": "evidence/h200_real_overlap_validation.md",
+    "historical_scope": "Historical H200 overlap evidence retained; canonical C++ ProducerPlan/token-streaming runtime is statically bound for new SP shapes, which remain GPU-unverified",
+    "capability": {
+      "recipe": "mac-h200-stock-frontier-gate4",
+      "provider": "h200_stock_frontier",
+      "local_heads": [
+        5,
+        10,
+        12,
+        20,
+        40
+      ],
+      "producer": "producer_plan_ext.ProducerPlan",
+      "consumer": "fa2_streaming_consumer_ext.streaming_fwd",
+      "historical_shape": {
+        "q": 4680,
+        "kv": 28080,
+        "heads": 12
+      },
+      "current_cpp_dma_acceptance": "NOT_RUN",
+      "overlap": "HISTORICAL_REAL_OVERLAP_PASS",
+      "current_native_binding": "SOURCE_CAPABLE_RUNTIME_ABI_REQUIRED",
+      "sp_scope": "SP1/SP2/SP4/SP8 static; only historical measured shapes retain evidence"
+    },
+    "shape_recipes": [
+      {
+        "local_heads": [
+          7,
+          14,
+          28,
+          56
+        ],
+        "recipe": "h3-native-head-shards-source-bound",
+        "parameters": {
+          "consumer": "original",
+          "head_group": 12,
+          "block_n": 64,
+          "gate_tiles": 4,
+          "host_pages": "pytorch",
+          "dispatch": "all"
+        },
+        "capability": {
+          "provider": "h200_stock_frontier",
+          "local_heads": [
+            7,
+            14,
+            28,
+            56
+          ],
+          "producer": "producer_plan_ext.ProducerPlan",
+          "consumer": "fa2_streaming_consumer_ext.streaming_fwd"
+        },
+        "policy": "fixed_mac",
+        "historical_scope": "Source-bound parameter family; H3 GPU execution NOT EXECUTED"
+      }
+    ]
+  },
+  "B200": {
+    "compute_capability": "10.0",
+    "policy": "autotune",
+    "e2e_status": "not_tested_in_release",
+    "status": "pending_hardware_acceptance",
+    "parameters": null
+  },
+  "RTX4090": {
+    "compute_capability": "8.9",
+    "policy": "fixed_mac",
+    "e2e_status": "not_tested_in_release",
+    "status": "static_source_capable_gpu_unverified_for_new_sp",
+    "parameters": {
+      "consumer": "frontier_opt",
+      "head_group": 3,
+      "block_n": 64,
+      "gate_tiles": 4,
+      "variant": 9,
+      "host_pages": "thp2m",
+      "dispatch": "early"
+    },
+    "source_config": "bench/frontier_best_config.json",
+    "evidence": "evidence/sm89_frontier_followup_20261014.md",
+    "historical_scope": "4090 seeded single-layer only",
+    "capability": {
+      "provider": "legacy_grouped",
+      "local_heads": [
+        12
+      ],
+      "kv_length": "positive, exact current binding required",
+      "producer": "producer_plan_ext.ProducerPlan",
+      "consumer": "b01_frontier_opt_ext.fwd",
+      "historical_shape": {
+        "q": 4680,
+        "kv": 28080,
+        "heads": 12
+      },
+      "sp_scope": "LongLive full H12 replicated-KV; LingBot H40/H20/H10/H5 via original Autotune provider"
+    },
+    "shape_recipes": [
+      {
+        "local_heads": [
+          5,
+          10,
+          20,
+          40
+        ],
+        "recipe": "mac-rtx4090-portable-autotune-g5-n64",
+        "parameters": {
+          "consumer": "autotune",
+          "head_group": 5,
+          "block_m": 64,
+          "block_n": 64,
+          "splits": 1,
+          "gate_tiles": 4,
+          "host_pages": "thp2m_slab",
+          "dispatch": "all"
+        },
+        "source_config": "ARCHIVE_AUTOTUNE.md",
+        "evidence": "evidence/autotune_validation_20261018.md",
+        "capability": {
+          "provider": "autotune",
+          "local_heads": [
+            5,
+            10,
+            20,
+            40
+          ],
+          "producer": "producer_plan_ext.ProducerPlan",
+          "consumer": "offload_fa2_ext.fwd"
+        },
+        "historical_scope": "H5 measured source family; H10/H20/H40 static source-bound, GPU/E2E unverified"
+      },
+      {
+        "local_heads": [
+          7,
+          14,
+          28,
+          56
+        ],
+        "recipe": "h3-native-head-shards-source-bound",
+        "parameters": {
+          "consumer": "autotune",
+          "head_group": 7,
+          "block_m": 64,
+          "block_n": 64,
+          "splits": 1,
+          "gate_tiles": 4,
+          "host_pages": "thp2m_slab",
+          "dispatch": "all"
+        },
+        "capability": {
+          "provider": "autotune",
+          "local_heads": [
+            7,
+            14,
+            28,
+            56
+          ],
+          "producer": "producer_plan_ext.ProducerPlan",
+          "consumer": "offload_fa2_ext.fwd"
+        },
+        "policy": "fixed_mac",
+        "historical_scope": "Source-bound parameter family; H3 GPU execution NOT EXECUTED"
+      }
+    ]
+  },
+  "RTX5090": {
+    "compute_capability": "12.0",
+    "policy": "fixed_mac",
+    "e2e_status": "not_tested_in_release",
+    "status": "static_source_capable_gpu_unverified",
+    "parameters": {
+      "consumer": "autotune",
+      "head_group": 2,
+      "block_m": 64,
+      "block_n": 64,
+      "splits": 4,
+      "gate_tiles": 4,
+      "host_pages": "thp2m_slab",
+      "dispatch": "all"
+    },
+    "evidence": "evidence/autotune_validation_20261018.md",
+    "capability": {
+      "recipe": "mac-5090-g2-s4-source-bound",
+      "provider": "autotune",
+      "local_heads": [
+        12
+      ],
+      "producer": "producer_plan_ext.ProducerPlan",
+      "consumer": "offload_fa2_ext.fwd",
+      "current_native_binding": "STATIC_SOURCE_BOUND_GPU_UNVERIFIED",
+      "historical_scope": "5090 g2/S4 calibration prior; current release requires real target runtime validation"
+    },
+    "source_config": "ARCHIVE_AUTOTUNE.md",
+    "historical_scope": "Real SM120 g2/S4 prior retained; canonical Autotune provider cross-compiled for SM120; current release E2E not run",
+    "shape_recipes": [
+      {
+        "local_heads": [
+          10,
+          20,
+          40
+        ],
+        "recipe": "mac-5090-g2-s4-source-capable",
+        "parameters": {
+          "consumer": "autotune",
+          "head_group": 2,
+          "block_m": 64,
+          "block_n": 64,
+          "splits": 4,
+          "gate_tiles": 4,
+          "host_pages": "thp2m_slab",
+          "dispatch": "all"
+        },
+        "source_config": "ARCHIVE_AUTOTUNE.md",
+        "evidence": "evidence/autotune_validation_20261018.md",
+        "capability": {
+          "provider": "autotune",
+          "local_heads": [
+            10,
+            20,
+            40
+          ],
+          "producer": "producer_plan_ext.ProducerPlan",
+          "consumer": "offload_fa2_ext.fwd"
+        },
+        "historical_scope": "Reuses real SM120 g2/S4 scheduling prior; H10/H20/H40 target E2E unverified"
+      },
+      {
+        "local_heads": [
+          5
+        ],
+        "recipe": "mac-5090-g5-s4-source-capable",
+        "parameters": {
+          "consumer": "autotune",
+          "head_group": 5,
+          "block_m": 64,
+          "block_n": 64,
+          "splits": 4,
+          "gate_tiles": 4,
+          "host_pages": "thp2m_slab",
+          "dispatch": "all"
+        },
+        "source_config": "ARCHIVE_AUTOTUNE.md",
+        "evidence": "evidence/autotune_validation_20261018.md",
+        "capability": {
+          "provider": "autotune",
+          "local_heads": [
+            5
+          ],
+          "producer": "producer_plan_ext.ProducerPlan",
+          "consumer": "offload_fa2_ext.fwd"
+        },
+        "historical_scope": "Original SM120 Autotune/SplitKV source-bound; H5 target GPU/E2E unverified"
+      },
+      {
+        "local_heads": [
+          7,
+          14,
+          28,
+          56
+        ],
+        "recipe": "h3-native-head-shards-source-bound",
+        "parameters": {
+          "consumer": "autotune",
+          "head_group": 7,
+          "block_m": 64,
+          "block_n": 64,
+          "splits": 1,
+          "gate_tiles": 4,
+          "host_pages": "thp2m_slab",
+          "dispatch": "all"
+        },
+        "capability": {
+          "provider": "autotune",
+          "local_heads": [
+            7,
+            14,
+            28,
+            56
+          ],
+          "producer": "producer_plan_ext.ProducerPlan",
+          "consumer": "offload_fa2_ext.fwd"
+        },
+        "policy": "fixed_mac",
+        "historical_scope": "Source-bound parameter family; H3 GPU execution NOT EXECUTED"
+      }
+    ]
+  }
+}

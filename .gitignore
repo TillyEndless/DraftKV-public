@@ -1,17 +1,8 @@
 __pycache__/
-*.py[cod]
-*.egg-info/
-.pytest_cache/
-.DS_Store
+*.pyc
+.venv/
 build/
 dist/
-outputs/
-assets.local.json
-*.safetensors
-*.pt
-*.pth
-*.mp4
-
-.release-private/
-
-.venv/
+*.egg-info/
+# Private evidence stays outside the local source commit.
+audits/

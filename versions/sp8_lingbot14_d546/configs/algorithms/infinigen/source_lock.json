@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "algorithm": "infinigen",
+  "origin": "Pinned author math with current shared portable adapter; budget allocation is author-ratio scaled by configs/backbones/effective_budgets.json",
+  "files": {
+    "src/draftkv/algorithms/infinigen/forecast.py": "027be17171b1dd829938695ee83891918f3432a118fb221864e04fc6d6d1df86",
+    "src/draftkv/algorithms/infinigen/vendor/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "src/draftkv/algorithms/infinigen/vendor/__init__.py": "d60b08a7d03b532cde743f2607d16bbe5f9888bd1d52b9174d9f168ff18bf8a6",
+    "src/draftkv/algorithms/infinigen/vendor/author/partial_weight_generation_controller.py": "42f7355a4a8f27f550cc0133d7302222a0edb3b1098b8b2f6f281e8eb1ff14ea",
+    "src/draftkv/algorithms/infinigen/vendor/author/skewing_controller.py": "9ea2c9a490990a68f0f8b4a87d4ed669689d474f48380a7c97e5214a8d04d93c",
+    "src/draftkv/algorithms/infinigen/vendor/base.py": "2bc0b610274ba56c069534b4e4d2184719ea7b4b748ee1945c500906e0563a4b",
+    "src/draftkv/algorithms/infinigen/vendor/free_cache.py": "142015d6d948fc3347436b6c2a6804fb4f65c56c5a764bae2584374fa60da2ce",
+    "src/draftkv/algorithms/infinigen/vendor/freekv_core.py": "0ca18677932c10f981ffa886f2916c88caa358e33534d31f11337daf5deb4109",
+    "src/draftkv/algorithms/infinigen/vendor/infinigen_core.py": "2eab780fa638ed7cc4cecfce1d10577eb2ef169ee704e182079c9c12c4f0bf7c",
+    "src/draftkv/algorithms/infinigen/vendor/shadow_core.py": "70df0511c63b8ea36c4762480829cfa3ad33accc32d71c70b5a461e4af3610f8",
+    "src/draftkv/algorithms/infinigen/vendor/speculation_components.py": "58206a5c230fe3397783979e310c8319e23b1febe6cbe4b07d81590b8fc424e5",
+    "src/draftkv/algorithms/infinigen/vendor/speculation_route.py": "ae9f2f3be13c81d4a87fbde710eb7d62ee2769959e071da2a34a1ca17bdfefc1"
+  }
+}

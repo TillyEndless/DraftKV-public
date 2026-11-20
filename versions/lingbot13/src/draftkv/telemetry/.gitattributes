@@ -1,0 +1,2 @@
+# Immutable historical CSV uses CRLF; retain its original bytes and SHA-256.
+evidence/h200_real_overlap_profile.csv -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

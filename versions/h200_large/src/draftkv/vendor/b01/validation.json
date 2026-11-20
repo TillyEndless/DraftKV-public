@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "branch": "agent/b01-vendor-release",
+  "baseline_commit": "3a4120d2e0a34d68a4bbb5a3678c0e6dc9b2a2e3",
+  "source_generation": "0db298a38ad6c1709c4734094c042ae6d82dc8c25459446bcc447e790a6044a5",
+  "compatibility_generation": "54ab11e6cd9ce93de96c7c286e2a5d0eccc8ce623cf77cddec4956f5be1eefeb",
+  "source_snapshot_sha256": "7b651a07dc5ca47c1dd946078e45a37878dad14df12ce3df1c01141a09d2a7f0",
+  "date": "2026-10-26",
+  "scope": "P1 vendor only; no GPU tasks or CUDA compilation",
+  "gates": {
+    "STATIC": "PASS",
+    "CUDA_GOLDEN": "NOT_RUN",
+    "REAL_CHECKPOINT_FORWARD": "NOT_RUN",
+    "VIDEO_E2E": "NOT_RUN",
+    "OFFICIAL_EVAL": "NOT_RUN"
+  },
+  "receipts": [
+    {
+      "validation": "STATIC",
+      "interpreter": "3.11.0 Conda",
+      "command": "PYTHONPATH=src \"$PYTHON_311\" -m unittest discover -s tests -v",
+      "result": "PASS_WITH_EXPLICIT_SKIPS",
+      "tests_run": 167,
+      "skipped": 7,
+      "vendor_tests": 31,
+      "exit_code": 0,
+      "path": "receipts/python311-unittest.txt",
+      "sha256": "f215088e970cd08cc24c867418de7e48d95640b59c0d1c2586e713d82a2cb729"
+    },
+    {
+      "validation": "STATIC",
+      "interpreter": "3.13.11 Conda",
+      "command": "PYTHONPATH=src \"$PYTHON_313\" -m unittest discover -s tests -v",
+      "result": "PASS_WITH_EXPLICIT_SKIPS",
+      "tests_run": 167,
+      "skipped": 7,
+      "vendor_tests": 31,
+      "exit_code": 0,
+      "path": "receipts/python313-unittest.txt",
+      "sha256": "7f7100bc2e68619f4d01d2c4cbd673d8c6d017ac34f7ded9361d989b28a78abc"
+    }
+  ],
+  "all_hardware_new_vendor_acceptance": {
+    "H100": "NOT_RUN",
+    "B200": "NOT_RUN",
+    "H200": "NOT_RUN",
+    "RTX4090": "NOT_RUN",
+    "RTX5090": "NOT_RUN"
+  },
+  "blockers": [
+    "B01 engineering-modification redistribution permission is missing from supplied archive",
+    "Actual toolkit/Torch/architecture compilation and driver stream-memory-ops capability not verified",
+    "CUDA numerical output/LSE golden tests not executed",
+    "Backbone/streaming integration, local-head/SP admission, memory budgets and process watchdog not wired by this owner",
+    "No new actual-overlap trace, real-checkpoint forward, video E2E or official evaluation",
+    "H200 historical CSV does not independently establish a clean frozen source commit; 4090 frozen source is archived content verification only"
+  ],
+  "historical_evidence_does_not_satisfy_new_vendor_gates": true,
+  "test_source_sha256": "bd26c4fa792781b087919696f21f8d79cf1c88948fab5f13806f5173f817f7eb",
+  "static_integrity": {
+    "path": "receipts/static-integrity.txt",
+    "sha256": "1e162e2b640463e0c2c04ff7842db0f2bb017d958c018b49928077031649a53b",
+    "validation": "STATIC"
+  }
+}

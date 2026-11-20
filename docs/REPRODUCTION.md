@@ -1,75 +1,15 @@
-# Reproduction
+# Reproduction evidence and limits
 
-## Scientific configurations
+Keep four classes separate: original Table1/2 profiling records; new SOURCE_IDENTICAL_REPLAY executions from recovered research trees; new pruned-source deployments; and earlier compatibility-patched experiments (excluded from this candidate).
 
-| Backbone | S/L/R/C | Protected history P | Grounding Top-M | Historical SP |
-|---|---|---:|---:|---:|
-| LongLive1.3B | 3/0/6/3 | 2 | N/A | 1 |
-| LingBot1.3B | 3/0/11/4 | 3 | 3 | 8 |
-| LingBot14B | 3/0/11/4 | 3 | 3 | 8 |
-| SolarWM33B | 0/0/25/5 | 5 | 7 | 8 |
+The final candidate completed four original real cases on H200 SP1; results and scope are in RELEASE_STATUS.md. These runs use the preserved original timers and external parent controllers. A bare native worker alone does not reproduce the parent NVML monitor/preparation/admission protocol.
 
-These generation budgets are distinct from streaming receive-slot/tile
-parameters. LongLive uses the text-only path; camera-conditioned backbones
-include Grounding. Preserve checkpoint, inputs, seed, precision, source/kernel
-identity, positions and selection policy when comparing executions. Do not
-adjust budgets to target a paper latency.
+Earlier original-tree H200 replay E2E values were379.367952302s (LongLive),88.390334906s (canonical LingBot1.3B),274.218020578s (LingBot14B), and521.086457745s (Solar), with historical video hashes identical. They are not substituted for candidate deployment measurements. LongLive's original-tree replay failed the15% latency tolerance; only the combined pre-diffusion setup increase was localized, with no unmeasured finer cause asserted.
 
-```bash
-./reproduce.sh plan --backbone LongLive1.3B --profile off
-./reproduce.sh plan --backbone LingBot1.3B --profile summary
-./reproduce.sh plan --backbone LingBot14B --profile off
-./reproduce.sh plan --backbone SolarWM33B --profile summary
-```
+The first candidate LingBot14B run produced a matching full video but failed the original compilation admission:45 compiler execution events in the timed window. Formal E2E remains rejected. A separate original warm-cache preparation and run passed; no compilation time was subtracted. Other earlier failed attempts and raw observations remain evidence, not accepted measurements.
 
-Historical topology is the default. The unchanged LingBot1.3B catalog also
-records an earlier SP1 validation, separate from its SP8 profiling record.
-It does not validate a new topology for every model. TP is not independently
-attested by the available source-version receipts.
+Original5090 LingBot14B generated a complete matching video but its parent ffprobe PATH finalization failed; a zero handled parent exit is not full acceptance and no parent aggregate is fabricated. Original5090 Solar completed generation/decode/eight-rank admission/cleanup at1026.378416239s and matched its original SP8 video. These are original-tree replays, not candidate SP8 passes. The candidate SP8 scope was made optional; no candidate eight-GPU generation was started.
 
-## Generation
+The Table1 efficiency input is the recovered WorldAttention160 WA_001 60s/957-frame six-prompt case; it is not an efficiency average over the VBench-Long quality cohort. The Table2 efficiency case is the recovered WorldAtlas memory-dolly_loop-memory_pool_30s_144 input/480-frame output, separate from ORBIA quality evaluation. No complete quality benchmark was rerun here. Different hardware/cases/profiling histories are not merged into a new independent cohort.
 
-Configure authorized sources and frozen cases following [INSTALL](INSTALL.md).
-Use a new output directory per invocation:
-
-```bash
-./reproduce.sh run --backbone LongLive1.3B --devices 0 \
-  --asset-config assets.local.json --workspace outputs/longlive \
-  --generation-only --profile off
-```
-
-Historical LingBot/Solar configurations use eight explicitly selected devices.
-Workers validate frozen input contracts and write hash-bound `video-map.json`.
-`--generation-only` skips evaluation; without it, the configured quality
-evaluator is also required. No independent baseline/ablation runner is supplied.
-
-## Evaluation
-
-Provide source-locked evaluator adapters, environments and weight indices in
-`assets.local.json` under `evaluators`. The original 29-file evaluation adapter
-lock is retained in full. Required settings include:
-
-- VBench-Long: `adapter_root`, `python`, evaluator `config`, `weight_index`.
-- ORBIA: additionally exact upstream `source`, config/hash, dataset lock/hash,
-  dataset specification, interface and recorded run/checkpoint/condition
-  metadata required by the original bridge.
-- Revisit: exact upstream `source`, `python`, `weights`, `adapter_root`, and
-  `weight_index`; the original interface invokes the external reprojection script.
-
-Each weight-index entry has a local path and SHA256. Evaluation verifies video
-hashes and scientific source/config identity. Arbitrary MP4 files do not satisfy
-that binding. A separate evaluation workspace can consume the matching map:
-
-```bash
-./reproduce.sh evaluate --backbone LingBot14B --evaluator orbia \
-  --devices 0 --asset-config assets.local.json \
-  --video-map outputs/lingbot14b/video-map.json --workspace outputs/orbia
-./reproduce.sh evaluate --backbone LingBot14B --evaluator revisit \
-  --devices 0 --asset-config assets.local.json \
-  --video-map outputs/lingbot14b/video-map.json --workspace outputs/revisit
-```
-
-Select `--evaluator vbench-long` for LongLive. Revisit never launches generation;
-an evaluator may still need GPU resources. These interfaces do not imply that
-this release reran every paper cohort. See [RELEASE_STATUS](RELEASE_STATUS.md)
-and [PROFILING](PROFILING.md).
+External models, inputs, authorized native code and matching environments must be provisioned separately. Public source/config locks identify content; they do not expose private receipts, grant external redistribution rights or provide an out-of-the-box full-paper numerical reproduction environment.
