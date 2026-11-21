@@ -31,7 +31,7 @@ See [installation](docs/INSTALL.md), [original command mapping](docs/ORIGINAL_CO
 
 Plans are the original worker's execution metadata, prepared separately under the approved operational path mapping. The wrapper does not generate scientific configurations, load a new provider, change kernels or install timing callbacks. External campaign workers are required for the ORBIA rows.
 
-`--profile {off,summary}` defaults to `off`, which preserves the existing worker command and immutable plan settings. `summary` selects a SHA-pinned original external profiling controller. LongLive and LingBot-1.3B have conditional dispatch in their separately provisioned original environments; 14B and Solar remain explicitly blocked because their unchanged controllers cannot safely bind this release. No new-switch GPU test is claimed. See [profiling requirements and measurement scopes](docs/PROFILING.md).
+`--profile {off,summary}` defaults to `off`, which preserves the existing worker command and immutable plan settings. `summary` selects a SHA-pinned original external profiling controller. All four backbone mappings are CPU-verified (`CLI_STATIC_VERIFIED`) and require separately provisioned original dependencies. 14B/Solar select their audited existing single-row APIs; no plan or profiler is rewritten. The prior complete H200 SP1 acceptances remain valid; no new-switch GPU test is claimed. See [profiling requirements and measurement scopes](docs/PROFILING.md).
 
 The repository includes the DraftKV research implementation
 but is not a fully self-contained, out-of-the-box reproduction

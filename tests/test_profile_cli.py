@@ -13,6 +13,8 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import patch
+from unittest.mock import Mock
+from types import SimpleNamespace
 
 SPEC = importlib.util.spec_from_file_location("launch_original", Path(__file__).resolve().parents[1] / "tools/launch_original.py")
 cli = importlib.util.module_from_spec(SPEC)
@@ -169,13 +171,133 @@ class ProfileCLI(unittest.TestCase):
             with self.subTest(name=name), self.assertRaisesRegex(ValueError, "controller SHA"):
                 cli.main(["plan", "--backbone", name, "--profile", "summary", "--controller", str(controller)])
 
-    def test_unusable_original_controllers_remain_blocked_after_matching_sha(self):
+    def test_large_original_controllers_select_single_row_api_after_matching_sha(self):
         for name in ("lingbot14b", "solarwm33b"):
             expected = cli.PROFILE_CONTROLLERS[name]["sha256"]
             controller = self.base / "controller.py"
             controller.write_text("# fixture selection only\n")
-            with patch.object(cli, "sha", return_value=expected), self.assertRaisesRegex(ValueError, cli.PROFILE_CONTROLLERS[name]["blocked"].split(";")[0].replace("()", r"\(\)")):
-                cli.main(["plan", "--backbone", name, "--profile", "summary", "--controller", str(controller)])
+            self.assertIn("run_one", cli.PROFILE_CONTROLLERS[name]["entry"])
+            with patch.object(cli, "sha", return_value=expected):
+                selected = cli.select_controller(SimpleNamespace(backbone=name, sp=1, controller=controller))
+            self.assertEqual(selected, controller.resolve())
+
+    def large_fixture(self, name):
+        args, root, run, plan = self.setup_row(name)
+        base = self.base / "campaign"
+        tools = base / "tools"
+        tools.mkdir(parents=True)
+        worker = tools / "worker.py"
+        worker.write_bytes((self.base / "worker.py").read_bytes())
+        args[args.index("--worker") + 1] = str(worker)
+        (base / "runs").mkdir()
+        target = base / "runs/one-original-row"
+        run.rename(target)
+        run = target
+        args[args.index("--plan") + 1] = str(run / "plan.json")
+        plan.update(run_dir=str(run), output=str(run / "native.mp4"), measurement_mode="formal")
+        (base / "source").symlink_to(root, target_is_directory=True)
+        index = 0 if name == "lingbot14b" else 1
+        plan["selected_devices"] = [index]
+        (base / f"tmp_gpu{index}").mkdir()
+        (root.parent / "build").mkdir()
+        reference = self.base / "reference"
+        reference.mkdir()
+        self.write_json(reference / "result.json", dict(status="COMPLETE", correctness={}))
+        controller = tools / "run_campaign.py" if name == "lingbot14b" else base / "controller.py"
+        caches = [self.base / "triton", self.base / "torchinductor"]
+        for cache in caches:
+            cache.mkdir()
+        controller.write_text("PY=" + repr(sys.executable) + "\nGPU=1\nsettings=dict(TRITON_CACHE_DIR="
+                              + repr(str(caches[0])) + ",TORCHINDUCTOR_CACHE_DIR=" + repr(str(caches[1])) + ")\n")
+        if name == "lingbot14b":
+            row = dict(name=run.name, mode="formal", schedule="streaming", plan=str(run / "plan.json"))
+            observer = tools / "test_observers.py"
+            observer.write_text("# test-only original-tool fixture\n")
+            pin = patch.object(cli, "L14_TEST_OBSERVER_SHA256", cli.sha(observer))
+        else:
+            row = dict(name=run.name, backbone="SolarWM33B", reused=False, schedule="streaming", physical_gpu=1,
+                       run_dir=str(run), reference_dir=str(reference))
+            helper = base / "measurement_admission.py"
+            helper.write_text("# test-only original-helper fixture\n")
+            pin = patch.object(cli, "MEASUREMENT_ADMISSION_SHA256", cli.sha(helper))
+        pin.start()
+        self.addCleanup(pin.stop)
+        known = {**cli.PROFILE_CONTROLLERS[name], "sha256": cli.sha(controller)}
+        pin = patch.dict(cli.PROFILE_CONTROLLERS, {name: known})
+        pin.start()
+        self.addCleanup(pin.stop)
+        pin = patch.dict(cli.REFERENCE_RESULT_SHA256, {name: cli.sha(reference / "result.json")})
+        pin.start()
+        self.addCleanup(pin.stop)
+        inventory = {f.name: cli.sha(f) for f in tools.glob("*.py")}
+        plan["campaign_tools"] = inventory
+        mapping = json.loads((self.root / "ORIGINAL_COMMAND_MAPPING.json").read_text())
+        mapping[name + ":sp1"]["external_companion_sha256"] = {}
+        self.write_json(self.root / "ORIGINAL_COMMAND_MAPPING.json", mapping)
+        self.write_json(run / "plan.json", plan)
+        self.write_json(base / "weights-identity.json", {})
+        self.write_json(base / "selected_row.json", row)
+        self.write_json(base / "inventory.json", dict(rows=[row], source=str(root), commit=self.commit, gpu=index, tools=inventory))
+        args += ["--profile", "summary", "--controller", str(controller), "--controller-reference", str(reference)]
+        return args, base, row, root, controller
+
+    def check_large_summary(self, name):
+        args, base, row, root, controller = self.large_fixture(name)
+        before = self.snapshot()
+        record = self.invoke(["plan", *args])
+        self.assertEqual(record["cli_status"], "CLI_STATIC_VERIFIED")
+        self.assertEqual(record["argv"][3:5], ["-c", cli.SCOPED_CONTROLLER_ENTRY])
+        binding = json.loads(record["argv"][-1])
+        self.assertEqual(binding["row"], row)
+        self.assertEqual(binding["source"], str(root))
+        self.assertEqual(before, self.snapshot())
+        # Execute only the stdlib selector with a mocked original module/API.
+        module = SimpleNamespace(run_one=Mock(), main=Mock(), prepare=Mock())
+        spec = SimpleNamespace(loader=SimpleNamespace(exec_module=Mock()))
+        import importlib.util
+        with patch.object(importlib.util, "spec_from_file_location", return_value=spec), \
+             patch.object(importlib.util, "module_from_spec", return_value=module), \
+             patch.object(sys, "argv", ["-c", str(controller), record["argv"][-1]]), patch.object(sys, "path", list(sys.path)):
+            exec(cli.SCOPED_CONTROLLER_ENTRY, {})
+        expected = (row,) if name == "lingbot14b" else (row, binding["tools"])
+        module.run_one.assert_called_once_with(*expected)
+        module.main.assert_not_called()
+        module.prepare.assert_not_called()
+        self.assertEqual(module.B, base)
+        self.assertEqual(module.S, root)
+        self.assertEqual(module.COMMIT, self.commit)
+        self.assertEqual(before, self.snapshot())
+        return args, base
+
+    def test_lingbot14_original_single_row_dispatch_is_cpu_verified(self):
+        args, base = self.check_large_summary("lingbot14b")
+        (self.base / "reference/result.json").write_text("{}")
+        before = self.snapshot()
+        with self.assertRaisesRegex(ValueError, "reference result missing/changed"):
+            self.invoke(["plan", *args])
+        self.assertEqual(before, self.snapshot())
+
+    def test_solar_original_single_row_dispatch_and_helper_are_cpu_verified(self):
+        args, base = self.check_large_summary("solarwm33b")
+        (base / "measurement_admission.py").unlink()
+        before = self.snapshot()
+        with self.assertRaisesRegex(ValueError, "measurement_admission.py missing/changed"):
+            self.invoke(["plan", *args])
+        self.assertEqual(before, self.snapshot())
+
+    def test_large_summary_refuses_extra_rows_or_changed_tool_inventory(self):
+        args, base, _, _, _ = self.large_fixture("solarwm33b")
+        file = base / "inventory.json"
+        inv = json.loads(file.read_text())
+        inv["rows"].append(inv["rows"][0])
+        self.write_json(file, inv)
+        with self.assertRaisesRegex(ValueError, "one prepared inventory row"):
+            self.invoke(["plan", *args])
+        inv["rows"].pop()
+        self.write_json(file, inv)
+        (base / "tools/unverified.py").write_text("# must not be accepted\n")
+        with self.assertRaisesRegex(ValueError, "tool inventory missing/changed"):
+            self.invoke(["plan", *args])
 
     def check_summary(self, name):
         args, root, run, plan = self.setup_row(name)
